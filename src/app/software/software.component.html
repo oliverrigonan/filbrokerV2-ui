@@ -1,0 +1,152 @@
+<div class="main-sidenav-container" [class.main-is-mobile]="mobileQuery.matches">
+    <mat-toolbar color="" class="main-toolbar">
+        <button mat-icon-button (click)="buttonToggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        &nbsp;
+        <img src="./../../assets/images/filbroker-logo/filbroker.png" height="30" style="margin-bottom: 12px;">
+        <span class="toolbar-spacer"></span>
+        <button color="primary" mat-flat-button [matMenuTriggerFor]="loginUserMenu">
+            User
+        </button>
+        <mat-menu #loginUserMenu="matMenu" xPosition="after">
+            <button mat-menu-item>
+                Account
+            </button>
+            <button mat-menu-item>
+                Settings
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item>
+                Logout
+            </button>
+        </mat-menu>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <mat-sidenav-container class="sidenav-container">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" opened
+            class="sidenav">
+            <mat-nav-list>
+                <mat-accordion>
+                    <mat-expansion-panel style="margin: 5px;" hideToggle>
+                        <mat-expansion-panel-header routerLink="/software" #dashboardPanelHeader
+                            (click)="dashboardPanelHeader._toggle()">
+                            <mat-panel-title>
+                                <img src="./../../assets/images/software-icons/dashboard.png" height="23" />
+                                &nbsp;&nbsp; Dashboard
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel style="margin: 5px;">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <img src="./../../assets/images/software-icons/broker.png" height="23" />
+                                &nbsp;&nbsp; Setup
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <mat-nav-list>
+                            <a mat-list-item routerLink="/software/setup-supplier-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/project.png" height="30" />
+                                &nbsp;&nbsp; Project
+                            </a>
+                            <a mat-list-item routerLink="/software/activity-purchase-request-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/unit.png" height="30" />
+                                &nbsp;&nbsp; Unit
+                            </a>
+                            <a mat-list-item routerLink="/software/activity-purchase-order-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/checklist.png" height="30" />
+                                &nbsp;&nbsp; Checklist
+                            </a>
+                            <a mat-list-item routerLink="/software/activity-receiving-receipt-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/customer.png" height="30" />
+                                &nbsp;&nbsp; Customer
+                            </a>
+                            <a mat-list-item routerLink="/software/activity-disbursement-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/broker.png" height="30" />
+                                &nbsp;&nbsp; Broker
+                            </a>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel style="margin: 5px;">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <img src="./../../assets/images/software-icons/sold-unit.png" height="23" />
+                                &nbsp;&nbsp; Activity
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <mat-nav-list>
+                            <a mat-list-item routerLink="/software/setup-supplier-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/sold-unit.png" height="30" />
+                                &nbsp;&nbsp; Sold Unit
+                            </a>
+                            <a mat-list-item routerLink="/software/activity-purchase-request-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/collection.png" height="30" />
+                                &nbsp;&nbsp; Collection
+                            </a>
+                            <a mat-list-item routerLink="/software/activity-purchase-order-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/commission.png" height="30" />
+                                &nbsp;&nbsp; Commission
+                            </a>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel style="margin: 5px;">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <img src="./../../assets/images/software-icons/settings.png" height="23" />
+                                &nbsp;&nbsp; System
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <mat-nav-list>
+                            <a mat-list-item routerLink="/software/setup-supplier-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/user.png" height="30" />
+                                &nbsp;&nbsp; User
+                            </a>
+                            <a mat-list-item routerLink="/software/activity-purchase-request-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/settings.png" height="30" />
+                                &nbsp;&nbsp; Settings
+                            </a>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel style="margin: 5px;">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <img src="./../../assets/images/software-icons/report.png" height="23" />
+                                &nbsp;&nbsp; Reports
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <mat-nav-list>
+                            <a mat-list-item routerLink="/software/setup-supplier-list"
+                                style="height: auto; padding: 10px 0px;">
+                                <img src="./../../assets/images/software-icons/report.png" height="30" />
+                                &nbsp;&nbsp; Sold Unit
+                            </a>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
