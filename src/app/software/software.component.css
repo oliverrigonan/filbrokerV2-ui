@@ -10,6 +10,7 @@
 
 .sidenav-container {
     flex: 1;
+    background-color: rgb(255, 255, 255);
 }
 
 .main-is-mobile .sidenav-container {

@@ -105,15 +105,17 @@ export class SetupChecklistListComponent implements OnInit {
   public buttonAddChecklist(): void {
     this.isButtonAddChecklistDisabled = true;
 
+    let currentDate = new Date();
+
     let mstChecklistModel: MstChecklistModel = {
       Id: 0,
       ChecklistCode: "",
       Checklist: "",
-      ChecklistDate: "",
+      ChecklistDate: currentDate.toLocaleDateString(),
       ProjectId: this.selectedProjectId,
       Project: "NA",
       Remarks: "NA",
-      Status: "OPEN",
+      Status: "ACTIVE",
       IsLocked: false
     };
 
@@ -128,7 +130,8 @@ export class SetupChecklistListComponent implements OnInit {
               this.router.navigate(['/software/setup-checklist-detail/' + data[1]]);
             }, 500);
           } else {
-            this.toastr.success('Somethings went wrong!', 'Add Failed');
+            this.toastr.error('Somethings went wrong!', 'Add Failed');
+            this.isButtonAddChecklistDisabled = false;
           }
         } else {
           this.toastr.error(data[1], 'Add Failed');
@@ -160,15 +163,20 @@ export class SetupChecklistListComponent implements OnInit {
     openDialog.afterClosed().subscribe(result => {
 
       if (result != null) {
-        this.getChecklistData();
+        this.isSpinnerShow = true;
+        this.isContentShow = false;
 
         this.mstChecklistService.deleteChecklist(result).subscribe(
           data => {
 
             if (data[0] == true) {
               this.toastr.success('Checklist was successfully deleted!', 'Delete Successful');
+              this.getChecklistData();
             } else {
               this.toastr.error(data[1], 'Delete Failed');
+
+              this.isSpinnerShow = false;
+              this.isContentShow = true;
             }
 
           }

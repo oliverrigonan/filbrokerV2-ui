@@ -1,1 +1,102 @@
-<p>setup-checklist-detail works!</p>
+<div *ngIf="isSpinnerShow" style="padding: 100px 0px 15px 0px; text-align: center;">
+    <h4>Please wait...</h4>
+    <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+</div>
+<div *ngIf="isContentShow">
+    <mat-toolbar>
+        &nbsp;&nbsp;
+        <img src="../../../../assets/images/software-icons/checklist.png" class="toolBar-img-style" />
+        <span class="toolbar-title-style">
+            Checklist Detail
+        </span>
+        <span class="toolbar-spacer"></span>
+        <button mat-flat-button color="primary" [disabled]="isChecklistSaveButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonSaveChecklist()">
+            Save
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isChecklistLockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonLockChecklist()">
+            Lock
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isChecklistUnlockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonUnlockChecklist()">
+            Unlock
+        </button>
+        <button mat-flat-button color="warn" routerLink="/software/setup-checklist-list">
+            Close
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div class="software-container">
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Checklist Code</mat-label>
+                    <input matInput [(ngModel)]="mstChecklistModel.ChecklistCode" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstChecklistModel.IsLocked">
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Checklist</mat-label>
+                    <input matInput [(ngModel)]="mstChecklistModel.Checklist" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstChecklistModel.IsLocked">
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Checklist Date</mat-label>
+                    <input matInput [matDatepicker]="ChecklistDatePicker" [(ngModel)]="checklistDate"
+                        [ngModelOptions]="{standalone: true}" [disabled]="mstChecklistModel.IsLocked"
+                        (dateChange)="checklstDateDateChange('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="ChecklistDatePicker">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #ChecklistDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="75" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Project</mat-label>
+                    <input matInput [(ngModel)]="mstChecklistModel.Project" [ngModelOptions]="{standalone: true}"
+                        disabled>
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="75" style="padding: 3px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Remarks</mat-label>
+                    <textarea matInput [(ngModel)]="mstChecklistModel.Remarks" [ngModelOptions]="{standalone: true}"
+                        style="min-height: 73px;" [disabled]="mstChecklistModel.IsLocked"></textarea>
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="25" style="padding: 3px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Status</mat-label>
+                    <mat-select [(value)]="mstChecklistModel.Status" [disabled]="mstChecklistModel.IsLocked">
+                        <mat-option *ngFor="let sysDropdownObject of sysDropdownModel"
+                            [value]="sysDropdownObject.Value">
+                            {{sysDropdownObject.Description}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxFlex="75" style="padding: 5px;">
+
+            </div>
+        </div>
+    </div>
+</div>

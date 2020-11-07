@@ -49,6 +49,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
@@ -101,7 +103,9 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/materia
     MatInputModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatDialogModule,
+    MatTabsModule,
+    MatDatepickerModule,
+    MatDialogModule
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },

@@ -33,7 +33,35 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 mat-table {
     width: 100%;
-    border-top: 1px solid rgb(230, 230, 230);
+    border: 1px solid rgb(230, 230, 230);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+mat-header-row {
+    background: #3f51b5;
+}
+
+mat-header-cell {
+}
+
+.mat-sort-header-content {
+    color: white !important;
+}
+
+.mat-sort-header-arrow {
+    color: white !important;
+}
+
+mat-paginator {
+    width: 100%;
+    border: 1px solid rgb(230, 230, 230);
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.mat-paginator-page-size {
+    margin-bottom: 20px !important;
 }
 
 .cell-align-right {

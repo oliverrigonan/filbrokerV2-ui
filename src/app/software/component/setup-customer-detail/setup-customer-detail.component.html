@@ -1,1 +1,385 @@
-<p>setup-customer-detail works!</p>
+<div *ngIf="isSpinnerShow" style="padding: 100px 0px 15px 0px; text-align: center;">
+    <h4>Please wait...</h4>
+    <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+</div>
+<div *ngIf="isContentShow">
+    <mat-toolbar>
+        &nbsp;&nbsp;
+        <img src="../../../../assets/images/software-icons/customer.png" class="toolBar-img-style" />
+        <span class="toolbar-title-style">
+            Customer Detail
+        </span>
+        <span class="toolbar-spacer"></span>
+        <button mat-flat-button color="primary" [disabled]="isCustomerSaveButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonSaveCustomer()">
+            Save
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isCustomerLockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonLockCustomer()">
+            Lock
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isCustomerUnlockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonUnlockCustomer()">
+            Unlock
+        </button>
+        <button mat-flat-button color="warn" routerLink="/software/setup-customer-list">
+            Close
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div class="software-container">
+        <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="Customer Information">
+                <div fxLayout="row" fxLayout.xs="column" style="margin-top: 10px;">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Customer Code</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.CustomerCode"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.LastName"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>First Name</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.FirstName"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.MiddleName"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Gender</mat-label>
+                            <mat-select [(value)]="mstCustomerModel.Gender" [disabled]="mstCustomerModel.IsLocked">
+                                <mat-option *ngFor="let sysDropdownModelGenderObject of sysDropdownModelGender"
+                                    [value]="sysDropdownModelGenderObject.Value">
+                                    {{sysDropdownModelGenderObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Civil Status</mat-label>
+                            <mat-select [(value)]="mstCustomerModel.CivilStatus" [disabled]="mstCustomerModel.IsLocked">
+                                <mat-option
+                                    *ngFor="let sysDropdownModelCivilStatusObject of sysDropdownModelCivilStatus"
+                                    [value]="sysDropdownModelCivilStatusObject.Value">
+                                    {{sysDropdownModelCivilStatusObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Citizen</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.Citizen" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Birth Date</mat-label>
+                            <input matInput [matDatepicker]="BirthDatePicker" [(ngModel)]="birthDate"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked"
+                                (dateChange)="birthDateDateChange('change', $event)">
+                            <mat-datepicker-toggle matSuffix [for]="BirthDatePicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #BirthDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Telephone Number</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.TelephoneNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Mobile Number</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.MobileNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Street Address</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.Address" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>City</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.City" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Province</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.Province"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Country</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.Country" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Zip Code</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.ZipCode" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="550" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Email Address</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.EmailAddress"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>TIN</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.TIN" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Spouse Last Name</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.SpouseLastName"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Spouse First Name</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.SpouseFirstName"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Spouse Middle Name</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.SpouseMiddleName"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Spouse Birth Date</mat-label>
+                            <input matInput [matDatepicker]="SpouseBirthDatePicker" [(ngModel)]="spouseBirthDate"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked"
+                                (dateChange)="spouseBirthDateDateDateChange('change', $event)">
+                            <mat-datepicker-toggle matSuffix [for]="SpouseBirthDatePicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #SpouseBirthDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Spouse Citizen</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.SpouseCitizen"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Spouse TIN</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.SpouseTIN"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Spouse Employer</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.SpouseEmployer"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput [(ngModel)]="mstCustomerModel.Remarks"
+                                [ngModelOptions]="{standalone: true}" style="min-height: 73px;"
+                                [disabled]="mstCustomerModel.IsLocked"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Status</mat-label>
+                            <mat-select [(value)]="mstCustomerModel.Status" [disabled]="mstCustomerModel.IsLocked">
+                                <mat-option
+                                    *ngFor="let objDropdownModelCustomerStatusObject of sysDropdownModelCustomerStatus"
+                                    [value]="objDropdownModelCustomerStatusObject.Value">
+                                    {{objDropdownModelCustomerStatusObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="75" style="padding: 5px;">
+
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Employment Information">
+                <div fxLayout="row" fxLayout.xs="column" style="margin-top: 10px;">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Civil Status</mat-label>
+                            <mat-select [(value)]="mstCustomerModel.IdType" [disabled]="mstCustomerModel.IsLocked">
+                                <mat-option *ngFor="let sysDropdownModelIDTypeObject of sysDropdownModelIDType"
+                                    [value]="sysDropdownModelIDTypeObject.Value">
+                                    {{sysDropdownModelIDTypeObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>ID Number</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.IdNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Employment Status</mat-label>
+                            <mat-select [(value)]="mstCustomerModel.EmploymentStatus"
+                                [disabled]="mstCustomerModel.IsLocked">
+                                <mat-option
+                                    *ngFor="let sysDropdownModelEmploymentStatusObject of sysDropdownModelEmploymentStatus"
+                                    [value]="sysDropdownModelEmploymentStatusObject.Value">
+                                    {{sysDropdownModelEmploymentStatusObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Employer</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.Employer"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Employer Industry</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.EmployerIndustry"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Position</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.Position"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Number of Years Employed</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.NoOfYearsEmployed"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Employer Street Address</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.EmployerAddress"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>City</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.EmployerCity"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Province</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.EmployerProvince"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Country</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.EmployerCountry"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Zip Code</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.EmployerZipCode"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Telephone Number</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.EmployerTelephoneNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Mobile Number</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.EmployerMobileNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

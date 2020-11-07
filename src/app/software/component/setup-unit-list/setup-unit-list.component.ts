@@ -133,7 +133,8 @@ export class SetupUnitListComponent implements OnInit {
               this.router.navigate(['/software/setup-unit-detail/' + data[1]]);
             }, 500);
           } else {
-            this.toastr.success('Somethings went wrong!', 'Add Failed');
+            this.toastr.error('Somethings went wrong!', 'Add Failed');
+            this.isButtonAddUnitDisabled = false;
           }
         } else {
           this.toastr.error(data[1], 'Add Failed');
@@ -156,7 +157,7 @@ export class SetupUnitListComponent implements OnInit {
       width: '450px',
       data: {
         dialogDeleteTitle: "Delete Unit",
-        dialogDeleteMessage: "Are you sure you want to delete this unit " + currentData.Unit,
+        dialogDeleteMessage: "Are you sure you want to delete this unit code " + currentData.UnitCode,
         dialogDeleteId: id
       },
       disableClose: true
@@ -165,15 +166,20 @@ export class SetupUnitListComponent implements OnInit {
     openDialog.afterClosed().subscribe(result => {
 
       if (result != null) {
-        this.getUnitData();
+        this.isSpinnerShow = true;
+        this.isContentShow = false;
 
         this.mstUnitService.deleteUnit(result).subscribe(
           data => {
 
             if (data[0] == true) {
               this.toastr.success('Unit was successfully deleted!', 'Delete Successful');
+              this.getUnitData();
             } else {
               this.toastr.error(data[1], 'Delete Failed');
+
+              this.isSpinnerShow = false;
+              this.isContentShow = true;
             }
 
           }

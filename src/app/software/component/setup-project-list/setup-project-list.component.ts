@@ -102,7 +102,8 @@ export class SetupProjectListComponent implements OnInit {
               this.router.navigate(['/software/setup-project-detail/' + data[1]]);
             }, 500);
           } else {
-            this.toastr.success('Somethings went wrong!', 'Add Failed');
+            this.toastr.error('Somethings went wrong!', 'Add Failed');
+            this.isButtonAddProjectDisabled = false;
           }
         } else {
           this.toastr.error(data[1], 'Add Failed');
@@ -134,15 +135,20 @@ export class SetupProjectListComponent implements OnInit {
     openDialog.afterClosed().subscribe(result => {
 
       if (result != null) {
-        this.getProjectData();
+        this.isSpinnerShow = true;
+        this.isContentShow = false;
 
         this.mstProjectService.deleteProject(result).subscribe(
           data => {
 
             if (data[0] == true) {
               this.toastr.success('Project was successfully deleted!', 'Delete Successful');
+              this.getProjectData();
             } else {
               this.toastr.error(data[1], 'Delete Failed');
+
+              this.isSpinnerShow = false;
+              this.isContentShow = true;
             }
 
           }
