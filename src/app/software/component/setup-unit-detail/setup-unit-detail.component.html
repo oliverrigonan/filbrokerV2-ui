@@ -1,1 +1,134 @@
-<p>setup-unit-detail works!</p>
+<div *ngIf="isSpinnerShow" style="padding: 100px 0px 15px 0px; text-align: center;">
+    <h4>Please wait...</h4>
+    <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+</div>
+<div *ngIf="isContentShow">
+    <mat-toolbar>
+        &nbsp;&nbsp;
+        <img src="../../../../assets/images/software-icons/unit.png" class="toolBar-img-style" />
+        <span class="toolbar-title-style">
+            Unit Detail
+        </span>
+        <span class="toolbar-spacer"></span>
+        <button mat-flat-button color="primary" [disabled]="isUnitSaveButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonSaveUnit()">
+            Save
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isUnitLockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonLockUnit()">
+            Lock
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isUnitUnlockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonUnlockUnit()">
+            Unlock
+        </button>
+        <button mat-flat-button color="warn" routerLink="/software/setup-unit-list">
+            Close
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div class="software-container">
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Unit Code</mat-label>
+                    <input matInput [(ngModel)]="mstUnitModel.UnitCode" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked">
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Block</mat-label>
+                    <input matInput [(ngModel)]="mstUnitModel.Block" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked">
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Lot</mat-label>
+                    <input matInput [(ngModel)]="mstUnitModel.Lot" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked">
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Project</mat-label>
+                    <input matInput [(ngModel)]="mstUnitModel.Project" [ngModelOptions]="{standalone: true}" disabled>
+                </mat-form-field>
+            </div>
+            <div fxFlex="50" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>House Model</mat-label>
+                    <mat-select [(value)]="mstUnitModel.HouseModelId" [disabled]="mstUnitModel.IsLocked">
+                        <mat-option *ngFor="let mstHouseModelObject of mstHouseModelModel"
+                            [value]="mstHouseModelObject.Id">
+                            {{mstHouseModelObject.HouseModel}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Total Lot Area (sqm)</mat-label>
+                    <input matInput [(ngModel)]="mstUnitModel.TLA" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked">
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Total Floor Area (sqm)</mat-label>
+                    <input matInput [(ngModel)]="mstUnitModel.TFA" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50" style="padding: 5px;">
+
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>TCP</mat-label>
+                    <input matInput [(ngModel)]="mstUnitModel.Price" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked">
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>TSP</mat-label>
+                    <input matInput [(ngModel)]="mstUnitModel.TSP" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50" style="padding: 5px;">
+
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="25" style="padding: 3px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Status</mat-label>
+                    <mat-select [(value)]="mstUnitModel.Status" [disabled]="mstUnitModel.IsLocked">
+                        <mat-option *ngFor="let sysDropdownObject of sysDropdownModel"
+                            [value]="sysDropdownObject.Value">
+                            {{sysDropdownObject.Description}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxFlex="75" style="padding: 5px;">
+
+            </div>
+        </div>
+    </div>
+</div>
