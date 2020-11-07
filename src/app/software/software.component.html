@@ -1,12 +1,12 @@
 <div class="main-sidenav-container" [class.main-is-mobile]="mobileQuery.matches">
-    <mat-toolbar color="" class="main-toolbar">
+    <mat-toolbar color="" class="main-toolbar" style="background-color: rgb(213, 213, 213); height: 45px;">
         <button mat-icon-button (click)="buttonToggle()">
             <mat-icon>menu</mat-icon>
         </button>
         &nbsp;
-        <img src="./../../assets/images/filbroker-logo/filbroker.png" height="30" style="margin-bottom: 12px;">
+        <img src="./../../assets/images/filbroker-logo/filbroker.png" height="25" style="margin-bottom: 7px;">
         <span class="toolbar-spacer"></span>
-        <button color="primary" mat-flat-button [matMenuTriggerFor]="loginUserMenu">
+        <button color="" mat-button [matMenuTriggerFor]="loginUserMenu">
             User
         </button>
         <mat-menu #loginUserMenu="matMenu" xPosition="after">
@@ -28,7 +28,7 @@
             class="sidenav">
             <mat-nav-list>
                 <mat-accordion>
-                    <mat-expansion-panel style="margin: 5px;" hideToggle>
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 5px;" hideToggle>
                         <mat-expansion-panel-header routerLink="/software" #dashboardPanelHeader
                             (click)="dashboardPanelHeader._toggle()">
                             <mat-panel-title>
@@ -38,7 +38,7 @@
                         </mat-expansion-panel-header>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel style="margin: 5px;">
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 5px;">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <img src="./../../assets/images/software-icons/broker.png" height="23" />
@@ -47,27 +47,27 @@
                         </mat-expansion-panel-header>
 
                         <mat-nav-list>
-                            <a mat-list-item routerLink="/software/setup-supplier-list"
+                            <a mat-list-item routerLink="/software/setup-project-list"
                                 style="height: auto; padding: 10px 0px;">
                                 <img src="./../../assets/images/software-icons/project.png" height="30" />
                                 &nbsp;&nbsp; Project
                             </a>
-                            <a mat-list-item routerLink="/software/activity-purchase-request-list"
+                            <a mat-list-item routerLink="/software/setup-unit-list"
                                 style="height: auto; padding: 10px 0px;">
                                 <img src="./../../assets/images/software-icons/unit.png" height="30" />
                                 &nbsp;&nbsp; Unit
                             </a>
-                            <a mat-list-item routerLink="/software/activity-purchase-order-list"
+                            <a mat-list-item routerLink="/software/setup-checklist-list"
                                 style="height: auto; padding: 10px 0px;">
                                 <img src="./../../assets/images/software-icons/checklist.png" height="30" />
                                 &nbsp;&nbsp; Checklist
                             </a>
-                            <a mat-list-item routerLink="/software/activity-receiving-receipt-list"
+                            <a mat-list-item routerLink="/software/setup-customer-list"
                                 style="height: auto; padding: 10px 0px;">
                                 <img src="./../../assets/images/software-icons/customer.png" height="30" />
                                 &nbsp;&nbsp; Customer
                             </a>
-                            <a mat-list-item routerLink="/software/activity-disbursement-list"
+                            <a mat-list-item routerLink="/software/setup-broker-list"
                                 style="height: auto; padding: 10px 0px;">
                                 <img src="./../../assets/images/software-icons/broker.png" height="30" />
                                 &nbsp;&nbsp; Broker
@@ -75,7 +75,7 @@
                         </mat-nav-list>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel style="margin: 5px;">
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 5px;">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <img src="./../../assets/images/software-icons/sold-unit.png" height="23" />
@@ -84,17 +84,17 @@
                         </mat-expansion-panel-header>
 
                         <mat-nav-list>
-                            <a mat-list-item routerLink="/software/setup-supplier-list"
+                            <a mat-list-item routerLink="/software/activity-sold-unit-list"
                                 style="height: auto; padding: 10px 0px;">
                                 <img src="./../../assets/images/software-icons/sold-unit.png" height="30" />
                                 &nbsp;&nbsp; Sold Unit
                             </a>
-                            <a mat-list-item routerLink="/software/activity-purchase-request-list"
+                            <a mat-list-item routerLink="/software/activity-collection-list"
                                 style="height: auto; padding: 10px 0px;">
                                 <img src="./../../assets/images/software-icons/collection.png" height="30" />
                                 &nbsp;&nbsp; Collection
                             </a>
-                            <a mat-list-item routerLink="/software/activity-purchase-order-list"
+                            <a mat-list-item routerLink="/software/activity-commission-list"
                                 style="height: auto; padding: 10px 0px;">
                                 <img src="./../../assets/images/software-icons/commission.png" height="30" />
                                 &nbsp;&nbsp; Commission
@@ -102,7 +102,7 @@
                         </mat-nav-list>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel style="margin: 5px;">
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 5px;">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <img src="./../../assets/images/software-icons/settings.png" height="23" />
@@ -111,12 +111,12 @@
                         </mat-expansion-panel-header>
 
                         <mat-nav-list>
-                            <a mat-list-item routerLink="/software/setup-supplier-list"
+                            <a mat-list-item routerLink="/software/system-user-list"
                                 style="height: auto; padding: 10px 0px;">
                                 <img src="./../../assets/images/software-icons/user.png" height="30" />
                                 &nbsp;&nbsp; User
                             </a>
-                            <a mat-list-item routerLink="/software/activity-purchase-request-list"
+                            <a mat-list-item routerLink="/software/system-settings"
                                 style="height: auto; padding: 10px 0px;">
                                 <img src="./../../assets/images/software-icons/settings.png" height="30" />
                                 &nbsp;&nbsp; Settings
@@ -124,7 +124,7 @@
                         </mat-nav-list>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel style="margin: 5px;">
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 5px;">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <img src="./../../assets/images/software-icons/report.png" height="23" />

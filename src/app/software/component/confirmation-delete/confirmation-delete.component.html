@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>
+    {{ dialogDeleteTitle }}
+</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <br />
+    {{ dialogDeleteMessage }}
+    <br /><br />
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="warn" (click)="buttonDeleteClick()" [disabled]="isButtonDeleteConfirmationDisabled">
+        Delete
+    </button>
+    <button mat-stroked-button (click)="buttonCloseClick()" [disabled]="isButtonDeleteConfirmationDisabled">
+        Close
+    </button>
+</mat-dialog-actions>

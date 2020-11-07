@@ -3,6 +3,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.mat-list-base .mat-list-item .mat-list-item-ripple, .mat-list-base .mat-list-option .mat-list-item-ripple {
+    margin: -10px 0px;
+}
+
 .mat-expansion-panel-header.mat-expanded {
     height: 50px !important;
 }
@@ -21,4 +25,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .toolbar-title-style {
     margin-left: 10px;
+}
+
+.mat-row:nth-child(even){
+  background-color:rgb(245, 245, 245);
+}
+
+mat-table {
+    width: 100%;
+    border-top: 1px solid rgb(230, 230, 230);
+}
+
+.cell-align-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mat-form-field-underline {
+    display: none !important;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    /* border-radius: 20px !important; */
+    padding: .75em 1em 0 1em !important;
+}
+
+.mat-form-field-wrapper {
+    padding-bottom: 0px !important;
 }

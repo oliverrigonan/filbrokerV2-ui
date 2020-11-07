@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -27,6 +28,8 @@ import { ActivityCommissionDetailComponent } from './component/activity-commissi
 import { SystemSettingsComponent } from './component/system-settings/system-settings.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 
+import { ConfirmationDeleteComponent } from './component/confirmation-delete/confirmation-delete.component';
+
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -37,33 +40,46 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
-    SoftwareComponent, 
-    SetupProjectListComponent, 
-    SetupProjectDetailComponent, 
-    SetupUnitListComponent, 
+    SoftwareComponent,
+    SetupProjectListComponent,
+    SetupProjectDetailComponent,
+    SetupUnitListComponent,
     SetupUnitDetailComponent,
-    SetupChecklistDetailComponent, 
-    SetupChecklistListComponent, 
-    SetupCustomerListComponent, 
-    SetupCustomerDetailComponent, 
-    SetupBrokerListComponent, 
-    SetupBrokerDetailComponent, 
-    SystemUserListComponent, 
-    SystemUserDetailComponent, 
-    ActivitySoldUnitListComponent, 
-    ActivitySoldUnitDetailComponent, 
-    ActivityCollectionListComponent, 
-    ActivityCollectionDetailComponent, 
-    ActivityCommissionListComponent, 
-    ActivityCommissionDetailComponent, 
-    SystemSettingsComponent, 
-    DashboardComponent
+    SetupChecklistDetailComponent,
+    SetupChecklistListComponent,
+    SetupCustomerListComponent,
+    SetupCustomerDetailComponent,
+    SetupBrokerListComponent,
+    SetupBrokerDetailComponent,
+    SystemUserListComponent,
+    SystemUserDetailComponent,
+    ActivitySoldUnitListComponent,
+    ActivitySoldUnitDetailComponent,
+    ActivityCollectionListComponent,
+    ActivityCollectionDetailComponent,
+    ActivityCommissionListComponent,
+    ActivityCommissionDetailComponent,
+    SystemSettingsComponent,
+    DashboardComponent,
+    ConfirmationDeleteComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     SoftwareRoutingModule,
     FlexLayoutModule,
     MatNativeDateModule,
@@ -75,7 +91,21 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatExpansionModule,
     MatDividerModule,
     MatMenuModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressSpinnerModule,
+    MatButtonToggleModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatDialogModule,
+  ],
+  providers: [
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} }
   ]
 })
 export class SoftwareModule { }

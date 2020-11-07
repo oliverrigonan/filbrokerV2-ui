@@ -1,4 +1,5 @@
 <mat-toolbar>
+    &nbsp;&nbsp;
     <img src="../../../../assets/images/software-icons/dashboard.png" class="toolBar-img-style" />
     <span class="toolbar-title-style">
         Dashboard
@@ -8,7 +9,7 @@
 <div class="software-container">
     <div fxLayout="row" fxLayout.xs="column">
         <div fxFlex="25" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-request-list" color=""
+            <button mat-flat-button routerLink="/software/setup-project-list" color=""
                 style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;">
                 <img src="../../../../assets/images//software-icons/project.png" height="70"
                     style="margin-bottom: 7px;" />
@@ -17,7 +18,7 @@
             </button>
         </div>
         <div fxFlex="25" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-order-list" color=""
+            <button mat-flat-button routerLink="/software/setup-unit-list" color=""
                 style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;"><img
                     src="../../../../assets/images//software-icons/unit.png" height="70" style="margin-bottom: 7px;" />
                 <br />
@@ -25,7 +26,7 @@
             </button>
         </div>
         <div fxFlex="25" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-order-list" color=""
+            <button mat-flat-button routerLink="/software/setup-customer-list" color=""
                 style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;"><img
                     src="../../../../assets/images//software-icons/customer.png" height="70"
                     style="margin-bottom: 7px;" />
@@ -34,7 +35,7 @@
             </button>
         </div>
         <div fxFlex="25" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-order-list" color=""
+            <button mat-flat-button routerLink="/software/setup-broker-list" color=""
                 style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;"><img
                     src="../../../../assets/images//software-icons/broker.png" height="70"
                     style="margin-bottom: 7px;" />
@@ -45,7 +46,7 @@
     </div>
     <div fxLayout="row" fxLayout.xs="column">
         <div fxFlex="25" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-request-list" color=""
+            <button mat-flat-button routerLink="/software/setup-checklist-list" color=""
                 style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;">
                 <img src="../../../../assets/images//software-icons/checklist.png" height="70"
                     style="margin-bottom: 7px;" />
@@ -54,7 +55,7 @@
             </button>
         </div>
         <div fxFlex="25" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-order-list" color=""
+            <button mat-flat-button routerLink="/software/activity-sold-unit-list" color=""
                 style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;"><img
                     src="../../../../assets/images//software-icons/sold-unit.png" height="70"
                     style="margin-bottom: 7px;" />
@@ -63,7 +64,7 @@
             </button>
         </div>
         <div fxFlex="25" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-order-list" color=""
+            <button mat-flat-button routerLink="/software/activity-collection-list" color=""
                 style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;"><img
                     src="../../../../assets/images//software-icons/collection.png" height="70"
                     style="margin-bottom: 7px;" />
@@ -72,7 +73,7 @@
             </button>
         </div>
         <div fxFlex="25" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-order-list" color=""
+            <button mat-flat-button routerLink="/software/activity-commission-list" color=""
                 style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;"><img
                     src="../../../../assets/images//software-icons/commission.png" height="70"
                     style="margin-bottom: 7px;" />
@@ -83,7 +84,16 @@
     </div>
     <div fxLayout="row" fxLayout.xs="column">
         <div fxFlex="25" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-request-list" color=""
+            <button mat-flat-button routerLink="/software/activity-purchase-order-list" color=""
+                style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;"><img
+                    src="../../../../assets/images//software-icons/report.png" height="70"
+                    style="margin-bottom: 7px;" />
+                <br />
+                Report
+            </button>
+        </div>
+        <div fxFlex="25" style="padding: 5px;">
+            <button mat-flat-button routerLink="/software/system-user-list" color=""
                 style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;">
                 <img src="../../../../assets/images//software-icons/user.png" height="70" style="margin-bottom: 7px;" />
                 <br />
@@ -91,21 +101,12 @@
             </button>
         </div>
         <div fxFlex="25" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-order-list" color=""
+            <button mat-flat-button routerLink="/software/system-settings" color=""
                 style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;"><img
                     src="../../../../assets/images//software-icons/settings.png" height="70"
                     style="margin-bottom: 7px;" />
                 <br />
                 Settings
-            </button>
-        </div>
-        <div fxFlex="50" style="padding: 5px;">
-            <button mat-flat-button routerLink="/software/activity-purchase-order-list" color=""
-                style="width: 100%; font-size: 17px; padding: 10px 0px 10px 10px;"><img
-                    src="../../../../assets/images//software-icons/report.png" height="70"
-                    style="margin-bottom: 7px;" />
-                <br />
-                Report
             </button>
         </div>
     </div>
