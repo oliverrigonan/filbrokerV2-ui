@@ -1,0 +1,37 @@
+export class MstBrokerModel {
+    Id: number = 0;
+    BrokerCode: string = "";
+    LastName: string = "";
+    FirstName: string = "";
+    MiddleName: string = "";
+    FullName: string = "";
+    LicenseNumber: string = "";
+    BirthDate: string = "";
+    CivilStatus: string = "";
+    Gender: string = "";
+    Address: string = "";
+    TelephoneNumber: string = "";
+    MobileNumber: string = "";
+    Religion: string = "";
+    EmailAddress: string = "";
+    Facebook: string = "";
+    TIN: string = "";
+    RealtyFirm: string = "";
+    RealtyFirmAddress: string = "";
+    RealtyFirmTelephoneNumber: string = "";
+    RealtyFirmMobileNumber: string = "";
+    RealtyFirmFaxNumber: string = "";
+    RealtyFirmEmailAddress: string = "";
+    RealtyFirmWebsite: string = "";
+    RealtyFirmTIN: string = "";
+    Organization: string = "";
+    Remarks: string = "";
+    Picture: string = "";
+    Attachment1: string = "";
+    Attachment2: string = "";
+    Attachment3: string = "";
+    Attachment4: string = "";
+    Attachment5: string = "";
+    Status: string = "";
+    IsLocked: boolean = false;
+}

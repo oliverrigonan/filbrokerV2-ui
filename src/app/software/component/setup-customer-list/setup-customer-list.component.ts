@@ -81,6 +81,8 @@ export class SetupCustomerListComponent implements OnInit {
   public buttonAddCustomer(): void {
     this.isButtonAddCustomerDisabled = true;
 
+    let currentDate = new Date();
+
     let mstCustomerModel: MstCustomerModel = {
       Id: 0,
       CustomerCode: "",
@@ -90,7 +92,7 @@ export class SetupCustomerListComponent implements OnInit {
       FullName: "",
       Gender: "",
       CivilStatus: "",
-      BirthDate: "",
+      BirthDate: currentDate.toLocaleDateString(),
       Citizen: "",
       TIN: "",
       IdType: "",
@@ -118,7 +120,7 @@ export class SetupCustomerListComponent implements OnInit {
       SpouseLastName: "",
       SpouseFirstName: "",
       SpouseMiddleName: "",
-      SpouseBirthDate: "",
+      SpouseBirthDate: currentDate.toLocaleDateString(),
       SpouseCitizen: "",
       SpouseTIN: "",
       SpouseEmployer: "",

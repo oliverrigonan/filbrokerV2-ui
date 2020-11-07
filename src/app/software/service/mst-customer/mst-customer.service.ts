@@ -214,7 +214,7 @@ export class MstCustomerService {
 
   public deleteCustomer(id: number): Observable<[boolean, string]> {
     return new Observable<[boolean, string]>((observer) => {
-      this.httpClient.delete(this.defaultAPIURLHost + "/api/MstCustomer/delete/" + id, this.options).subscribe(
+      this.httpClient.delete(this.defaultAPIURLHost + "/api/MstCustomer/Delete/" + id, this.options).subscribe(
         response => {
           observer.next([true, ""]);
           observer.complete();

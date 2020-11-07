@@ -157,7 +157,7 @@
                     </div>
                 </div>
                 <div fxLayout="row" fxLayout.xs="column">
-                    <div fxFlex="550" style="padding: 5px;">
+                    <div fxFlex="50" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Email Address</mat-label>
                             <input matInput [(ngModel)]="mstCustomerModel.EmailAddress"
@@ -261,7 +261,7 @@
                 <div fxLayout="row" fxLayout.xs="column" style="margin-top: 10px;">
                     <div fxFlex="25" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Civil Status</mat-label>
+                            <mat-label>ID Type</mat-label>
                             <mat-select [(value)]="mstCustomerModel.IdType" [disabled]="mstCustomerModel.IsLocked">
                                 <mat-option *ngFor="let sysDropdownModelIDTypeObject of sysDropdownModelIDType"
                                     [value]="sysDropdownModelIDTypeObject.Value">

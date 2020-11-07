@@ -1,1 +1,263 @@
-<p>setup-broker-detail works!</p>
+<div *ngIf="isSpinnerShow" style="padding: 100px 0px 15px 0px; text-align: center;">
+    <h4>Please wait...</h4>
+    <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+</div>
+<div *ngIf="isContentShow">
+    <mat-toolbar>
+        &nbsp;&nbsp;
+        <img src="../../../../assets/images/software-icons/broker.png" class="toolBar-img-style" />
+        <span class="toolbar-title-style">
+            Broker Detail
+        </span>
+        <span class="toolbar-spacer"></span>
+        <button mat-flat-button color="primary" [disabled]="isBrokerSaveButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonSaveBroker()">
+            Save
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isBrokerLockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonLockBroker()">
+            Lock
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isBrokerUnlockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonUnlockBroker()">
+            Unlock
+        </button>
+        <button mat-flat-button color="warn" routerLink="/software/setup-broker-list">
+            Close
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div class="software-container">
+        <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="Broker Information">
+                <div fxLayout="row" fxLayout.xs="column" style="margin-top: 10px;">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Broker Code</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.BrokerCode"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.LastName" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>First Name</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.FirstName" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.MiddleName"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Gender</mat-label>
+                            <mat-select [(value)]="mstBrokerModel.Gender" [disabled]="mstBrokerModel.IsLocked">
+                                <mat-option *ngFor="let sysDropdownModelGenderObject of sysDropdownModelGender"
+                                    [value]="sysDropdownModelGenderObject.Value">
+                                    {{sysDropdownModelGenderObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Civil Status</mat-label>
+                            <mat-select [(value)]="mstBrokerModel.CivilStatus" [disabled]="mstBrokerModel.IsLocked">
+                                <mat-option
+                                    *ngFor="let sysDropdownModelCivilStatusObject of sysDropdownModelCivilStatus"
+                                    [value]="sysDropdownModelCivilStatusObject.Value">
+                                    {{sysDropdownModelCivilStatusObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Birth Date</mat-label>
+                            <input matInput [matDatepicker]="BirthDatePicker" [(ngModel)]="birthDate"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked"
+                                (dateChange)="birthDateDateChange('change', $event)">
+                            <mat-datepicker-toggle matSuffix [for]="BirthDatePicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #BirthDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Religion</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.Religion" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Telephone Number</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.TelephoneNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Mobile Number</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.MobileNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Street Address</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.Address" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Email Address</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.EmailAddress"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Facebook</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.Facebook" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>License Number</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.LicenseNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>TIN</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.TIN" [ngModelOptions]="{standalone: true}"
+                                [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput [(ngModel)]="mstBrokerModel.Remarks"
+                                [ngModelOptions]="{standalone: true}" style="min-height: 73px;"
+                                [disabled]="mstBrokerModel.IsLocked"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Status</mat-label>
+                            <mat-select [(value)]="mstBrokerModel.Status" [disabled]="mstBrokerModel.IsLocked">
+                                <mat-option
+                                    *ngFor="let objDropdownModelBrokerStatusObject of sysDropdownModelBrokerStatus"
+                                    [value]="objDropdownModelBrokerStatusObject.Value">
+                                    {{objDropdownModelBrokerStatusObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="75" style="padding: 5px;">
+
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Realty Firm Information">
+                <div fxLayout="row" fxLayout.xs="column" style="margin-top: 10px;">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Firm</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.RealtyFirm"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="75" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Address</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.RealtyFirmAddress"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Firm</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.RealtyFirmTelephoneNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Mobile Number</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.RealtyFirmMobileNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Fax Number</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.RealtyFirmFaxNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Email Address</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.RealtyFirmEmailAddress"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Website</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.RealtyFirmWebsite"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>TIN</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.RealtyFirmTIN"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Organization</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.Organization"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstBrokerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Attachments">
+
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

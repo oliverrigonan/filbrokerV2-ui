@@ -1,4 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+
+import { SysDropdownModel } from './../../model/sys-dropdown.model';
+import { MstBrokerModel } from './../../model/mst-broker.model';
+
+import { SysDropdownService } from './../../service/sys-dropdown/sys-dropdown.service';
+import { MstBrokerService } from './../../service/mst-broker/mst-broker.service';
+
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-setup-broker-detail',
@@ -7,9 +17,186 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SetupBrokerDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private sysDropdownService: SysDropdownService,
+    private mstBrokerService: MstBrokerService,
+    private toastr: ToastrService,
+  ) { }
 
-  ngOnInit(): void {
+  public isSpinnerShow: boolean = true;
+  public isContentShow: boolean = false;
+
+  public mstBrokerModel: MstBrokerModel = new MstBrokerModel();
+
+  public sysDropdownModelBrokerStatus: SysDropdownModel[] = [];
+  public sysDropdownModelCivilStatus: SysDropdownModel[] = [];
+  public sysDropdownModelGender: SysDropdownModel[] = [];
+  public sysDropdownModelIDType: SysDropdownModel[] = [];
+  public sysDropdownModelEmploymentStatus: SysDropdownModel[] = [];
+
+  public isBrokerSaveButtonDisabled: boolean = false;
+  public isBrokerLockButtonDisabled: boolean = false;
+  public isBrokerUnlockButtonDisabled: boolean = false;
+
+  public birthDate: Date = new Date();
+
+  public getDropdownListBrokerStatus(): void {
+    this.sysDropdownService.getDropdownList("BROKER STATUS").subscribe(
+      data => {
+        this.sysDropdownModelBrokerStatus = data;
+        this.getDropdownListCivilStatus();
+      }
+    );
   }
 
+  public getDropdownListCivilStatus(): void {
+    this.sysDropdownService.getDropdownList("CIVIL STATUS").subscribe(
+      data => {
+        this.sysDropdownModelCivilStatus = data;
+        this.getDropdownListGender();
+      }
+    );
+  }
+
+  public getDropdownListGender(): void {
+    this.sysDropdownService.getDropdownList("GENDER").subscribe(
+      data => {
+        this.sysDropdownModelGender = data;
+
+        let id = this.route.snapshot.params['id'];
+        this.getBrokerDetail(id);
+      }
+    );
+  }
+
+  public getBrokerDetail(id: number): void {
+    this.mstBrokerService.getBrokerDetail(id).subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstBrokerModel.Id = data.Id;
+            this.mstBrokerModel.BrokerCode = data.BrokerCode;
+            this.mstBrokerModel.LastName = data.LastName;
+            this.mstBrokerModel.FirstName = data.FirstName;
+            this.mstBrokerModel.MiddleName = data.MiddleName;
+            this.mstBrokerModel.FullName = data.FullName;
+            this.mstBrokerModel.LicenseNumber = data.LicenseNumber;
+            this.mstBrokerModel.BirthDate = data.BirthDate;
+            this.birthDate = new Date(data.BirthDate);
+            this.mstBrokerModel.CivilStatus = data.CivilStatus;
+            this.mstBrokerModel.Gender = data.Gender;
+            this.mstBrokerModel.Address = data.Address;
+            this.mstBrokerModel.TelephoneNumber = data.TelephoneNumber;
+            this.mstBrokerModel.MobileNumber = data.MobileNumber;
+            this.mstBrokerModel.Religion = data.Religion;
+            this.mstBrokerModel.EmailAddress = data.EmailAddress;
+            this.mstBrokerModel.Facebook = data.Facebook;
+            this.mstBrokerModel.TIN = data.TIN;
+            this.mstBrokerModel.RealtyFirm = data.RealtyFirm;
+            this.mstBrokerModel.RealtyFirmAddress = data.RealtyFirmAddress;
+            this.mstBrokerModel.RealtyFirmTelephoneNumber = data.RealtyFirmTelephoneNumber;
+            this.mstBrokerModel.RealtyFirmMobileNumber = data.RealtyFirmMobileNumber;
+            this.mstBrokerModel.RealtyFirmFaxNumber = data.RealtyFirmFaxNumber;
+            this.mstBrokerModel.RealtyFirmEmailAddress = data.RealtyFirmEmailAddress;
+            this.mstBrokerModel.RealtyFirmWebsite = data.RealtyFirmWebsite;
+            this.mstBrokerModel.RealtyFirmTIN = data.RealtyFirmTIN;
+            this.mstBrokerModel.Organization = data.Organization;
+            this.mstBrokerModel.Remarks = data.Remarks;
+            this.mstBrokerModel.Picture = data.Picture;
+            this.mstBrokerModel.Attachment1 = data.Attachment1;
+            this.mstBrokerModel.Attachment2 = data.Attachment2;
+            this.mstBrokerModel.Attachment3 = data.Attachment3;
+            this.mstBrokerModel.Attachment4 = data.Attachment4;
+            this.mstBrokerModel.Attachment5 = data.Attachment5;
+            this.mstBrokerModel.Status = data.Status;
+            this.mstBrokerModel.IsLocked = data.IsLocked;
+
+            this.isSpinnerShow = false;
+            this.isContentShow = true;
+
+            this.isLockedButtons(this.mstBrokerModel.IsLocked);
+          }
+        }, 500);
+
+      }
+    );
+  }
+
+  public birthDateDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
+    this.mstBrokerModel.BirthDate = this.birthDate.toString();
+  }
+
+  public disabledButtons(): void {
+    this.isBrokerSaveButtonDisabled = true;
+    this.isBrokerLockButtonDisabled = true;
+    this.isBrokerUnlockButtonDisabled = true;
+  }
+
+  public isLockedButtons(isLocked: boolean): void {
+    this.isBrokerSaveButtonDisabled = isLocked;
+    this.isBrokerLockButtonDisabled = isLocked;
+    this.isBrokerUnlockButtonDisabled = !isLocked;
+  }
+
+  public buttonSaveBroker(): void {
+    this.disabledButtons();
+
+    this.mstBrokerService.saveBroker(this.mstBrokerModel).subscribe(
+      data => {
+
+        if (data[0] == true) {
+          this.toastr.success('Broker was successfully saved!', 'Save Successful');
+        } else {
+          this.toastr.error(data[1], 'Save Failed');
+        }
+
+        this.isLockedButtons(this.mstBrokerModel.IsLocked);
+      }
+    );
+  }
+
+  public buttonLockBroker(): void {
+    this.mstBrokerModel.IsLocked = true;
+    this.disabledButtons();
+
+    this.mstBrokerService.lockBroker(this.mstBrokerModel).subscribe(
+      data => {
+
+        if (data[0] == true) {
+          this.toastr.success('Broker was successfully locked!', 'Lock Successful');
+        } else {
+          this.toastr.error(data[1], 'Lock Failed');
+          this.mstBrokerModel.IsLocked = false;
+        }
+
+        this.isLockedButtons(this.mstBrokerModel.IsLocked);
+      }
+    );
+  }
+
+  public buttonUnlockBroker(): void {
+    this.disabledButtons();
+
+    this.mstBrokerService.unlockBroker(this.mstBrokerModel).subscribe(
+      data => {
+
+        if (data[0] == true) {
+          this.toastr.success('Broker was successfully unlocked!', 'Unlock Successful');
+          this.mstBrokerModel.IsLocked = false;
+        } else {
+          this.toastr.error(data[1], 'Unlock Failed');
+          this.mstBrokerModel.IsLocked = true;
+        }
+
+        this.isLockedButtons(this.mstBrokerModel.IsLocked);
+      }
+    );
+  }
+
+  ngOnInit(): void {
+    this.getDropdownListBrokerStatus();
+  }
 }
