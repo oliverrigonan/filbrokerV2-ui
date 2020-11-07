@@ -27,10 +27,10 @@
         </button>
     </mat-toolbar>
     <mat-divider></mat-divider>
-    <div class="software-container">
-        <mat-tab-group mat-align-tabs="start">
-            <mat-tab label="Broker Information">
-                <div fxLayout="row" fxLayout.xs="column" style="margin-top: 10px;">
+    <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Broker Information">
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Broker Code</mat-label>
@@ -183,9 +183,11 @@
 
                     </div>
                 </div>
-            </mat-tab>
-            <mat-tab label="Realty Firm Information">
-                <div fxLayout="row" fxLayout.xs="column" style="margin-top: 10px;">
+            </div>
+        </mat-tab>
+        <mat-tab label="Realty Firm Information">
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Firm</mat-label>
@@ -254,10 +256,10 @@
                         </mat-form-field>
                     </div>
                 </div>
-            </mat-tab>
-            <mat-tab label="Attachments">
+            </div>
+        </mat-tab>
+        <mat-tab label="Attachments">
 
-            </mat-tab>
-        </mat-tab-group>
-    </div>
+        </mat-tab>
+    </mat-tab-group>
 </div>
