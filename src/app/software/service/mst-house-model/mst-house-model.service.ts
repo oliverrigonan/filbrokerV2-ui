@@ -144,7 +144,7 @@ export class MstHouseModelService {
 
   public deleteHouseModel(id: number): Observable<[boolean, string]> {
     return new Observable<[boolean, string]>((observer) => {
-      this.httpClient.delete(this.defaultAPIURLHost + "/api/MstHouseModel/delete/" + id, this.options).subscribe(
+      this.httpClient.delete(this.defaultAPIURLHost + "/api/MstHouseModel/Delete/" + id, this.options).subscribe(
         response => {
           observer.next([true, ""]);
           observer.complete();
