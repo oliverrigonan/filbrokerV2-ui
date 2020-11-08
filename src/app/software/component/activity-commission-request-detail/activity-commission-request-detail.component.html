@@ -1,0 +1,172 @@
+<div *ngIf="isSpinnerShow" style="padding: 100px 0px 15px 0px; text-align: center;">
+    <h4>Please wait...</h4>
+    <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+</div>
+<div *ngIf="isContentShow">
+    <mat-toolbar>
+        &nbsp;&nbsp;
+        <img src="../../../../assets/images/software-icons/commission.png" class="toolBar-img-style" />
+        <span class="toolbar-title-style">
+            Commission Request Detail
+        </span>
+        <span class="toolbar-spacer"></span>
+        <button mat-flat-button color="primary" [disabled]="isCommissionRequestSaveButtonDisabled"
+            style="margin-right: 5px;" (click)="buttonSaveCommissionRequest()">
+            Save
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isCommissionRequestLockButtonDisabled"
+            style="margin-right: 5px;" (click)="buttonLockCommissionRequest()">
+            Lock
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isCommissionRequestUnlockButtonDisabled"
+            style="margin-right: 5px;" (click)="buttonUnlockCommissionRequest()">
+            Unlock
+        </button>
+        <button mat-flat-button color="warn" routerLink="/software/activity-commission-request-list">
+            Close
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div class="software-container">
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="50">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Commission Request Number</mat-label>
+                            <input matInput [(ngModel)]="trnCommissionRequestModel.CommissionRequestNumber"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Commission Request Date</mat-label>
+                            <input matInput [matDatepicker]="CommissionRequestDatePicker"
+                                [(ngModel)]="commissionRequestDate" [ngModelOptions]="{standalone: true}"
+                                [disabled]="trnCommissionRequestModel.IsLocked"
+                                (dateChange)="commissionRequestDateDateChange('change', $event)">
+                            <mat-datepicker-toggle matSuffix [for]="CommissionRequestDatePicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #CommissionRequestDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Broker</mat-label>
+                            <mat-select [(value)]="trnCommissionRequestModel.BrokerId"
+                                [disabled]="trnCommissionRequestModel.IsLocked">
+                                <mat-option *ngFor="let mstBrokerObject of mstBrokerModel" [value]="mstBrokerObject.Id">
+                                    {{mstBrokerObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Sold Unit No.</mat-label>
+                            <mat-select [(value)]="trnCommissionRequestModel.SoldUnitId"
+                                [disabled]="trnCommissionRequestModel.IsLocked">
+                                <mat-option *ngFor="let trnSoldUnitModelObject of trnSoldUnitModel"
+                                    [value]="trnSoldUnitModelObject.Id">
+                                    {{trnSoldUnitModelObject.SoldUnitNumber}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Commission Number</mat-label>
+                            <mat-select [(value)]="trnCommissionRequestModel.CommissionNumber"
+                                [disabled]="trnCommissionRequestModel.IsLocked">
+                                <mat-option
+                                    *ngFor="let sysDropdownModelCommissionRequestNumberObject of sysDropdownModelCommissionRequestNumber"
+                                    [value]="sysDropdownModelCommissionRequestNumberObject.Value">
+                                    {{sysDropdownModelCommissionRequestNumberObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Amount</mat-label>
+                            <input matInput [(ngModel)]="trnCommissionRequestModel.Amount"
+                                [ngModelOptions]="{standalone: true}" [disabled]="trnCommissionRequestModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput [(ngModel)]="trnCommissionRequestModel.Remarks"
+                                [ngModelOptions]="{standalone: true}" style="min-height: 73px;"
+                                [disabled]="trnCommissionRequestModel.IsLocked"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Status</mat-label>
+                            <mat-select [(value)]="trnCommissionRequestModel.Status"
+                                [disabled]="trnCommissionRequestModel.IsLocked">
+                                <mat-option *ngFor="let sysDropdownObject of sysDropdownModel"
+                                    [value]="sysDropdownObject.Value">
+                                    {{sysDropdownObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="50">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Prepared By</mat-label>
+                            <input matInput [(ngModel)]="trnCommissionRequestModel.PrepearedByUser"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Checked By</mat-label>
+                            <mat-select [(value)]="trnCommissionRequestModel.CheckedBy"
+                                [disabled]="trnCommissionRequestModel.IsLocked">
+                                <mat-option *ngFor="let mstUserModelObject of mstUserModel"
+                                    [value]="mstUserModelObject.Id">
+                                    {{mstUserModelObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Approved By</mat-label>
+                            <mat-select [(value)]="trnCommissionRequestModel.ApprovedBy"
+                                [disabled]="trnCommissionRequestModel.IsLocked">
+                                <mat-option *ngFor="let mstUserModelObject of mstUserModel"
+                                    [value]="mstUserModelObject.Id">
+                                    {{mstUserModelObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

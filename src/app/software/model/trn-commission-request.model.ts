@@ -1,0 +1,20 @@
+export class TrnCommissionRequestModel {
+    Id: number = 0;
+    CommissionRequestNumber: string = "";
+    CommissionRequestDate: string = "";
+    BrokerId: number = 0;
+    Broker: string = "";
+    SoldUnitId: number = 0;
+    SoldUnit: string = "";
+    CommissionNumber: string = "";
+    Amount: number = 0;
+    Remarks: string = "";
+    PreparedBy: number = 0;
+    PrepearedByUser: string = "";
+    CheckedBy: number = 0;
+    CheckedByUser: string = "";
+    ApprovedBy: number = 0;
+    ApprovedByUser: string = "";
+    Status: string = "";
+    IsLocked: boolean = false;
+}

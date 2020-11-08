@@ -19,8 +19,8 @@ import { ActivitySoldUnitListComponent } from './component/activity-sold-unit-li
 import { ActivitySoldUnitDetailComponent } from './component/activity-sold-unit-detail/activity-sold-unit-detail.component';
 import { ActivityCollectionListComponent } from './component/activity-collection-list/activity-collection-list.component';
 import { ActivityCollectionDetailComponent } from './component/activity-collection-detail/activity-collection-detail.component';
-import { ActivityCommissionListComponent } from './component/activity-commission-list/activity-commission-list.component';
-import { ActivityCommissionDetailComponent } from './component/activity-commission-detail/activity-commission-detail.component';
+import { ActivityCommissionRequestListComponent } from './component/activity-commission-request-list/activity-commission-request-list.component';
+import { ActivityCommissionRequestDetailComponent } from './component/activity-commission-request-detail/activity-commission-request-detail.component';
 import { SystemUserListComponent } from './component/system-user-list/system-user-list.component';
 import { SystemUserDetailComponent } from './component/system-user-detail/system-user-detail.component';
 import { SystemSettingsComponent } from './component/system-settings/system-settings.component';
@@ -48,8 +48,8 @@ const routes: Routes = [
       { path: 'activity-sold-unit-detail/:id', canActivate: [SoftwareRouterActivate], component: ActivitySoldUnitDetailComponent },
       { path: 'activity-collection-list', canActivate: [SoftwareRouterActivate], component: ActivityCollectionListComponent },
       { path: 'activity-collection-detail/:id', canActivate: [SoftwareRouterActivate], component: ActivityCollectionDetailComponent },
-      { path: 'activity-commission-list', canActivate: [SoftwareRouterActivate], component: ActivityCommissionListComponent },
-      { path: 'activity-commission-detail/:id', canActivate: [SoftwareRouterActivate], component: ActivityCommissionDetailComponent },
+      { path: 'activity-commission-request-list', canActivate: [SoftwareRouterActivate], component: ActivityCommissionRequestListComponent },
+      { path: 'activity-commission-request-detail/:id', canActivate: [SoftwareRouterActivate], component: ActivityCommissionRequestDetailComponent },
       { path: 'system-user-list', canActivate: [SoftwareRouterActivate], component: SystemUserListComponent },
       { path: 'system-settings', canActivate: [SoftwareRouterActivate], component: SystemSettingsComponent }
     ]

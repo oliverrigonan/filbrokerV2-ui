@@ -24,8 +24,9 @@ import { ActivitySoldUnitListComponent } from './component/activity-sold-unit-li
 import { ActivitySoldUnitDetailComponent } from './component/activity-sold-unit-detail/activity-sold-unit-detail.component';
 import { ActivityCollectionListComponent } from './component/activity-collection-list/activity-collection-list.component';
 import { ActivityCollectionDetailComponent } from './component/activity-collection-detail/activity-collection-detail.component';
-import { ActivityCommissionListComponent } from './component/activity-commission-list/activity-commission-list.component';
-import { ActivityCommissionDetailComponent } from './component/activity-commission-detail/activity-commission-detail.component';
+import { ActivityCommissionRequestListComponent } from './component/activity-commission-request-list/activity-commission-request-list.component';
+import { ActivityCommissionRequestDetailComponent } from './component/activity-commission-request-detail/activity-commission-request-detail.component';
+
 import { SystemSettingsComponent } from './component/system-settings/system-settings.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 
@@ -73,11 +74,11 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/materia
     ActivitySoldUnitDetailComponent,
     ActivityCollectionListComponent,
     ActivityCollectionDetailComponent,
-    ActivityCommissionListComponent,
-    ActivityCommissionDetailComponent,
+    ActivityCommissionRequestListComponent,
+    ActivityCommissionRequestDetailComponent,
     SystemSettingsComponent,
     DashboardComponent,
-    ConfirmationDeleteComponent
+    ConfirmationDeleteComponent,
   ],
   imports: [
     CommonModule,
