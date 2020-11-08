@@ -51,6 +51,9 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   public isSoldUnitSaveButtonDisabled: boolean = false;
   public isSoldUnitLockButtonDisabled: boolean = false;
   public isSoldUnitUnlockButtonDisabled: boolean = false;
+  public isSoldUnitPrintButtonDisabled: boolean = false;
+  public isSoldUnitCancelButtonDisabled: boolean = false;
+  public isSoldUnitTransferButtonDisabled: boolean = false;
 
   public soldUnitDate: Date = new Date();
 
@@ -188,12 +191,18 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     this.isSoldUnitSaveButtonDisabled = true;
     this.isSoldUnitLockButtonDisabled = true;
     this.isSoldUnitUnlockButtonDisabled = true;
+    this.isSoldUnitPrintButtonDisabled = true;
+    this.isSoldUnitCancelButtonDisabled = true;
+    this.isSoldUnitTransferButtonDisabled = true;
   }
 
   public isLockedButtons(isLocked: boolean): void {
     this.isSoldUnitSaveButtonDisabled = isLocked;
     this.isSoldUnitLockButtonDisabled = isLocked;
     this.isSoldUnitUnlockButtonDisabled = !isLocked;
+    this.isSoldUnitPrintButtonDisabled = !isLocked;
+    this.isSoldUnitCancelButtonDisabled = !isLocked;
+    this.isSoldUnitTransferButtonDisabled = !isLocked;
   }
 
   public buttonSaveSoldUnit(): void {
@@ -249,6 +258,18 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
         this.isLockedButtons(this.trnSoldUnitModel.IsLocked);
       }
     );
+  }
+
+  public buttonPrintSoldUnit(): void {
+
+  }
+
+  public buttonCancelSoldUnit(): void {
+
+  }
+
+  public buttonTransferSoldUnit(): void {
+
   }
 
   ngOnInit(): void {

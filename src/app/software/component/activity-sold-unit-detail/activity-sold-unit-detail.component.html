@@ -22,6 +22,18 @@
             (click)="buttonUnlockSoldUnit()">
             Unlock
         </button>
+        <button mat-flat-button color="primary" [disabled]="isSoldUnitPrintButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonPrintSoldUnit()">
+            Print
+        </button>
+        <button mat-flat-button color="warn" [disabled]="isSoldUnitCancelButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonCancelSoldUnit()">
+            Cancel
+        </button>
+        <button mat-flat-button color="accent" [disabled]="isSoldUnitTransferButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonTransferSoldUnit()">
+            Transfer
+        </button>
         <button mat-flat-button color="warn" routerLink="/software/activity-sold-unit-list">
             Close
         </button>
