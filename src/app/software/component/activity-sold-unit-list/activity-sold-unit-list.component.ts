@@ -81,10 +81,10 @@ export class ActivitySoldUnitListComponent implements OnInit {
           this.soldUnitDataSource = new MatTableDataSource(this.soldUnitData);
           this.soldUnitDataSource.paginator = this.soldUnitPaginator;
           this.soldUnitDataSource.sort = this.soldUnitSort;
-
-          this.isSpinnerShow = false;
-          this.isContentShow = true;
         }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
       }
     );
   }
@@ -193,7 +193,7 @@ export class ActivitySoldUnitListComponent implements OnInit {
       width: '450px',
       data: {
         dialogDeleteTitle: "Delete Sold Unit",
-        dialogDeleteMessage: "Are you sure you want to delete this soldUnit code " + currentData.SoldUnitCode,
+        dialogDeleteMessage: "Are you sure you want to delete this sold unit number " + currentData.SoldUnitNumber,
         dialogDeleteId: id
       },
       disableClose: true

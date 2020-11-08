@@ -85,10 +85,10 @@ export class SetupUnitListComponent implements OnInit {
           this.unitDataSource = new MatTableDataSource(this.unitData);
           this.unitDataSource.paginator = this.unitPaginator;
           this.unitDataSource.sort = this.unitSort;
-
-          this.isSpinnerShow = false;
-          this.isContentShow = true;
         }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
       }
     );
   }

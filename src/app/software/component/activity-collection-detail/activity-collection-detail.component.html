@@ -1,1 +1,131 @@
-<p>activity-collection-detail works!</p>
+<div *ngIf="isSpinnerShow" style="padding: 100px 0px 15px 0px; text-align: center;">
+    <h4>Please wait...</h4>
+    <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+</div>
+<div *ngIf="isContentShow">
+    <mat-toolbar>
+        &nbsp;&nbsp;
+        <img src="../../../../assets/images/software-icons/collection.png" class="toolBar-img-style" />
+        <span class="toolbar-title-style">
+            Collection Detail
+        </span>
+        <span class="toolbar-spacer"></span>
+        <button mat-flat-button color="primary" [disabled]="isCollectionSaveButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonSaveCollection()">
+            Save
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isCollectionLockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonLockCollection()">
+            Lock
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isCollectionUnlockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonUnlockCollection()">
+            Unlock
+        </button>
+        <button mat-flat-button color="warn" routerLink="/software/activity-collection-list">
+            Close
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div class="software-container">
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="50">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Sold Unit Number</mat-label>
+                            <input matInput [(ngModel)]="trnCollectionModel.CollectionNumber"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Sold Unit Date</mat-label>
+                            <input matInput [matDatepicker]="CollectionDatePicker" [(ngModel)]="collectionDate"
+                                [ngModelOptions]="{standalone: true}" [disabled]="trnCollectionModel.IsLocked"
+                                (dateChange)="collectionDateDateChange('change', $event)">
+                            <mat-datepicker-toggle matSuffix [for]="CollectionDatePicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #CollectionDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Customer</mat-label>
+                            <mat-select [(value)]="trnCollectionModel.CustomerId"
+                                [disabled]="trnCollectionModel.IsLocked">
+                                <mat-option *ngFor="let mstCustomerObject of mstCustomerModel"
+                                    [value]="mstCustomerObject.Id">
+                                    {{mstCustomerObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Particulars</mat-label>
+                            <textarea matInput [(ngModel)]="trnCollectionModel.Particulars"
+                                [ngModelOptions]="{standalone: true}" style="min-height: 73px;"
+                                [disabled]="trnCollectionModel.IsLocked"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="50">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Prepared By</mat-label>
+                            <mat-select [(value)]="trnCollectionModel.PreparedBy" disabled>
+                                <mat-option *ngFor="let mstUserModelObject of mstUserModel"
+                                    [value]="mstUserModelObject.Id">
+                                    {{mstUserModelObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Checked By</mat-label>
+                            <mat-select [(value)]="trnCollectionModel.CheckedBy"
+                                [disabled]="trnCollectionModel.IsLocked">
+                                <mat-option *ngFor="let mstUserModelObject of mstUserModel"
+                                    [value]="mstUserModelObject.Id">
+                                    {{mstUserModelObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Approved By</mat-label>
+                            <mat-select [(value)]="trnCollectionModel.ApprovedBy"
+                                [disabled]="trnCollectionModel.IsLocked">
+                                <mat-option *ngFor="let mstUserModelObject of mstUserModel"
+                                    [value]="mstUserModelObject.Id">
+                                    {{mstUserModelObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Payments">
+            <div class="software-container">
+
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

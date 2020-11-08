@@ -61,10 +61,10 @@ export class SetupCustomerListComponent implements OnInit {
           this.customerDataSource = new MatTableDataSource(this.customerData);
           this.customerDataSource.paginator = this.customerPaginator;
           this.customerDataSource.sort = this.customerSort;
-
-          this.isSpinnerShow = false;
-          this.isContentShow = true;
         }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
       }
     );
   }

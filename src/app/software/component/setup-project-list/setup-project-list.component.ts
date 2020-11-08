@@ -61,10 +61,10 @@ export class SetupProjectListComponent implements OnInit {
           this.projectDataSource = new MatTableDataSource(this.projectData);
           this.projectDataSource.paginator = this.projectPaginator;
           this.projectDataSource.sort = this.projectSort;
-
-          this.isSpinnerShow = false;
-          this.isContentShow = true;
         }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
       }
     );
   }

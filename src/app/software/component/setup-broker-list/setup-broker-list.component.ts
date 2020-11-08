@@ -61,10 +61,10 @@ export class SetupBrokerListComponent implements OnInit {
           this.brokerDataSource = new MatTableDataSource(this.brokerData);
           this.brokerDataSource.paginator = this.brokerPaginator;
           this.brokerDataSource.sort = this.brokerSort;
-
-          this.isSpinnerShow = false;
-          this.isContentShow = true;
         }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
       }
     );
   }
