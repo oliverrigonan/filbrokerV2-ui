@@ -7,7 +7,7 @@
         <img src="./../../assets/images/filbroker-logo/filbroker.png" height="25" style="margin-bottom: 7px;">
         <span class="toolbar-spacer"></span>
         <button color="" mat-button [matMenuTriggerFor]="loginUserMenu">
-            User
+            {{loginUsername}}<mat-icon>arrow_drop_down</mat-icon>
         </button>
         <mat-menu #loginUserMenu="matMenu" xPosition="after">
             <button mat-menu-item>

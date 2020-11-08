@@ -151,41 +151,45 @@ export class SetupUnitListComponent implements OnInit {
   }
 
   public buttonDeleteUnit(currentData: any): void {
-    let id = currentData.Id;
+    if (currentData.IsLocked == true) {
+      this.toastr.error("Cannot delete a locked record.", 'Delete Failed');
+    } else {
+      let id = currentData.Id;
 
-    const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
-      width: '450px',
-      data: {
-        dialogDeleteTitle: "Delete Unit",
-        dialogDeleteMessage: "Are you sure you want to delete this unit code " + currentData.UnitCode,
-        dialogDeleteId: id
-      },
-      disableClose: true
-    });
+      const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
+        width: '450px',
+        data: {
+          dialogDeleteTitle: "Delete Unit",
+          dialogDeleteMessage: "Are you sure you want to delete this unit code " + currentData.UnitCode,
+          dialogDeleteId: id
+        },
+        disableClose: true
+      });
 
-    openDialog.afterClosed().subscribe(result => {
+      openDialog.afterClosed().subscribe(result => {
 
-      if (result != null) {
-        this.isSpinnerShow = true;
-        this.isContentShow = false;
+        if (result != null) {
+          this.isSpinnerShow = true;
+          this.isContentShow = false;
 
-        this.mstUnitService.deleteUnit(result).subscribe(
-          data => {
+          this.mstUnitService.deleteUnit(result).subscribe(
+            data => {
 
-            if (data[0] == true) {
-              this.toastr.success('Unit was successfully deleted!', 'Delete Successful');
-              this.getUnitData();
-            } else {
-              this.toastr.error(data[1], 'Delete Failed');
+              if (data[0] == true) {
+                this.toastr.success('Unit was successfully deleted!', 'Delete Successful');
+                this.getUnitData();
+              } else {
+                this.toastr.error(data[1], 'Delete Failed');
 
-              this.isSpinnerShow = false;
-              this.isContentShow = true;
+                this.isSpinnerShow = false;
+                this.isContentShow = true;
+              }
+
             }
-
-          }
-        );
-      }
-    });
+          );
+        }
+      });
+    }
   }
 
   ngOnInit(): void {

@@ -148,41 +148,45 @@ export class SetupChecklistListComponent implements OnInit {
   }
 
   public buttonDeleteChecklist(currentData: any): void {
-    let id = currentData.Id;
+    if (currentData.IsLocked == true) {
+      this.toastr.error("Cannot delete a locked record.", 'Delete Failed');
+    } else {
+      let id = currentData.Id;
 
-    const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
-      width: '450px',
-      data: {
-        dialogDeleteTitle: "Delete Checklist",
-        dialogDeleteMessage: "Are you sure you want to delete this checklist " + currentData.Checklist,
-        dialogDeleteId: id
-      },
-      disableClose: true
-    });
+      const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
+        width: '450px',
+        data: {
+          dialogDeleteTitle: "Delete Checklist",
+          dialogDeleteMessage: "Are you sure you want to delete this checklist " + currentData.Checklist,
+          dialogDeleteId: id
+        },
+        disableClose: true
+      });
 
-    openDialog.afterClosed().subscribe(result => {
+      openDialog.afterClosed().subscribe(result => {
 
-      if (result != null) {
-        this.isSpinnerShow = true;
-        this.isContentShow = false;
+        if (result != null) {
+          this.isSpinnerShow = true;
+          this.isContentShow = false;
 
-        this.mstChecklistService.deleteChecklist(result).subscribe(
-          data => {
+          this.mstChecklistService.deleteChecklist(result).subscribe(
+            data => {
 
-            if (data[0] == true) {
-              this.toastr.success('Checklist was successfully deleted!', 'Delete Successful');
-              this.getChecklistData();
-            } else {
-              this.toastr.error(data[1], 'Delete Failed');
+              if (data[0] == true) {
+                this.toastr.success('Checklist was successfully deleted!', 'Delete Successful');
+                this.getChecklistData();
+              } else {
+                this.toastr.error(data[1], 'Delete Failed');
 
-              this.isSpinnerShow = false;
-              this.isContentShow = true;
+                this.isSpinnerShow = false;
+                this.isContentShow = true;
+              }
+
             }
-
-          }
-        );
-      }
-    });
+          );
+        }
+      });
+    }
   }
 
   ngOnInit(): void {

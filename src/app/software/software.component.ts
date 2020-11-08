@@ -23,6 +23,7 @@ export class SoftwareComponent implements OnInit {
 
   @ViewChild('snav') sidenav: MatSidenav;
 
+  public loginUsername: string = localStorage.getItem('username');
   public panelOpenState = false;
 
   public buttonToggle() {
