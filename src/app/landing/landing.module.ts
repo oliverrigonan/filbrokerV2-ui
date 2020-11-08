@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { LandingRoutingModule } from './landing-routing.module';
 import { LandingComponent } from './landing.component';
 import { HomePageComponent } from './component/home-page/home-page.component';
@@ -17,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     CommonModule,
     LandingRoutingModule,
+    FlexLayoutModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule
