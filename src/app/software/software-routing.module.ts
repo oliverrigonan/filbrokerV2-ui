@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { SoftwareRouterActivate } from './software-router-activate';
+
 import { SoftwareComponent } from './software.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { SetupProjectListComponent } from './component/setup-project-list/setup-project-list.component';
@@ -26,29 +28,30 @@ import { SystemSettingsComponent } from './component/system-settings/system-sett
 const routes: Routes = [
   {
     path: '',
+    canActivate: [SoftwareRouterActivate],
     component: SoftwareComponent,
     children: [
-      { path: '', component: DashboardComponent },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'setup-project-list', component: SetupProjectListComponent },
-      { path: 'setup-project-detail/:id', component: SetupProjectDetailComponent },
-      { path: 'setup-unit-list', component: SetupUnitListComponent },
-      { path: 'setup-unit-detail/:id', component: SetupUnitDetailComponent },
-      { path: 'setup-checklist-list', component: SetupChecklistListComponent },
-      { path: 'setup-checklist-detail/:id', component: SetupChecklistDetailComponent },
-      { path: 'setup-customer-list', component: SetupCustomerListComponent },
-      { path: 'setup-customer-detail/:id', component: SetupCustomerDetailComponent },
-      { path: 'setup-broker-list', component: SetupBrokerListComponent },
-      { path: 'setup-broker-detail/:id', component: SetupBrokerDetailComponent },
-      { path: 'system-user-detail/:id', component: SystemUserDetailComponent },
-      { path: 'activity-sold-unit-list', component: ActivitySoldUnitListComponent },
-      { path: 'activity-sold-unit-detail/:id', component: ActivitySoldUnitDetailComponent },
-      { path: 'activity-collection-list', component: ActivityCollectionListComponent },
-      { path: 'activity-collection-detail/:id', component: ActivityCollectionDetailComponent },
-      { path: 'activity-commission-list', component: ActivityCommissionListComponent },
-      { path: 'activity-commission-detail/:id', component: ActivityCommissionDetailComponent },
-      { path: 'system-user-list', component: SystemUserListComponent },
-      { path: 'system-settings', component: SystemSettingsComponent }
+      { path: '', canActivate: [SoftwareRouterActivate], component: DashboardComponent },
+      { path: 'dashboard', canActivate: [SoftwareRouterActivate], component: DashboardComponent },
+      { path: 'setup-project-list', canActivate: [SoftwareRouterActivate], component: SetupProjectListComponent },
+      { path: 'setup-project-detail/:id', canActivate: [SoftwareRouterActivate], component: SetupProjectDetailComponent },
+      { path: 'setup-unit-list', canActivate: [SoftwareRouterActivate], component: SetupUnitListComponent },
+      { path: 'setup-unit-detail/:id', canActivate: [SoftwareRouterActivate], component: SetupUnitDetailComponent },
+      { path: 'setup-checklist-list', canActivate: [SoftwareRouterActivate], component: SetupChecklistListComponent },
+      { path: 'setup-checklist-detail/:id', canActivate: [SoftwareRouterActivate], component: SetupChecklistDetailComponent },
+      { path: 'setup-customer-list', canActivate: [SoftwareRouterActivate], component: SetupCustomerListComponent },
+      { path: 'setup-customer-detail/:id', canActivate: [SoftwareRouterActivate], component: SetupCustomerDetailComponent },
+      { path: 'setup-broker-list', canActivate: [SoftwareRouterActivate], component: SetupBrokerListComponent },
+      { path: 'setup-broker-detail/:id', canActivate: [SoftwareRouterActivate], component: SetupBrokerDetailComponent },
+      { path: 'system-user-detail/:id', canActivate: [SoftwareRouterActivate], component: SystemUserDetailComponent },
+      { path: 'activity-sold-unit-list', canActivate: [SoftwareRouterActivate], component: ActivitySoldUnitListComponent },
+      { path: 'activity-sold-unit-detail/:id', canActivate: [SoftwareRouterActivate], component: ActivitySoldUnitDetailComponent },
+      { path: 'activity-collection-list', canActivate: [SoftwareRouterActivate], component: ActivityCollectionListComponent },
+      { path: 'activity-collection-detail/:id', canActivate: [SoftwareRouterActivate], component: ActivityCollectionDetailComponent },
+      { path: 'activity-commission-list', canActivate: [SoftwareRouterActivate], component: ActivityCommissionListComponent },
+      { path: 'activity-commission-detail/:id', canActivate: [SoftwareRouterActivate], component: ActivityCommissionDetailComponent },
+      { path: 'system-user-list', canActivate: [SoftwareRouterActivate], component: SystemUserListComponent },
+      { path: 'system-settings', canActivate: [SoftwareRouterActivate], component: SystemSettingsComponent }
     ]
   }
 ];

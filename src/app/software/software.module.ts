@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { SoftwareRoutingModule } from './software-routing.module';
+import { SoftwareRouterActivate } from './software-router-activate';
 
 import { SoftwareComponent } from './software.component';
 import { SetupProjectListComponent } from './component/setup-project-list/setup-project-list.component';
@@ -109,7 +110,8 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/materia
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },
-    { provide: MatDialogRef, useValue: {} }
+    { provide: MatDialogRef, useValue: {} },
+    SoftwareRouterActivate
   ]
 })
 export class SoftwareModule { }

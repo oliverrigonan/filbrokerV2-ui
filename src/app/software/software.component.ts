@@ -29,6 +29,15 @@ export class SoftwareComponent implements OnInit {
     this.sidenav.toggle();
   }
 
+  public buttonLogout() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('expires_in');
+    localStorage.removeItem('token_type');
+    localStorage.removeItem('username');
+
+    location.reload();
+  }
+
   ngOnInit(): void {
 
   }

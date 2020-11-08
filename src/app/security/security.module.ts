@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { SecurityRoutingModule } from './security-routing.module';
+import { SecurityRouterActivate } from './security-router-activate';
 
 import { SecurityComponent } from './security.component';
 import { SystemLoginComponent } from './component/system-login/system-login.component';
@@ -37,6 +38,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatCheckboxModule,
     MatFormFieldModule,
     MatSnackBarModule
+  ],
+  providers: [
+    SecurityRouterActivate
   ]
 })
 export class SecurityModule { }
