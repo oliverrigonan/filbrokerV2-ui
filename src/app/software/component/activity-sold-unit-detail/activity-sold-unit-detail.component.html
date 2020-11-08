@@ -1,1 +1,489 @@
-<p>activity-sold-unit-detail works!</p>
+<div *ngIf="isSpinnerShow" style="padding: 100px 0px 15px 0px; text-align: center;">
+    <h4>Please wait...</h4>
+    <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+</div>
+<div *ngIf="isContentShow">
+    <mat-toolbar>
+        &nbsp;&nbsp;
+        <img src="../../../../assets/images/software-icons/sold-unit.png" class="toolBar-img-style" />
+        <span class="toolbar-title-style">
+            Sold Unit Detail
+        </span>
+        <span class="toolbar-spacer"></span>
+        <button mat-flat-button color="primary" [disabled]="isSoldUnitSaveButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonSaveSoldUnit()">
+            Save
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isSoldUnitLockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonLockSoldUnit()">
+            Lock
+        </button>
+        <button mat-flat-button color="primary" [disabled]="isSoldUnitUnlockButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonUnlockSoldUnit()">
+            Unlock
+        </button>
+        <button mat-flat-button color="warn" routerLink="/software/activity-sold-unit-list">
+            Close
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div class="software-container">
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="50">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Sold Unit Number</mat-label>
+                            <input matInput [(ngModel)]="trnSoldUnitModel.SoldUnitNumber"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Sold Unit Date</mat-label>
+                            <input matInput [matDatepicker]="SoldUnitDatePicker" [(ngModel)]="soldUnitDate"
+                                [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                (dateChange)="soldUnitDateDateChange('change', $event)">
+                            <mat-datepicker-toggle matSuffix [for]="SoldUnitDatePicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #SoldUnitDatePicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Project</mat-label>
+                            <input matInput [(ngModel)]="trnSoldUnitModel.Project" [ngModelOptions]="{standalone: true}"
+                                [disabled]="trnSoldUnitModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Unit</mat-label>
+                            <input matInput [(ngModel)]="trnSoldUnitModel.Unit" [ngModelOptions]="{standalone: true}"
+                                [disabled]="trnSoldUnitModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Customer</mat-label>
+                            <mat-select [(value)]="trnSoldUnitModel.CustomerId" [disabled]="trnSoldUnitModel.IsLocked">
+                                <mat-option *ngFor="let mstCustomerObject of mstCustomerModel"
+                                    [value]="mstCustomerObject.Id">
+                                    {{mstCustomerObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Broker</mat-label>
+                            <mat-select [(value)]="trnSoldUnitModel.BrokerId" [disabled]="trnSoldUnitModel.IsLocked">
+                                <mat-option *ngFor="let mstBrokerObject of mstBrokerModel" [value]="mstBrokerObject.Id">
+                                    {{mstBrokerObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Agent</mat-label>
+                            <input matInput [(ngModel)]="trnSoldUnitModel.Agent" [ngModelOptions]="{standalone: true}"
+                                [disabled]="trnSoldUnitModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Broker Coordinator</mat-label>
+                            <input matInput [(ngModel)]="trnSoldUnitModel.BrokerCoordinator"
+                                [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Remarks</mat-label>
+                            <textarea matInput [(ngModel)]="trnSoldUnitModel.Remarks"
+                                [ngModelOptions]="{standalone: true}" style="min-height: 73px;"
+                                [disabled]="trnSoldUnitModel.IsLocked"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Status</mat-label>
+                            <mat-select [(value)]="trnSoldUnitModel.Status" [disabled]="trnSoldUnitModel.IsLocked">
+                                <mat-option *ngFor="let sysDropdownObject of sysDropdownModel"
+                                    [value]="sysDropdownObject.Value">
+                                    {{sysDropdownObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="50">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Checklist</mat-label>
+                            <mat-select [(value)]="trnSoldUnitModel.ChecklistId" [disabled]="trnSoldUnitModel.IsLocked">
+                                <mat-option *ngFor="let mstChecklistObject of mstChecklistModel"
+                                    [value]="mstChecklistObject.Id">
+                                    {{mstChecklistObject.Checklist}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Price</mat-label>
+                            <input matInput [(ngModel)]="trnSoldUnitModel.Price" [ngModelOptions]="{standalone: true}"
+                                [disabled]="trnSoldUnitModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>TCP</mat-label>
+                            <input matInput [(ngModel)]="trnSoldUnitModel.TCP" [ngModelOptions]="{standalone: true}"
+                                [disabled]="trnSoldUnitModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Price Discount</mat-label>
+                            <input matInput [(ngModel)]="trnSoldUnitModel.PriceDiscount"
+                                [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>TSP</mat-label>
+                            <input matInput [(ngModel)]="trnSoldUnitModel.TSP" [ngModelOptions]="{standalone: true}"
+                                [disabled]="trnSoldUnitModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Financing Types</mat-label>
+                            <mat-select [(value)]="trnSoldUnitModel.FinancingType"
+                                [disabled]="trnSoldUnitModel.IsLocked">
+                                <mat-option
+                                    *ngFor="let sysDropdownModelFinancingTypesObject of sysDropdownModelFinancingTypes"
+                                    [value]="sysDropdownModelFinancingTypesObject.Value">
+                                    {{sysDropdownModelFinancingTypesObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Prepared By</mat-label>
+                            <input matInput [(ngModel)]="trnSoldUnitModel.PreparedByUser"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Checked By</mat-label>
+                            <mat-select [(value)]="trnSoldUnitModel.CheckedBy" [disabled]="trnSoldUnitModel.IsLocked">
+                                <mat-option *ngFor="let mstUserModelObject of mstUserModel"
+                                    [value]="mstUserModelObject.Id">
+                                    {{mstUserModelObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Approved By</mat-label>
+                            <mat-select [(value)]="trnSoldUnitModel.ApprovedBy" [disabled]="trnSoldUnitModel.IsLocked">
+                                <mat-option *ngFor="let mstUserModelObject of mstUserModel"
+                                    [value]="mstUserModelObject.Id">
+                                    {{mstUserModelObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Checklist Requirements">
+            <div class="software-container">
+
+            </div>
+        </mat-tab>
+        <mat-tab label="Total Investments">
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 3px; text-align: right;">
+                        <button mat-stroked-button color="" [disabled]="trnSoldUnitModel.IsLocked">
+                            Write
+                        </button>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Total Investments</mat-label>
+                            <textarea matInput [(ngModel)]="trnSoldUnitModel.TotalInvestment"
+                                [ngModelOptions]="{standalone: true}" style="min-height: 300px;"
+                                [disabled]="trnSoldUnitModel.IsLocked"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Payment Options">
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25">
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Equity (%)</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.EquityPercent"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Equity</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.EquityValue"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Discount</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.Discount"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Discounted Equity</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.DiscountedEquity"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Reservation</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.Reservation"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Net Equity</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.NetEquity"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="25">
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Equity Spot Payment 1 (First)</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.EquitySpotPayment1"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Equity Spot Payment 2 (Mid)</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.EquitySpotPayment2"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Equity Spot Payment 3 (Last)</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.EquitySpotPayment3"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="25">
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Equity Balance</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.NetEquityBalance"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Interest</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.NetEquityInterest"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>No. of Payments</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.NetEquityNoOfPayments"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Amortization</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.NetEquityAmortization"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="25">
+
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 3px; text-align: right;">
+                        <button mat-stroked-button color="" [disabled]="trnSoldUnitModel.IsLocked">
+                            Write
+                        </button>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Payment Options</mat-label>
+                            <textarea matInput [(ngModel)]="trnSoldUnitModel.PaymentOptions"
+                                [ngModelOptions]="{standalone: true}" style="min-height: 300px;"
+                                [disabled]="trnSoldUnitModel.IsLocked"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Financing">
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25">
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Balance</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.Balance"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Interest</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.BalanceInterest"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>No. of Payments</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.BalanceNoOfPayments"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Amortization</mat-label>
+                                    <input matInput [(ngModel)]="trnSoldUnitModel.BalanceAmortization"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="50">
+
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 3px; text-align: right;">
+                        <button mat-stroked-button color="" [disabled]="trnSoldUnitModel.IsLocked">
+                            Write
+                        </button>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Financing</mat-label>
+                            <textarea matInput [(ngModel)]="trnSoldUnitModel.Financing"
+                                [ngModelOptions]="{standalone: true}" style="min-height: 300px;"
+                                [disabled]="trnSoldUnitModel.IsLocked"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Co-Owner">
+            <div class="software-container">
+
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

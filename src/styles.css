@@ -36,6 +36,8 @@ mat-table {
     border: 1px solid rgb(230, 230, 230);
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
+    margin: 0px !important;
+    overflow: hidden;
 }
 
 mat-header-row {
@@ -43,6 +45,15 @@ mat-header-row {
 }
 
 mat-header-cell {
+
+}
+
+.mat-header-row{
+    width: max-content !important;
+}
+
+.mat-row{
+    width: max-content !important;
 }
 
 .mat-sort-header-content {
