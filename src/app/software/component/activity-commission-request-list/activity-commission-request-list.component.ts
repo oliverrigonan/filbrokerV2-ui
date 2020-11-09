@@ -33,6 +33,7 @@ export class ActivityCommissionRequestListComponent implements OnInit {
     'SoldUnit',
     'Status',
     'IsLocked',
+    'Space'
   ];
 
   public commissionRequestDataSource: MatTableDataSource<TrnCommissionRequestModel>;

@@ -28,6 +28,7 @@ export class SetupProjectListComponent implements OnInit {
     'Address',
     'Status',
     'IsLocked',
+    'Space'
   ];
 
   public projectDataSource: MatTableDataSource<MstProjectModel>;

@@ -79,11 +79,17 @@
                         </mat-cell>
                     </ng-container>
 
+                    <ng-container matColumnDef="Space">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                        </mat-cell>
+                    </ng-container>
+
                     <mat-header-row *matHeaderRowDef="projectDisplayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: projectDisplayedColumns;"></mat-row>
 
                     <tr class="mat-row" *matNoDataRow>
-                        <td class="mat-cell" colspan="7">No data matching the filter "{{projectFilterData.value}}"</td>
+                        <td class="mat-cell" colspan="8">No data matching the filter "{{projectFilterData.value}}"</td>
                     </tr>
                 </mat-table>
 

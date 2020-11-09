@@ -32,6 +32,7 @@ export class ActivityCollectionListComponent implements OnInit {
     'Customer',
     'Particulars',
     'IsLocked',
+    'Space'
   ];
 
   public collectionDataSource: MatTableDataSource<TrnCollectionModel>;

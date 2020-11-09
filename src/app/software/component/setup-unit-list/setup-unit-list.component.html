@@ -95,6 +95,12 @@
                         </mat-cell>
                     </ng-container>
 
+                    <ng-container matColumnDef="Space">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                        </mat-cell>
+                    </ng-container>
+
                     <mat-header-row *matHeaderRowDef="unitDisplayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: unitDisplayedColumns;"></mat-row>
 

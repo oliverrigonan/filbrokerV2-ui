@@ -33,6 +33,7 @@ export class SetupChecklistListComponent implements OnInit {
     'Remarks',
     'Status',
     'IsLocked',
+    'Space'
   ];
 
   public checklistDataSource: MatTableDataSource<MstChecklistModel>;

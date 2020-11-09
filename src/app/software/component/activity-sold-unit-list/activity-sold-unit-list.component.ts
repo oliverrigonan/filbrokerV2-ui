@@ -34,6 +34,7 @@ export class ActivitySoldUnitListComponent implements OnInit {
     'Customer',
     'Status',
     'IsLocked',
+    'Space'
   ];
 
   public soldUnitDataSource: MatTableDataSource<TrnSoldUnitModel>;

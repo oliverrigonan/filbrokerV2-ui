@@ -28,6 +28,7 @@ export class SetupCustomerListComponent implements OnInit {
     'Address',
     'Status',
     'IsLocked',
+    'Space'
   ];
 
   public customerDataSource: MatTableDataSource<MstCustomerModel>;

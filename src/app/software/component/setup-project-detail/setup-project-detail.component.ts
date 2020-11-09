@@ -53,7 +53,8 @@ export class SetupProjectDetailComponent implements OnInit {
     'HouseModelCode',
     'HouseModel',
     'TFA',
-    'Price'
+    'Price',
+    'Space'
   ];
 
   public houseModelDataSource: MatTableDataSource<MstHouseModelModel>;

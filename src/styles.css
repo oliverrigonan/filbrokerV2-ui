@@ -27,8 +27,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-left: 10px;
 }
 
-.mat-row:nth-child(even){
+.mat-row:nth-child(even) .mat-cell {
   background-color:rgb(245, 245, 245);
+}
+
+.mat-row:nth-child(odd) .mat-cell {
+  background-color: gainsboro;
 }
 
 mat-table {
@@ -40,6 +44,10 @@ mat-table {
     overflow: hidden;
 }
 
+.mat-table {
+    background: #3f51b5;
+}
+
 mat-header-row {
     background: #3f51b5;
 }
@@ -48,12 +56,16 @@ mat-header-cell {
 
 }
 
-.mat-header-row{
-    width: max-content !important;
+/* .mat-header-row{
+    width: fit-content !important;
 }
 
 .mat-row{
-    width: max-content !important;
+    width: fit-content !important;
+} */
+
+.mat-row{
+  border-bottom-style: hidden;
 }
 
 .mat-sort-header-content {

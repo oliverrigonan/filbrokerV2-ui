@@ -58,7 +58,8 @@ export class SetupChecklistDetailComponent implements OnInit {
     'Requirement',
     'Category',
     'Type',
-    'WithAttachments'
+    'WithAttachments',
+    'Space'
   ];
 
   public checklistRequirementDataSource: MatTableDataSource<MstChecklistRequirementModel>;

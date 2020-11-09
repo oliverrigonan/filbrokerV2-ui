@@ -33,6 +33,7 @@ export class SetupUnitListComponent implements OnInit {
     'HouseModel',
     'Status',
     'IsLocked',
+    'Space'
   ];
 
   public unitDataSource: MatTableDataSource<MstUnitModel>;

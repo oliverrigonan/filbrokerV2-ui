@@ -28,6 +28,7 @@ export class SetupBrokerListComponent implements OnInit {
     'Address',
     'Status',
     'IsLocked',
+    'Space'
   ];
 
   public brokerDataSource: MatTableDataSource<MstBrokerModel>;
