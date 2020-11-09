@@ -157,7 +157,7 @@ export class SetupChecklistListComponent implements OnInit {
         width: '450px',
         data: {
           dialogDeleteTitle: "Delete Checklist",
-          dialogDeleteMessage: "Are you sure you want to delete this checklist " + currentData.Checklist,
+          dialogDeleteMessage: "Are you sure you want to delete this checklist " + currentData.Checklist + "?",
           dialogDeleteId: id
         },
         disableClose: true

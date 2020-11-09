@@ -159,7 +159,7 @@ export class SetupBrokerListComponent implements OnInit {
         width: '450px',
         data: {
           dialogDeleteTitle: "Delete Broker",
-          dialogDeleteMessage: "Are you sure you want to delete this broker " + currentData.FullName,
+          dialogDeleteMessage: "Are you sure you want to delete this broker " + currentData.FullName + "?",
           dialogDeleteId: id
         },
         disableClose: true

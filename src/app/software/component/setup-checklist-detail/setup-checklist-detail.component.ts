@@ -1,16 +1,24 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
-import { MstHouseModelModel } from './../../model/mst-house-model.model';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { MstChecklistRequirementModel } from './../../model/mst-checklist-requirement.model';
 import { SysDropdownModel } from './../../model/sys-dropdown.model';
 import { MstChecklistModel } from './../../model/mst-checklist.model';
 
-import { MstHouseModelService } from './../../service/mst-house-model/mst-house-model.service';
+import { MstChecklistRequirementsService } from './../../service/mst-checklist-requirements/mst-checklist-requirements.service';
 import { SysDropdownService } from './../../service/sys-dropdown/sys-dropdown.service';
 import { MstChecklistService } from './../../service/mst-checklist/mst-checklist.service';
 
 import { ToastrService } from 'ngx-toastr';
+
+import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
+import { SetupChecklistRequirementDetailComponent } from './../../component/setup-checklist-requirement-detail/setup-checklist-requirement-detail.component';
 
 @Component({
   selector: 'app-setup-checklist-detail',
@@ -22,17 +30,19 @@ export class SetupChecklistDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private mstHouseModelService: MstHouseModelService,
+    private mstChecklistRequirementService: MstChecklistRequirementsService,
     private sysDropdownService: SysDropdownService,
     private mstChecklistService: MstChecklistService,
     private toastr: ToastrService,
+    private confirmationDeleteDialog: MatDialog,
+    private setupChecklistRequirementDetailDialog: MatDialog
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
 
   public mstChecklistModel: MstChecklistModel = new MstChecklistModel();
-  public mstHouseModelModel: MstHouseModelModel[] = [];
+  public mstChecklistRequirementModel: MstChecklistRequirementModel[] = [];
   public sysDropdownModel: SysDropdownModel[] = [];
 
   public isChecklistSaveButtonDisabled: boolean = false;
@@ -40,6 +50,24 @@ export class SetupChecklistDetailComponent implements OnInit {
   public isChecklistUnlockButtonDisabled: boolean = false;
 
   public checklistDate: Date = new Date();
+
+  public checklistRequirementDisplayedColumns: string[] = [
+    'ButtonEdit',
+    'ButtonDelete',
+    'RequirementNo',
+    'Requirement',
+    'Category',
+    'Type',
+    'WithAttachments'
+  ];
+
+  public checklistRequirementDataSource: MatTableDataSource<MstChecklistRequirementModel>;
+  public checklistRequirementData: MstChecklistRequirementModel[] = []
+
+  @ViewChild('checklistRequirementPaginator') public checklistRequirementPaginator: MatPaginator;
+  @ViewChild('checklistRequirementSort') public checklistRequirementSort: MatSort;
+
+  public isButtonAddChecklistRequirementDisabled: boolean = false;
 
   public getDropdownList(): void {
     this.sysDropdownService.getDropdownList("CHECKLIST STATUS").subscribe(
@@ -69,7 +97,7 @@ export class SetupChecklistDetailComponent implements OnInit {
             this.mstChecklistModel.Status = data.Status;
             this.mstChecklistModel.IsLocked = data.IsLocked;
 
-            this.getHouseModelList(this.mstChecklistModel.ProjectId);
+            this.getChecklistRequirementData();
 
             this.isLockedButtons(this.mstChecklistModel.IsLocked);
           }
@@ -81,17 +109,6 @@ export class SetupChecklistDetailComponent implements OnInit {
 
   public checklstDateDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
     this.mstChecklistModel.ChecklistDate = this.checklistDate.toString();
-  }
-
-  public getHouseModelList(projectId: number): void {
-    this.mstHouseModelService.getHouseModelListPerProject(projectId).subscribe(
-      data => {
-        this.mstHouseModelModel = data;
-
-        this.isSpinnerShow = false;
-        this.isContentShow = true;
-      }
-    );
   }
 
   public disabledButtons(): void {
@@ -159,6 +176,138 @@ export class SetupChecklistDetailComponent implements OnInit {
         this.isLockedButtons(this.mstChecklistModel.IsLocked);
       }
     );
+  }
+
+  public getChecklistRequirementData(): void {
+    this.checklistRequirementData = [];
+    this.checklistRequirementDataSource = new MatTableDataSource(this.checklistRequirementData);
+    this.checklistRequirementDataSource.paginator = this.checklistRequirementPaginator;
+    this.checklistRequirementDataSource.sort = this.checklistRequirementSort;
+
+    this.mstChecklistRequirementService.getChecklistRequirementListPerProject(this.mstChecklistModel.Id).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.checklistRequirementData = data;
+          this.checklistRequirementDataSource = new MatTableDataSource(this.checklistRequirementData);
+          this.checklistRequirementDataSource.paginator = this.checklistRequirementPaginator;
+          this.checklistRequirementDataSource.sort = this.checklistRequirementSort;
+        }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
+      }
+    );
+  }
+
+  public checklistRequirementFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.checklistRequirementDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.checklistRequirementDataSource.paginator) {
+      this.checklistRequirementDataSource.paginator.firstPage();
+    }
+  }
+
+  public buttonAddChecklistRequirement(): void {
+    if (this.mstChecklistModel.IsLocked == true) {
+      this.toastr.error("Cannot edit a locked record.", 'Edit Failed');
+    } else {
+      let mstChecklistRequirementModel: MstChecklistRequirementModel = {
+        Id: 0,
+        ChecklistId: this.mstChecklistModel.Id,
+        Checklist: this.mstChecklistModel.Checklist,
+        RequirementNo: "",
+        Requirement: "",
+        Category: "",
+        Type: "",
+        WithAttachments: false
+      };
+
+      const openDialog = this.setupChecklistRequirementDetailDialog.open(SetupChecklistRequirementDetailComponent, {
+        width: '550px',
+        data: {
+          dialogTitle: "Add Checklist Requirement",
+          dialogData: mstChecklistRequirementModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.getChecklistRequirementData();
+        }
+      });
+    }
+  }
+
+  public buttonEditChecklistRequirement(currentData: any): void {
+    if (this.mstChecklistModel.IsLocked == true) {
+      this.toastr.error("Cannot edit a locked record.", 'Edit Failed');
+    } else {
+      let id = currentData.Id;
+
+      let mstChecklistRequirementModel: MstChecklistRequirementModel = {
+        Id: id,
+        ChecklistId: this.mstChecklistModel.Id,
+        Checklist: this.mstChecklistModel.Checklist,
+        RequirementNo: "",
+        Requirement: "",
+        Category: "",
+        Type: "",
+        WithAttachments: false
+      };
+
+      const openDialog = this.setupChecklistRequirementDetailDialog.open(SetupChecklistRequirementDetailComponent, {
+        width: '550px',
+        data: {
+          dialogTitle: "Edit Checklist Requirement",
+          dialogData: mstChecklistRequirementModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.getChecklistRequirementData();
+        }
+      });
+    }
+  }
+
+  public buttonDeleteChecklistRequirement(currentData: any): void {
+    if (this.mstChecklistModel.IsLocked == true) {
+      this.toastr.error("Cannot delete a locked record.", 'Delete Failed');
+    } else {
+      let id = currentData.Id;
+
+      const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
+        width: '450px',
+        data: {
+          dialogDeleteTitle: "Delete Checklist Requirement",
+          dialogDeleteMessage: "Are you sure you want to delete this check list requirement " + currentData.Requirement + "?",
+          dialogDeleteId: id
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+        if (result != null) {
+          this.mstChecklistRequirementService.deleteChecklistRequirement(result).subscribe(
+            data => {
+
+              if (data[0] == true) {
+                this.toastr.success('Checklist requirement was successfully deleted!', 'Delete Successful');
+                this.getChecklistRequirementData();
+              } else {
+                this.toastr.error(data[1], 'Delete Failed');
+              }
+
+            }
+          );
+        }
+      });
+    }
   }
 
   ngOnInit(): void {

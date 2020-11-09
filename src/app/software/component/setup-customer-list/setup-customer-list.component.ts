@@ -167,7 +167,7 @@ export class SetupCustomerListComponent implements OnInit {
         width: '450px',
         data: {
           dialogDeleteTitle: "Delete Customer",
-          dialogDeleteMessage: "Are you sure you want to delete this customer " + currentData.FullName,
+          dialogDeleteMessage: "Are you sure you want to delete this customer " + currentData.FullName + "?",
           dialogDeleteId: id
         },
         disableClose: true

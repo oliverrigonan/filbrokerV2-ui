@@ -196,7 +196,7 @@ export class ActivitySoldUnitListComponent implements OnInit {
         width: '450px',
         data: {
           dialogDeleteTitle: "Delete Sold Unit",
-          dialogDeleteMessage: "Are you sure you want to delete this sold unit number " + currentData.SoldUnitNumber,
+          dialogDeleteMessage: "Are you sure you want to delete this sold unit number " + currentData.SoldUnitNumber + "?",
           dialogDeleteId: id
         },
         disableClose: true

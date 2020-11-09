@@ -53,6 +53,7 @@ import { SystemSettingsComponent } from './component/system-settings/system-sett
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { ConfirmationDeleteComponent } from './component/confirmation-delete/confirmation-delete.component';
 import { SetupHouseModelDetailComponent } from './component/setup-house-model-detail/setup-house-model-detail.component';
+import { SetupChecklistRequirementDetailComponent } from './component/setup-checklist-requirement-detail/setup-checklist-requirement-detail.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { SetupHouseModelDetailComponent } from './component/setup-house-model-de
     DashboardComponent,
     ConfirmationDeleteComponent,
     SetupHouseModelDetailComponent,
+    SetupChecklistRequirementDetailComponent,
   ],
   imports: [
     CommonModule,

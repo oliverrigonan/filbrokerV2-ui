@@ -153,7 +153,7 @@ export class ActivityCollectionListComponent implements OnInit {
         width: '450px',
         data: {
           dialogDeleteTitle: "Delete Sold Unit",
-          dialogDeleteMessage: "Are you sure you want to delete this collection number " + currentData.CollectionNumber,
+          dialogDeleteMessage: "Are you sure you want to delete this collection number " + currentData.CollectionNumber + "?",
           dialogDeleteId: id
         },
         disableClose: true

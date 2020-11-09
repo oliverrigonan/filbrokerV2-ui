@@ -129,7 +129,7 @@ export class SetupProjectListComponent implements OnInit {
         width: '450px',
         data: {
           dialogDeleteTitle: "Delete Project",
-          dialogDeleteMessage: "Are you sure you want to delete this project " + currentData.Project,
+          dialogDeleteMessage: "Are you sure you want to delete this project " + currentData.Project + "?",
           dialogDeleteId: id
         },
         disableClose: true

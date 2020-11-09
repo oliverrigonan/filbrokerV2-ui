@@ -161,7 +161,7 @@ export class ActivityCommissionRequestListComponent implements OnInit {
         width: '450px',
         data: {
           dialogDeleteTitle: "Delete Sold Unit",
-          dialogDeleteMessage: "Are you sure you want to delete this commission request number " + currentData.CommissionRequestNumber,
+          dialogDeleteMessage: "Are you sure you want to delete this commission request number " + currentData.CommissionRequestNumber + "?",
           dialogDeleteId: id
         },
         disableClose: true

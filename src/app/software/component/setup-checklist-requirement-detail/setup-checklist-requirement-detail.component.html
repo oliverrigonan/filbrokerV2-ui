@@ -1,0 +1,71 @@
+<h1 mat-dialog-title>
+    {{ dialogTitle }}
+</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <div *ngIf="isSpinnerShow" style="padding: 25px 0px 25px 0px; text-align: center;">
+        <h4>Please wait...</h4>
+        <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+    </div>
+    <div *ngIf="isContentShow">
+        <div class="software-container">
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>No.</mat-label>
+                        <input matInput [(ngModel)]="mstChecklistRequirementModel.RequirementNo"
+                            [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Requirement</mat-label>
+                        <input matInput [(ngModel)]="mstChecklistRequirementModel.Requirement"
+                            [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Category</mat-label>
+                        <input matInput [(ngModel)]="mstChecklistRequirementModel.Category"
+                            [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Type</mat-label>
+                        <mat-select [(value)]="mstChecklistRequirementModel.Type">
+                            <mat-option *ngFor="let sysDropdownObject of sysDropdownModel"
+                                [value]="sysDropdownObject.Value">
+                                {{sysDropdownObject.Description}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-checkbox color="primary" [(ngModel)]="mstChecklistRequirementModel.WithAttachments"
+                        [ngModelOptions]="{standalone: true}">
+                        With Attachments
+                    </mat-checkbox>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" (click)="buttonSaveClick()" [disabled]="isButtonSaveConfirmationDisabled">
+        Save
+    </button>
+    <button mat-flat-button color="warn" (click)="buttonCloseClick()" [disabled]="isButtonSaveConfirmationDisabled">
+        Close
+    </button>
+</mat-dialog-actions>

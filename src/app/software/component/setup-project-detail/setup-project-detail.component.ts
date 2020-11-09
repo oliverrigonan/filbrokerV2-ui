@@ -276,7 +276,7 @@ export class SetupProjectDetailComponent implements OnInit {
         width: '450px',
         data: {
           dialogDeleteTitle: "Delete House Model",
-          dialogDeleteMessage: "Are you sure you want to delete this house model " + currentData.HouseModel,
+          dialogDeleteMessage: "Are you sure you want to delete this house model " + currentData.HouseModel + "?",
           dialogDeleteId: id
         },
         disableClose: true

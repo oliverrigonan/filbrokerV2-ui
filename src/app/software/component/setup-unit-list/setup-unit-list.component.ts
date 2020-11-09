@@ -160,7 +160,7 @@ export class SetupUnitListComponent implements OnInit {
         width: '450px',
         data: {
           dialogDeleteTitle: "Delete Unit",
-          dialogDeleteMessage: "Are you sure you want to delete this unit code " + currentData.UnitCode,
+          dialogDeleteMessage: "Are you sure you want to delete this unit code " + currentData.UnitCode + "?",
           dialogDeleteId: id
         },
         disableClose: true
