@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "filbrokerph"
+  },
+  "targets": {
+    "filbrokerph": {
+      "hosting": {
+        "filbrokerph": [
+          "filbrokerph"
+        ],
+        "filbrokerph-tytans-ui": [
+          "filbrokerph-tytans-ui"
+        ]
+      }
+    }
+  }
+}

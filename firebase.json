@@ -1,0 +1,22 @@
+{
+  "hosting": [
+    {
+      "public": "dist/filbrokerV2-ui",
+      "target": "filbrokerph",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "public": "dist/filbrokerV2-ui",
+      "target": "filbrokerph-tytans-ui",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    }
+  ]
+}
