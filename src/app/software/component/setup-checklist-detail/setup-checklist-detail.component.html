@@ -191,10 +191,10 @@
                             <mat-header-row *matHeaderRowDef="checklistRequirementDisplayedColumns"></mat-header-row>
                             <mat-row *matRowDef="let row; columns: checklistRequirementDisplayedColumns;"></mat-row>
 
-                            <tr class="mat-row" *matNoDataRow>
+                            <!-- <tr class="mat-row" *matNoDataRow>
                                 <td class="mat-cell" colspan="7">No data matching the filter
                                     "{{checklistRequirementFilterData.value}}"</td>
-                            </tr>
+                            </tr> -->
                         </mat-table>
 
                         <mat-paginator #checklistRequirementPaginator [pageSizeOptions]="[10, 50, 100, 200]">

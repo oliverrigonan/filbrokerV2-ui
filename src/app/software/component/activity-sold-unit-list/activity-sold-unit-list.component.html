@@ -123,9 +123,9 @@
                     <mat-header-row *matHeaderRowDef="soldUnitDisplayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: soldUnitDisplayedColumns;"></mat-row>
 
-                    <tr class="mat-row" *matNoDataRow>
+                    <!-- <tr class="mat-row" *matNoDataRow>
                         <td class="mat-cell" colspan="9">No data matching the filter "{{soldUnitFilterData.value}}"</td>
-                    </tr>
+                    </tr> -->
                 </mat-table>
 
                 <mat-paginator #soldUnitPaginator [pageSizeOptions]="[10, 50, 100, 200]"></mat-paginator>

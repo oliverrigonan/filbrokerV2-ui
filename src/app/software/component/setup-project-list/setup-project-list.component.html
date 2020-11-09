@@ -88,9 +88,9 @@
                     <mat-header-row *matHeaderRowDef="projectDisplayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: projectDisplayedColumns;"></mat-row>
 
-                    <tr class="mat-row" *matNoDataRow>
+                    <!-- <tr class="mat-row" *matNoDataRow>
                         <td class="mat-cell" colspan="8">No data matching the filter "{{projectFilterData.value}}"</td>
-                    </tr>
+                    </tr> -->
                 </mat-table>
 
                 <mat-paginator #projectPaginator [pageSizeOptions]="[10, 50, 100, 200]"></mat-paginator>
