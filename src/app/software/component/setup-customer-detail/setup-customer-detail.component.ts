@@ -43,6 +43,9 @@ export class SetupCustomerDetailComponent implements OnInit {
   public birthDate: Date = new Date();
   public spouseBirthDate: Date = new Date();
 
+  @ViewChild("imageURL") public imageURL: any;
+  public isUploadDisabled: boolean = false;
+
   public getDropdownListCustomerStatus(): void {
     this.sysDropdownService.getDropdownList("CUSTOMER STATUS").subscribe(
       data => {
@@ -130,6 +133,7 @@ export class SetupCustomerDetailComponent implements OnInit {
             this.mstCustomerModel.EmployerZipCode = data.EmployerZipCode;
             this.mstCustomerModel.EmployerTelephoneNumber = data.EmployerTelephoneNumber;
             this.mstCustomerModel.EmployerMobileNumber = data.EmployerMobileNumber;
+            this.mstCustomerModel.Picture = data.Picture;
             this.mstCustomerModel.SpouseLastName = data.SpouseLastName;
             this.mstCustomerModel.SpouseFirstName = data.SpouseFirstName;
             this.mstCustomerModel.SpouseMiddleName = data.SpouseMiddleName;
@@ -171,6 +175,49 @@ export class SetupCustomerDetailComponent implements OnInit {
     this.isCustomerSaveButtonDisabled = isLocked;
     this.isCustomerLockButtonDisabled = isLocked;
     this.isCustomerUnlockButtonDisabled = !isLocked;
+  }
+
+  public inputFileChange(): void {
+    let fi = this.imageURL.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+    }
+  }
+
+  public buttonUploadImage(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.imageURL.nativeElement;
+
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstCustomerService.uploadCustomerImage(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Photo was successfully uploaded!', 'Upload Successful');
+              let imageURL = data[1];
+              this.mstCustomerModel.Picture = imageURL;
+              this.imageURL.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearImage(): void {
+    this.mstCustomerModel.Picture = "";
   }
 
   public buttonSaveCustomer(): void {

@@ -259,7 +259,143 @@
             </div>
         </mat-tab>
         <mat-tab label="Attachments">
-
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 5px;">
+                            <mat-label>Attachment 1 (URL)</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.Attachment1"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                        <input readonly #inputFileAttachment1 type="file"
+                            style="border: 1px solid #dadada; padding: 5px; margin-bottom: 10px; margin-right: 5px;"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled" />
+                        <button mat-stroked-button color="" (click)="buttonUploadAttachment1()"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Upload
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonClearAttachment1()"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Clear
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonViewAttachment1()">
+                            View
+                        </button>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 5px;">
+                            <mat-label>Attachment 2 (URL)</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.Attachment2"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                        <input readonly #inputFileAttachment2 type="file"
+                            style="border: 1px solid #dadada; padding: 5px; margin-bottom: 10px; margin-right: 5px;"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled" />
+                        <button mat-stroked-button color="" (click)="buttonUploadAttachment2()"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Upload
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonClearAttachment2()"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Clear
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonViewAttachment2()">
+                            View
+                        </button>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 5px;">
+                            <mat-label>Attachment 3 (URL)</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.Attachment3"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                        <input readonly #inputFileAttachment3 type="file"
+                            style="border: 1px solid #dadada; padding: 5px; margin-bottom: 10px; margin-right: 5px;"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled" />
+                        <button mat-stroked-button color="" (click)="buttonUploadAttachment3()"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Upload
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonClearAttachment3()"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Clear
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonViewAttachment3()">
+                            View
+                        </button>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 5px;">
+                            <mat-label>Attachment 4 (URL)</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.Attachment4"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                        <input readonly #inputFileAttachment4 type="file"
+                            style="border: 1px solid #dadada; padding: 5px; margin-bottom: 10px; margin-right: 5px;"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled" />
+                        <button mat-stroked-button color="" (click)="buttonUploadAttachment4()"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Upload
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonClearAttachment4()"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Clear
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonViewAttachment4()">
+                            View
+                        </button>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 5px;">
+                            <mat-label>Attachment 5 (URL)</mat-label>
+                            <input matInput [(ngModel)]="mstBrokerModel.Attachment5"
+                                [ngModelOptions]="{standalone: true}" disabled>
+                        </mat-form-field>
+                        <input readonly #inputFileAttachment5 type="file"
+                            style="border: 1px solid #dadada; padding: 5px; margin-bottom: 10px; margin-right: 5px;"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled" />
+                        <button mat-stroked-button color="" (click)="buttonUploadAttachment5()"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Upload
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonClearAttachment5()"
+                            [disabled]="mstBrokerModel.IsLocked ? mstBrokerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Clear
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonViewAttachment5()">
+                            View
+                        </button>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                    </div>
+                </div>
+            </div>
         </mat-tab>
     </mat-tab-group>
 </div>

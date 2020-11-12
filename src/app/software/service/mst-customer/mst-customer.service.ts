@@ -66,6 +66,7 @@ export class MstCustomerService {
                 EmployerZipCode: results[i].EmployerZipCode,
                 EmployerTelephoneNumber: results[i].EmployerTelephoneNumber,
                 EmployerMobileNumber: results[i].EmployerMobileNumber,
+                Picture: results[i].Picture,
                 SpouseLastName: results[i].SpouseLastName,
                 SpouseFirstName: results[i].SpouseFirstName,
                 SpouseMiddleName: results[i].SpouseMiddleName,
@@ -129,6 +130,7 @@ export class MstCustomerService {
               EmployerCountry: results["EmployerCountry"],
               EmployerZipCode: results["EmployerZipCode"],
               EmployerTelephoneNumber: results["EmployerTelephoneNumber"],
+              Picture: results["Picture"],
               EmployerMobileNumber: results["EmployerMobileNumber"],
               SpouseLastName: results["SpouseLastName"],
               SpouseFirstName: results["SpouseFirstName"],
@@ -217,6 +219,30 @@ export class MstCustomerService {
       this.httpClient.delete(this.defaultAPIURLHost + "/api/MstCustomer/Delete/" + id, this.options).subscribe(
         response => {
           observer.next([true, ""]);
+          observer.complete();
+        },
+        error => {
+          observer.next([false, error.error]);
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  public uploadCustomerImage(fileToUpload: any): Observable<[boolean, string]> {
+    return new Observable<[boolean, string]>((observer) => {
+      let imageOptions: any = {
+        headers: new HttpHeaders({
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        })
+      };
+
+      let input = new FormData();
+      input.append("file", fileToUpload);
+
+      this.httpClient.post(this.defaultAPIURLHost + "/api/Blob/Upload", input, imageOptions).subscribe(
+        response => {
+          observer.next([true, response[0]["FileUrl"].toString()]);
           observer.complete();
         },
         error => {

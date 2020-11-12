@@ -210,4 +210,28 @@ export class MstBrokerService {
       );
     });
   }
+
+  public uploadBrokerAttachment(fileToUpload: any): Observable<[boolean, string]> {
+    return new Observable<[boolean, string]>((observer) => {
+      let imageOptions: any = {
+        headers: new HttpHeaders({
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        })
+      };
+
+      let input = new FormData();
+      input.append("file", fileToUpload);
+
+      this.httpClient.post(this.defaultAPIURLHost + "/api/Blob/Upload", input, imageOptions).subscribe(
+        response => {
+          observer.next([true, response[0]["FileUrl"].toString()]);
+          observer.complete();
+        },
+        error => {
+          observer.next([false, error.error]);
+          observer.complete();
+        }
+      );
+    });
+  }
 }

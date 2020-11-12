@@ -118,6 +118,7 @@ export class SetupCustomerListComponent implements OnInit {
       EmployerZipCode: "",
       EmployerTelephoneNumber: "",
       EmployerMobileNumber: "",
+      Picture: "",
       SpouseLastName: "",
       SpouseFirstName: "",
       SpouseMiddleName: "",

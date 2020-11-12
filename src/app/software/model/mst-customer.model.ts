@@ -32,6 +32,7 @@ export class MstCustomerModel {
     EmployerZipCode: string = "";
     EmployerTelephoneNumber: string = "";
     EmployerMobileNumber: string = "";
+    Picture: string = "";
     SpouseLastName: string = "";
     SpouseFirstName: string = "";
     SpouseMiddleName: string = "";

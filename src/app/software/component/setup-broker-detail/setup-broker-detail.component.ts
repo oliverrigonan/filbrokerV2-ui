@@ -42,6 +42,13 @@ export class SetupBrokerDetailComponent implements OnInit {
 
   public birthDate: Date = new Date();
 
+  @ViewChild("inputFileAttachment1") public inputFileAttachment1: any;
+  @ViewChild("inputFileAttachment2") public inputFileAttachment2: any;
+  @ViewChild("inputFileAttachment3") public inputFileAttachment3: any;
+  @ViewChild("inputFileAttachment4") public inputFileAttachment4: any;
+  @ViewChild("inputFileAttachment5") public inputFileAttachment5: any;
+  public isUploadDisabled: boolean = false;
+
   public getDropdownListBrokerStatus(): void {
     this.sysDropdownService.getDropdownList("BROKER STATUS").subscribe(
       data => {
@@ -139,6 +146,206 @@ export class SetupBrokerDetailComponent implements OnInit {
     this.isBrokerSaveButtonDisabled = isLocked;
     this.isBrokerLockButtonDisabled = isLocked;
     this.isBrokerUnlockButtonDisabled = !isLocked;
+  }
+
+  public buttonUploadAttachment1(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.inputFileAttachment1.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstBrokerService.uploadBrokerAttachment(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Attachment 1 was successfully uploaded!', 'Upload Successful');
+              let URL = data[1];
+              this.mstBrokerModel.Attachment1 = URL;
+              this.inputFileAttachment1.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearAttachment1(): void {
+    this.mstBrokerModel.Attachment1 = "";
+  }
+
+  public buttonViewAttachment1(): void {
+    let win = window.open(this.mstBrokerModel.Attachment1, '_blank');
+    win.focus();
+  }
+
+  public buttonUploadAttachment2(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.inputFileAttachment2.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstBrokerService.uploadBrokerAttachment(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Attachment 1 was successfully uploaded!', 'Upload Successful');
+              let URL = data[1];
+              this.mstBrokerModel.Attachment2 = URL;
+              this.inputFileAttachment2.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearAttachment2(): void {
+    this.mstBrokerModel.Attachment2 = "";
+  }
+
+  public buttonViewAttachment2(): void {
+    let win = window.open(this.mstBrokerModel.Attachment2, '_blank');
+    win.focus();
+  }
+
+  public buttonUploadAttachment3(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.inputFileAttachment3.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstBrokerService.uploadBrokerAttachment(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Attachment 1 was successfully uploaded!', 'Upload Successful');
+              let URL = data[1];
+              this.mstBrokerModel.Attachment3 = URL;
+              this.inputFileAttachment3.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearAttachment3(): void {
+    this.mstBrokerModel.Attachment3 = "";
+  }
+
+  public buttonViewAttachment3(): void {
+    let win = window.open(this.mstBrokerModel.Attachment3, '_blank');
+    win.focus();
+  }
+
+  public buttonUploadAttachment4(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.inputFileAttachment4.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstBrokerService.uploadBrokerAttachment(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Attachment 1 was successfully uploaded!', 'Upload Successful');
+              let URL = data[1];
+              this.mstBrokerModel.Attachment4 = URL;
+              this.inputFileAttachment4.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearAttachment4(): void {
+    this.mstBrokerModel.Attachment4 = "";
+  }
+
+  public buttonViewAttachment4(): void {
+    let win = window.open(this.mstBrokerModel.Attachment4, '_blank');
+    win.focus();
+  }
+
+  public buttonUploadAttachment5(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.inputFileAttachment5.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstBrokerService.uploadBrokerAttachment(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Attachment 1 was successfully uploaded!', 'Upload Successful');
+              let URL = data[1];
+              this.mstBrokerModel.Attachment5 = URL;
+              this.inputFileAttachment5.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearAttachment5(): void {
+    this.mstBrokerModel.Attachment5 = "";
+  }
+
+  public buttonViewAttachment5(): void {
+    let win = window.open(this.mstBrokerModel.Attachment5, '_blank');
+    win.focus();
   }
 
   public buttonSaveBroker(): void {

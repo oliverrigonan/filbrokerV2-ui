@@ -86,10 +86,10 @@ export class SetupChecklistListComponent implements OnInit {
           this.checklistDataSource = new MatTableDataSource(this.checklistData);
           this.checklistDataSource.paginator = this.checklistPaginator;
           this.checklistDataSource.sort = this.checklistSort;
-
-          this.isSpinnerShow = false;
-          this.isContentShow = true;
         }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
       }
     );
   }

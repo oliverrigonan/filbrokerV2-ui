@@ -31,33 +31,63 @@
         <mat-tab label="Customer Information">
             <div class="software-container">
                 <div fxLayout="row" fxLayout.xs="column">
-                    <div fxFlex="25" style="padding: 5px;">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Customer Code</mat-label>
-                            <input matInput [(ngModel)]="mstCustomerModel.CustomerCode"
-                                [ngModelOptions]="{standalone: true}" disabled>
-                        </mat-form-field>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100">
+                                <img src="{{mstCustomerModel.Picture}}" style="width: 100%;" />
+                            </div>
+                        </div>
+                        <input readonly #imageURL type="file"
+                            style="border: 1px solid #dadada; padding: 5px; margin-bottom: 10px; margin-right: 5px;"
+                            (change)="inputFileChange()"
+                            [disabled]="mstCustomerModel.IsLocked ? mstCustomerModel.IsLocked : isUploadDisabled" />
+                        <button mat-stroked-button color="" (click)="buttonUploadImage()"
+                            [disabled]="mstCustomerModel.IsLocked ? mstCustomerModel.IsLocked : isUploadDisabled"
+                            style="margin-right: 5px;">
+                            Upload
+                        </button>
+                        <button mat-stroked-button color="" (click)="buttonClearImage()"
+                            [disabled]="mstCustomerModel.IsLocked ? mstCustomerModel.IsLocked : isUploadDisabled">
+                            Clear
+                        </button>
                     </div>
-                    <div fxFlex="25" style="padding: 5px;">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Last Name</mat-label>
-                            <input matInput [(ngModel)]="mstCustomerModel.LastName"
-                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="25" style="padding: 5px;">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>First Name</mat-label>
-                            <input matInput [(ngModel)]="mstCustomerModel.FirstName"
-                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="25" style="padding: 5px;">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Middle Name</mat-label>
-                            <input matInput [(ngModel)]="mstCustomerModel.MiddleName"
-                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
-                        </mat-form-field>
+                    <div fxFlex="50">
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 5px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Customer Code</mat-label>
+                                    <input matInput [(ngModel)]="mstCustomerModel.CustomerCode"
+                                        [ngModelOptions]="{standalone: true}" disabled>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 5px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Last Name</mat-label>
+                                    <input matInput [(ngModel)]="mstCustomerModel.LastName"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 5px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>First Name</mat-label>
+                                    <input matInput [(ngModel)]="mstCustomerModel.FirstName"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 5px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Middle Name</mat-label>
+                                    <input matInput [(ngModel)]="mstCustomerModel.MiddleName"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div fxLayout="row" fxLayout.xs="column">

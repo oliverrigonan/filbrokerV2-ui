@@ -28,6 +28,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { SoftwareComponent } from './software.component';
@@ -109,6 +110,7 @@ import { SetupChecklistRequirementDetailComponent } from './component/setup-chec
     MatSelectModule,
     MatTabsModule,
     MatDatepickerModule,
+    MatCardModule,
     MatDialogModule
   ],
   providers: [

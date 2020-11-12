@@ -99,8 +99,15 @@ mat-paginator {
 .mat-form-field-appearance-fill .mat-form-field-flex {
     /* border-radius: 20px !important; */
     padding: .75em 1em 0 1em !important;
+    background: white;
 }
 
 .mat-form-field-wrapper {
     padding-bottom: 0px !important;
+    border: 1px solid #dadada;
+    border-radius: 4px 4px 0 0
+}
+
+.mat-paginator-page-size-select .mat-form-field-wrapper {
+    border: none;
 }
