@@ -1,14 +1,24 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { MstCustomerModel } from './../../model/mst-customer.model';
 import { MstUserModel } from './../../model/mst-user.model';
 import { TrnCollectionModel } from './../../model/trn-collection.model';
+import { TrnCollectionPaymentModel } from './../../model/trn-collection-payment.model';
 
 import { MstCustomerService } from './../../service/mst-customer/mst-customer.service';
 import { MstUserService } from './../../service/mst-user/mst-user.service';
 import { TrnCollectionService } from './../../service/trn-collection/trn-collection.service';
+import { TrnCollectionPaymentService } from './../../service/trn-collection-payment/trn-collection-payment.service';
+
+import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
+import { ActivityCollectionPaymentDetailComponent } from './../activity-collection-payment-detail/activity-collection-payment-detail.component';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -25,7 +35,10 @@ export class ActivityCollectionDetailComponent implements OnInit {
     private mstCustomerService: MstCustomerService,
     private mstUserService: MstUserService,
     private trnCollectionService: TrnCollectionService,
+    private trnCollectionPaymentService: TrnCollectionPaymentService,
     private toastr: ToastrService,
+    private confirmationDeleteDialog: MatDialog,
+    private activityCollectionPaymentDetailDialog: MatDialog
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -40,6 +53,24 @@ export class ActivityCollectionDetailComponent implements OnInit {
   public isCollectionUnlockButtonDisabled: boolean = false;
 
   public collectionDate: Date = new Date();
+
+  public collectionPaymentDisplayedColumns: string[] = [
+    'ButtonEdit',
+    'ButtonDelete',
+    'SoldUnit',
+    'Project',
+    'PayType',
+    'Amount',
+    'Space'
+  ];
+
+  public collectionPaymentDataSource: MatTableDataSource<TrnCollectionPaymentModel>;
+  public collectionPaymentData: TrnCollectionPaymentModel[] = []
+
+  @ViewChild('collectionPaymentPaginator') public collectionPaymentPaginator: MatPaginator;
+  @ViewChild('collectionPaymentSort') public collectionPaymentSort: MatSort;
+
+  public isButtonAddCollectionPaymentDisabled: boolean = false;
 
   public getCustomerList(): void {
     this.mstCustomerService.getCustomerList().subscribe(
@@ -81,6 +112,8 @@ export class ActivityCollectionDetailComponent implements OnInit {
 
             this.isSpinnerShow = false;
             this.isContentShow = true;
+
+            this.getCollectionPaymentData();
 
             this.isLockedButtons(this.trnCollectionModel.IsLocked);
           }
@@ -159,6 +192,144 @@ export class ActivityCollectionDetailComponent implements OnInit {
         this.isLockedButtons(this.trnCollectionModel.IsLocked);
       }
     );
+  }
+
+  public getCollectionPaymentData(): void {
+    this.collectionPaymentData = [];
+    this.collectionPaymentDataSource = new MatTableDataSource(this.collectionPaymentData);
+    this.collectionPaymentDataSource.paginator = this.collectionPaymentPaginator;
+    this.collectionPaymentDataSource.sort = this.collectionPaymentSort;
+
+    this.trnCollectionPaymentService.getCollectionPaymentListPerCollection(this.trnCollectionModel.Id).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.collectionPaymentData = data;
+          this.collectionPaymentDataSource = new MatTableDataSource(this.collectionPaymentData);
+          this.collectionPaymentDataSource.paginator = this.collectionPaymentPaginator;
+          this.collectionPaymentDataSource.sort = this.collectionPaymentSort;
+        }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
+      }
+    );
+  }
+
+  public collectionPaymentFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.collectionPaymentDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.collectionPaymentDataSource.paginator) {
+      this.collectionPaymentDataSource.paginator.firstPage();
+    }
+  }
+
+  public buttonAddCollectionPayment(): void {
+    if (this.trnCollectionModel.IsLocked == true) {
+      this.toastr.error("Cannot edit a locked record.", 'Edit Failed');
+    } else {
+      let trnCollectionPaymentModel: TrnCollectionPaymentModel = {
+        Id: 0,
+        CollectionId: this.trnCollectionModel.Id,
+        SoldUnitId: 0,
+        SoldUnit: "",
+        Project: "",
+        PayType: "",
+        Amount: 0,
+        CheckNumber: "",
+        CheckDate: "",
+        CheckBank: "",
+        OtherInformation: ""
+      };
+
+      const openDialog = this.activityCollectionPaymentDetailDialog.open(ActivityCollectionPaymentDetailComponent, {
+        width: '550px',
+        data: {
+          dialogTitle: "Add Payment",
+          dialogData: trnCollectionPaymentModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.getCollectionPaymentData();
+        }
+      });
+    }
+  }
+
+  public buttonEditCollectionPayment(currentData: any): void {
+    if (this.trnCollectionModel.IsLocked == true) {
+      this.toastr.error("Cannot edit a locked record.", 'Edit Failed');
+    } else {
+      let id = currentData.Id;
+
+      let trnCollectionPaymentModel: TrnCollectionPaymentModel = {
+        Id: id,
+        CollectionId: this.trnCollectionModel.Id,
+        SoldUnitId: 0,
+        SoldUnit: "",
+        Project: "",
+        PayType: "",
+        Amount: 0,
+        CheckNumber: "",
+        CheckDate: "",
+        CheckBank: "",
+        OtherInformation: ""
+      };
+
+      const openDialog = this.activityCollectionPaymentDetailDialog.open(ActivityCollectionPaymentDetailComponent, {
+        width: '550px',
+        data: {
+          dialogTitle: "Edit Payment",
+          dialogData: trnCollectionPaymentModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.getCollectionPaymentData();
+        }
+      });
+    }
+  }
+
+  public buttonDeleteCollectionPayment(currentData: any): void {
+    if (this.trnCollectionModel.IsLocked == true) {
+      this.toastr.error("Cannot delete a locked record.", 'Delete Failed');
+    } else {
+      let id = currentData.Id;
+
+      const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
+        width: '450px',
+        data: {
+          dialogDeleteTitle: "Delete Payment",
+          dialogDeleteMessage: "Are you sure you want to delete this pay type " + currentData.PayType + "?",
+          dialogDeleteId: id
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+        if (result != null) {
+          this.trnCollectionPaymentService.deleteCollectionPayment(result).subscribe(
+            data => {
+
+              if (data[0] == true) {
+                this.toastr.success('Payment was successfully deleted!', 'Delete Successful');
+                this.getCollectionPaymentData();
+              } else {
+                this.toastr.error(data[1], 'Delete Failed');
+              }
+
+            }
+          );
+        }
+      });
+    }
   }
 
   ngOnInit(): void {

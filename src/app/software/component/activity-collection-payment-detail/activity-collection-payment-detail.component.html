@@ -1,0 +1,97 @@
+<h1 mat-dialog-title>
+    {{ dialogTitle }}
+</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <div *ngIf="isSpinnerShow" style="padding: 25px 0px 25px 0px; text-align: center;">
+        <h4>Please wait...</h4>
+        <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+    </div>
+    <div *ngIf="isContentShow">
+        <div class="software-container">
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 3px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Sold Unit No.</mat-label>
+                        <mat-select [(value)]="trnCollectionPaymentModel.SoldUnitId">
+                            <mat-option *ngFor="let trnSoldUnitObject of trnSoldUnitModel"
+                                [value]="trnSoldUnitObject.Id">
+                                {{trnSoldUnitObject.SoldUnitNumber}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 3px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Pay Type</mat-label>
+                        <mat-select [(value)]="trnCollectionPaymentModel.PayType">
+                            <mat-option *ngFor="let sysDropdownObject of sysDropdownModel"
+                                [value]="sysDropdownObject.Value">
+                                {{sysDropdownObject.Description}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Amount</mat-label>
+                        <input matInput [(ngModel)]="trnCollectionPaymentModel.Amount"
+                            [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Check No.</mat-label>
+                        <input matInput [(ngModel)]="trnCollectionPaymentModel.CheckNumber"
+                            [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Check Date</mat-label>
+                        <input matInput [matDatepicker]="CheckDatePicker" [(ngModel)]="checkDate"
+                            [ngModelOptions]="{standalone: true}" (dateChange)="checkDateDateChange('change', $event)">
+                        <mat-datepicker-toggle matSuffix [for]="CheckDatePicker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #CheckDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Check Bank</mat-label>
+                        <input matInput [(ngModel)]="trnCollectionPaymentModel.CheckBank"
+                            [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Other Information</mat-label>
+                        <textarea matInput [(ngModel)]="trnCollectionPaymentModel.OtherInformation"
+                            [ngModelOptions]="{standalone: true}" style="min-height: 73px;"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" (click)="buttonSaveClick()" [disabled]="isButtonSaveConfirmationDisabled">
+        Save
+    </button>
+    <button mat-flat-button color="warn" (click)="buttonCloseClick()" [disabled]="isButtonSaveConfirmationDisabled">
+        Close
+    </button>
+</mat-dialog-actions>

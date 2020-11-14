@@ -58,6 +58,7 @@ import { SetupChecklistRequirementDetailComponent } from './component/setup-chec
 import { ConfirmationAddChecklistComponent } from './component/confirmation-add-checklist/confirmation-add-checklist.component';
 import { ActivitySoldUnitRequirementDetailComponent } from './component/activity-sold-unit-requirement-detail/activity-sold-unit-requirement-detail.component';
 import { ActivitySoldUnitRequirementActivityDetailComponent } from './component/activity-sold-unit-requirement-activity-detail/activity-sold-unit-requirement-activity-detail.component';
+import { ActivityCollectionPaymentDetailComponent } from './component/activity-collection-payment-detail/activity-collection-payment-detail.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { ActivitySoldUnitRequirementActivityDetailComponent } from './component/
     SetupChecklistRequirementDetailComponent,
     ConfirmationAddChecklistComponent,
     ActivitySoldUnitRequirementDetailComponent,
-    ActivitySoldUnitRequirementActivityDetailComponent
+    ActivitySoldUnitRequirementActivityDetailComponent,
+    ActivityCollectionPaymentDetailComponent
   ],
   imports: [
     CommonModule,
