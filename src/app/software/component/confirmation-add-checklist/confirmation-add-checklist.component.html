@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>
+    {{ dialogAddChecklistTitle }}
+</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <br />
+    {{ dialogAddChecklistMessage }}
+    <br /><br />
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" (click)="buttonAddChecklistClick()"
+        [disabled]="isButtonAddChecklistConfirmationDisabled">
+        Add
+    </button>
+    <button mat-stroked-button (click)="buttonCloseClick()" [disabled]="isButtonAddChecklistConfirmationDisabled">
+        Close
+    </button>
+</mat-dialog-actions>

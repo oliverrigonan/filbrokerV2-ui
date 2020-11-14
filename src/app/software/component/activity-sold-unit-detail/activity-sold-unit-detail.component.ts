@@ -1,6 +1,11 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { MstCustomerModel } from './../../model/mst-customer.model';
 import { MstBrokerModel } from './../../model/mst-broker.model';
@@ -8,6 +13,7 @@ import { MstChecklistModel } from './../../model/mst-checklist.model';
 import { MstUserModel } from './../../model/mst-user.model';
 import { SysDropdownModel } from './../../model/sys-dropdown.model';
 import { TrnSoldUnitModel } from './../../model/trn-sold-unit.model';
+import { TrnSoldUnitRequirementModel } from './../../model/trn-sold-unit-requirement.model';
 
 import { MstCustomerService } from './../../service/mst-customer/mst-customer.service';
 import { MstBrokerService } from './../../service/mst-broker/mst-broker.service';
@@ -15,8 +21,12 @@ import { MstChecklistService } from './../../service/mst-checklist/mst-checklist
 import { MstUserService } from './../../service/mst-user/mst-user.service';
 import { SysDropdownService } from './../../service/sys-dropdown/sys-dropdown.service';
 import { TrnSoldUnitService } from './../../service/trn-sold-unit/trn-sold-unit.service';
+import { TrnSoldUnitRequirementService } from './../../service/trn-sold-unit-requirement/trn-sold-unit-requirement.service';
 
 import { ToastrService } from 'ngx-toastr';
+
+import { ActivitySoldUnitRequirementDetailComponent } from './../activity-sold-unit-requirement-detail/activity-sold-unit-requirement-detail.component';
+import { ConfirmationAddChecklistComponent } from './../confirmation-add-checklist/confirmation-add-checklist.component';
 
 @Component({
   selector: 'app-activity-sold-unit-detail',
@@ -34,7 +44,10 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     private mstUserService: MstUserService,
     private sysDropdownService: SysDropdownService,
     private trnSoldUnitService: TrnSoldUnitService,
-    private toastr: ToastrService,
+    private trnSoldUnitRequirementService: TrnSoldUnitRequirementService,
+    private activitySoldUnitRequirementDetailDialog: MatDialog,
+    private confirmationAddChecklistDialog: MatDialog,
+    private toastr: ToastrService
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -56,6 +69,26 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   public isSoldUnitTransferButtonDisabled: boolean = false;
 
   public soldUnitDate: Date = new Date();
+
+  public soldUnitRequirementDisplayedColumns: string[] = [
+    'ButtonEdit',
+    'ChecklistRequirementNo',
+    'ChecklistRequirement',
+    'ChecklistCategory',
+    'ChecklistType',
+    'ChecklistWithAttachments',
+    'Status',
+    'StatusDate',
+    'Space'
+  ];
+
+  public soldUnitRequirementDataSource: MatTableDataSource<TrnSoldUnitRequirementModel>;
+  public soldUnitRequirementData: TrnSoldUnitRequirementModel[] = []
+
+  @ViewChild('soldUnitRequirementPaginator') public soldUnitRequirementPaginator: MatPaginator;
+  @ViewChild('soldUnitRequirementSort') public soldUnitRequirementSort: MatSort;
+
+  public isButtonAddSoldUnitRequirementDisabled: boolean = false;
 
   public getCustomerList(): void {
     this.mstCustomerService.getCustomerList().subscribe(
@@ -175,6 +208,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
             this.isSpinnerShow = false;
             this.isContentShow = true;
 
+            this.getSoldUnitRequirementData();
+
             this.isLockedButtons(this.trnSoldUnitModel.IsLocked);
           }
         }, 500);
@@ -270,6 +305,111 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
 
   public buttonTransferSoldUnit(): void {
 
+  }
+
+  public getSoldUnitRequirementData(): void {
+    this.soldUnitRequirementData = [];
+    this.soldUnitRequirementDataSource = new MatTableDataSource(this.soldUnitRequirementData);
+    this.soldUnitRequirementDataSource.paginator = this.soldUnitRequirementPaginator;
+    this.soldUnitRequirementDataSource.sort = this.soldUnitRequirementSort;
+
+    this.trnSoldUnitRequirementService.getSoldUnitRequirementListPerSoldUnit(this.trnSoldUnitModel.Id).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.soldUnitRequirementData = data;
+          this.soldUnitRequirementDataSource = new MatTableDataSource(this.soldUnitRequirementData);
+          this.soldUnitRequirementDataSource.paginator = this.soldUnitRequirementPaginator;
+          this.soldUnitRequirementDataSource.sort = this.soldUnitRequirementSort;
+        }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
+      }
+    );
+  }
+
+  public soldUnitRequirementFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.soldUnitRequirementDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.soldUnitRequirementDataSource.paginator) {
+      this.soldUnitRequirementDataSource.paginator.firstPage();
+    }
+  }
+
+  public buttonAddSoldUnitRequirement(): void {
+    if (this.trnSoldUnitModel.IsLocked == true) {
+      this.toastr.error("Cannot edit a locked record.", 'Edit Failed');
+    } else {
+      const openDialog = this.confirmationAddChecklistDialog.open(ConfirmationAddChecklistComponent, {
+        width: '450px',
+        data: {
+          dialogAddChecklistTitle: "Add Checklist Requirements",
+          dialogAddChecklistMessage: "Are you sure you want to add all requirements from selected checklist?"
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+        if (result != null) {
+          this.trnSoldUnitRequirementService.addSoldUnitRequirement(this.trnSoldUnitModel.Id, this.trnSoldUnitModel.ChecklistId).subscribe(
+            data => {
+
+              if (data[0] == true) {
+                this.toastr.success('Checklist requirements were successfully added!', 'Add Checklist Requirements Successful');
+                this.getSoldUnitRequirementData();
+              } else {
+                this.toastr.error(data[1], 'Add Checklist Requirements Failed');
+              }
+
+            }
+          );
+        }
+      });
+    }
+  }
+
+  public buttonEditSoldUnitRequirement(currentData: any): void {
+    if (this.trnSoldUnitModel.IsLocked == true) {
+      this.toastr.error("Cannot edit a locked record.", 'Edit Failed');
+    } else {
+      let id = currentData.Id;
+
+      let mstSoldUnitRequirementModel: TrnSoldUnitRequirementModel = {
+        Id: id,
+        SoldUnitId: this.trnSoldUnitModel.Id,
+        ChecklistRequirementId: 0,
+        ChecklistRequirement: "",
+        ChecklistRequirementNo: 0,
+        ChecklistCategory: "",
+        ChecklistType: "",
+        ChecklistWithAttachments: false,
+        Attachment1: "",
+        Attachment2: "",
+        Attachment3: "",
+        Attachment4: "",
+        Attachment5: "",
+        Remarks: "",
+        Status: "",
+        StatusDate: ""
+      };
+
+      const openDialog = this.activitySoldUnitRequirementDetailDialog.open(ActivitySoldUnitRequirementDetailComponent, {
+        width: '1200px',
+        data: {
+          dialogTitle: "Edit Sold Unit Requirement",
+          dialogData: mstSoldUnitRequirementModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.getSoldUnitRequirementData();
+        }
+      });
+    }
   }
 
   ngOnInit(): void {

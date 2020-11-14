@@ -65,6 +65,9 @@ export class SetupProjectDetailComponent implements OnInit {
 
   public isButtonAddHouseModelDisabled: boolean = false;
 
+  @ViewChild("imageURL") public imageURL: any;
+  public isUploadDisabled: boolean = false;
+
   public getDropdownList(): void {
     this.sysDropdownService.getDropdownList("PROJECT STATUS").subscribe(
       data => {
@@ -114,6 +117,42 @@ export class SetupProjectDetailComponent implements OnInit {
     this.isProjectSaveButtonDisabled = isLocked;
     this.isProjectLockButtonDisabled = isLocked;
     this.isProjectUnlockButtonDisabled = !isLocked;
+  }
+
+  public buttonUploadImage(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.imageURL.nativeElement;
+
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstProjectService.uploadProjectLogo(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Photo was successfully uploaded!', 'Upload Successful');
+              let imageURL = data[1];
+              this.mstProjectModel.ProjectLogo = imageURL;
+              this.imageURL.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearImage(): void {
+    this.mstProjectModel.ProjectLogo = "";
   }
 
   public buttonSaveProject(): void {
