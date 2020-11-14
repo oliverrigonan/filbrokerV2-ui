@@ -57,6 +57,7 @@ import { SetupHouseModelDetailComponent } from './component/setup-house-model-de
 import { SetupChecklistRequirementDetailComponent } from './component/setup-checklist-requirement-detail/setup-checklist-requirement-detail.component';
 import { ConfirmationAddChecklistComponent } from './component/confirmation-add-checklist/confirmation-add-checklist.component';
 import { ActivitySoldUnitRequirementDetailComponent } from './component/activity-sold-unit-requirement-detail/activity-sold-unit-requirement-detail.component';
+import { ActivitySoldUnitRequirementActivityDetailComponent } from './component/activity-sold-unit-requirement-activity-detail/activity-sold-unit-requirement-activity-detail.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { ActivitySoldUnitRequirementDetailComponent } from './component/activity
     SetupChecklistRequirementDetailComponent,
     ConfirmationAddChecklistComponent,
     ActivitySoldUnitRequirementDetailComponent,
+    ActivitySoldUnitRequirementActivityDetailComponent
   ],
   imports: [
     CommonModule,

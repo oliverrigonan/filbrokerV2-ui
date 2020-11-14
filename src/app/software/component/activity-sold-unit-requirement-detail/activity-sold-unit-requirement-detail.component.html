@@ -194,7 +194,96 @@
                 </div>
             </mat-tab>
             <mat-tab label="Activities">
+                <div class="software-container">
+                    <div fxLayout="row" fxLayout.xs="column">
+                        <div fxFlex="100" style="padding: 3px; text-align: right;">
+                            <button mat-flat-button color="primary" (click)="buttonAddSoldUnitRequirementActivity()">
+                                Add
+                            </button>
+                        </div>
+                    </div>
 
+                    <div fxLayout="row" fxLayout.xs="column">
+                        <div fxFlex="100" style="padding: 5px;">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Filter</mat-label>
+                                <input matInput (keyup)="soldUnitRequirementActivityFilter($event)" placeholder="Filter"
+                                    #soldUnitRequirementActivityFilterData />
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayout.xs="column">
+                        <div fxFlex="100" style="padding: 5px;">
+                            <mat-table [dataSource]="soldUnitRequirementActivityDataSource"
+                                #soldUnitRequirementActivitySort="matSort" matSort style="overflow-x: scroll;">
+
+                                <ng-container matColumnDef="ButtonEdit">
+                                    <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
+                                    <mat-cell fxFlex="100px" *matCellDef="let row">
+                                        <button mat-flat-button color="primary"
+                                            (click)="buttonEditSoldUnitRequirementActivity(row)">
+                                            Edit
+                                        </button>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ButtonDelete">
+                                    <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
+                                    <mat-cell fxFlex="100px" *matCellDef="let row">
+                                        <button mat-flat-button color="warn"
+                                            (click)="buttonDeleteSoldUnitRequirementActivity(row)">
+                                            Delete
+                                        </button>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="ActivityDate">
+                                    <mat-header-cell fxFlex="120px" *matHeaderCellDef mat-sort-header> Date
+                                    </mat-header-cell>
+                                    <mat-cell fxFlex="120px" *matCellDef="let row"> {{row.ActivityDate}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="Activity">
+                                    <mat-header-cell fxFlex="250px" *matHeaderCellDef mat-sort-header> Activity
+                                    </mat-header-cell>
+                                    <mat-cell fxFlex="250px" *matCellDef="let row"> {{row.Activity}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="Remarks">
+                                    <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Remarks
+                                    </mat-header-cell>
+                                    <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Remarks}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="User">
+                                    <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> User
+                                    </mat-header-cell>
+                                    <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.User}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="Space">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                    </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="soldUnitRequirementActivityDisplayedColumns">
+                                </mat-header-row>
+                                <mat-row *matRowDef="let row; columns: soldUnitRequirementActivityDisplayedColumns;">
+                                </mat-row>
+
+                                <!-- <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="6">No data matching the filter
+                                    "{{soldUnitRequirementActivityFilterData.value}}"</td>
+                            </tr> -->
+                            </mat-table>
+
+                            <mat-paginator #soldUnitRequirementActivityPaginator [pageSizeOptions]="[10, 50, 100, 200]">
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
             </mat-tab>
         </mat-tab-group>
     </div>

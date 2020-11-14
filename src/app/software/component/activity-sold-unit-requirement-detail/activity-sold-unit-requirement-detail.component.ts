@@ -1,14 +1,23 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { SysDropdownModel } from './../../model/sys-dropdown.model';
 import { TrnSoldUnitRequirementModel } from './../../model/trn-sold-unit-requirement.model';
+import { TrnSoldUnitRequirementActivityModel } from './../../model/trn-sold-unit-requirement-activity.model';
 
 import { TrnSoldUnitRequirementService } from './../../service/trn-sold-unit-requirement/trn-sold-unit-requirement.service';
+import { TrnSoldUnitRequirementActivityService } from './../../service/trn-sold-unit-requirement-activity/trn-sold-unit-requirement-activity.service';
 
 import { SysDropdownService } from './../../service/sys-dropdown/sys-dropdown.service';
 
 import { ToastrService } from 'ngx-toastr';
+
+import { ActivitySoldUnitRequirementActivityDetailComponent } from './../activity-sold-unit-requirement-activity-detail/activity-sold-unit-requirement-activity-detail.component';
+import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 
 @Component({
   selector: 'app-activity-sold-unit-requirement-detail',
@@ -22,7 +31,10 @@ export class ActivitySoldUnitRequirementDetailComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private activitySoldUnitRequirementDetailData: any,
     private toastr: ToastrService,
     private sysDropdownService: SysDropdownService,
-    private trnSoldUnitRequirementService: TrnSoldUnitRequirementService
+    private trnSoldUnitRequirementService: TrnSoldUnitRequirementService,
+    private trnSoldUnitRequirementActivityService: TrnSoldUnitRequirementActivityService,
+    private activitySoldUnitRequirementActivityDetailDialog: MatDialog,
+    private confirmationDeleteDialog: MatDialog
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -42,6 +54,24 @@ export class ActivitySoldUnitRequirementDetailComponent implements OnInit {
   @ViewChild("inputFileAttachment4") public inputFileAttachment4: any;
   @ViewChild("inputFileAttachment5") public inputFileAttachment5: any;
   public isUploadDisabled: boolean = false;
+
+  public soldUnitRequirementActivityDisplayedColumns: string[] = [
+    'ButtonEdit',
+    'ButtonDelete',
+    'ActivityDate',
+    'Activity',
+    'Remarks',
+    'User',
+    'Space'
+  ];
+
+  public soldUnitRequirementActivityDataSource: MatTableDataSource<TrnSoldUnitRequirementActivityModel>;
+  public soldUnitRequirementActivityData: TrnSoldUnitRequirementActivityModel[] = []
+
+  @ViewChild('soldUnitRequirementActivityPaginator') public soldUnitRequirementActivityPaginator: MatPaginator;
+  @ViewChild('soldUnitRequirementActivitySort') public soldUnitRequirementActivitySort: MatSort;
+
+  public isButtonAddSoldUnitRequirementActivityDisabled: boolean = false;
 
   public getDropdownList(): void {
     this.sysDropdownService.getDropdownList("REQUIREMENT STATUS").subscribe(
@@ -75,6 +105,8 @@ export class ActivitySoldUnitRequirementDetailComponent implements OnInit {
             this.trnSoldUnitRequirementModel.Remarks = data.Remarks;
             this.trnSoldUnitRequirementModel.Status = data.Status;
             this.trnSoldUnitRequirementModel.StatusDate = data.StatusDate;
+
+            this.getSoldUnitRequirementActivityData();
           } else {
             this.trnSoldUnitRequirementModel.SoldUnitId = this.dialogData.SoldUnitId;
           }
@@ -286,6 +318,146 @@ export class ActivitySoldUnitRequirementDetailComponent implements OnInit {
   public buttonViewAttachment5(): void {
     let win = window.open(this.trnSoldUnitRequirementModel.Attachment5, '_blank');
     win.focus();
+  }
+
+  public getSoldUnitRequirementActivityData(): void {
+    this.soldUnitRequirementActivityData = [];
+    this.soldUnitRequirementActivityDataSource = new MatTableDataSource(this.soldUnitRequirementActivityData);
+    this.soldUnitRequirementActivityDataSource.paginator = this.soldUnitRequirementActivityPaginator;
+    this.soldUnitRequirementActivityDataSource.sort = this.soldUnitRequirementActivitySort;
+
+    this.trnSoldUnitRequirementActivityService.getSoldUnitRequirementActivityListPerProject(this.trnSoldUnitRequirementModel.Id).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.soldUnitRequirementActivityData = data;
+          this.soldUnitRequirementActivityDataSource = new MatTableDataSource(this.soldUnitRequirementActivityData);
+          this.soldUnitRequirementActivityDataSource.paginator = this.soldUnitRequirementActivityPaginator;
+          this.soldUnitRequirementActivityDataSource.sort = this.soldUnitRequirementActivitySort;
+        }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
+      }
+    );
+  }
+
+  public soldUnitRequirementActivityFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.soldUnitRequirementActivityDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.soldUnitRequirementActivityDataSource.paginator) {
+      this.soldUnitRequirementActivityDataSource.paginator.firstPage();
+    }
+  }
+
+  public buttonAddSoldUnitRequirementActivity(): void {
+    if (this.trnSoldUnitRequirementModel.Id == 0) {
+      this.toastr.error("No sold unit requirement data found.", 'Add Failed');
+    } else {
+      let trnSoldUnitRequirementActivityModel: TrnSoldUnitRequirementActivityModel = {
+        Id: 0,
+        SoldUnitRequirementId: this.trnSoldUnitRequirementModel.Id,
+        ActivityDate: "",
+        Activity: "",
+        Remarks: "",
+        UserId: 0,
+        User: "",
+        ChecklistRequirement: "",
+        SoldUnitNumber: "",
+        Project: "",
+        UnitCode: "",
+        Customer: ""
+      };
+
+      const openDialog = this.activitySoldUnitRequirementActivityDetailDialog.open(ActivitySoldUnitRequirementActivityDetailComponent, {
+        width: '550px',
+        data: {
+          dialogTitle: "Add Activity",
+          dialogData: trnSoldUnitRequirementActivityModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.getSoldUnitRequirementActivityData();
+        }
+      });
+    }
+  }
+
+  public buttonEditSoldUnitRequirementActivity(currentData: any): void {
+    if (this.trnSoldUnitRequirementModel.Id == 0) {
+      this.toastr.error("No sold unit requirement data found.", 'Add Failed');
+    } else {
+      let id = currentData.Id;
+
+      let trnSoldUnitRequirementActivityModel: TrnSoldUnitRequirementActivityModel = {
+        Id: id,
+        SoldUnitRequirementId: this.trnSoldUnitRequirementModel.Id,
+        ActivityDate: "",
+        Activity: "",
+        Remarks: "",
+        UserId: 0,
+        User: "",
+        ChecklistRequirement: "",
+        SoldUnitNumber: "",
+        Project: "",
+        UnitCode: "",
+        Customer: ""
+      };
+
+      const openDialog = this.activitySoldUnitRequirementActivityDetailDialog.open(ActivitySoldUnitRequirementActivityDetailComponent, {
+        width: '550px',
+        data: {
+          dialogTitle: "Edit Activity",
+          dialogData: trnSoldUnitRequirementActivityModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.getSoldUnitRequirementActivityData();
+        }
+      });
+    }
+  }
+
+  public buttonDeleteSoldUnitRequirementActivity(currentData: any): void {
+    if (this.trnSoldUnitRequirementModel.Id == 0) {
+      this.toastr.error("No sold unit requirement data found.", 'Add Failed');
+    } else {
+      let id = currentData.Id;
+
+      const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
+        width: '450px',
+        data: {
+          dialogDeleteTitle: "Delete Activity",
+          dialogDeleteMessage: "Are you sure you want to delete this activity " + currentData.Activity + "?",
+          dialogDeleteId: id
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+        if (result != null) {
+          this.trnSoldUnitRequirementActivityService.deleteSoldUnitRequirementActivity(result).subscribe(
+            data => {
+
+              if (data[0] == true) {
+                this.toastr.success('Activity was successfully deleted!', 'Delete Successful');
+                this.getSoldUnitRequirementActivityData();
+              } else {
+                this.toastr.error(data[1], 'Delete Failed');
+              }
+
+            }
+          );
+        }
+      });
+    }
   }
 
   public buttonSaveClick() {
