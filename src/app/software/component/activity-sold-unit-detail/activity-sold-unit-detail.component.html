@@ -170,15 +170,23 @@
                     <div fxFlex="50" style="padding: 3px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Price</mat-label>
-                            <input matInput [(ngModel)]="trnSoldUnitModel.Price" [ngModelOptions]="{standalone: true}"
-                                [disabled]="trnSoldUnitModel.IsLocked">
+                            <input matInput [(ngModel)]="soldUnitPrice" [ngModelOptions]="{standalone: true}"
+                                (keypress)="onKeyPressNumberOnly($event)"
+                                (focus)="onFocusNumberRemoveCommas('soldUnitPrice')"
+                                (blur)="onaBlurNumberAddCommas(soldUnitPrice, 'soldUnitPrice')"
+                                (keyup)="onKeyUpComputeAmount($event, 'soldUnitPrice')" style="text-align: right;"
+                                disabled>
                         </mat-form-field>
                     </div>
                     <div fxFlex="50" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>TCP</mat-label>
-                            <input matInput [(ngModel)]="trnSoldUnitModel.TCP" [ngModelOptions]="{standalone: true}"
-                                [disabled]="trnSoldUnitModel.IsLocked">
+                            <input matInput [(ngModel)]="soldUnitTCP" [ngModelOptions]="{standalone: true}"
+                                (keypress)="onKeyPressNumberOnly($event)"
+                                (focus)="onFocusNumberRemoveCommas('soldUnitTCP')"
+                                (blur)="onaBlurNumberAddCommas(soldUnitTCP, 'soldUnitTCP')"
+                                (keyup)="onKeyUpComputeAmount($event, 'soldUnitTCP')" style="text-align: right;"
+                                disabled>
                         </mat-form-field>
                     </div>
                 </div>
@@ -186,15 +194,23 @@
                     <div fxFlex="50" style="padding: 3px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Price Discount</mat-label>
-                            <input matInput [(ngModel)]="trnSoldUnitModel.PriceDiscount"
-                                [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                            <input matInput [(ngModel)]="soldUnitPriceDiscount" [ngModelOptions]="{standalone: true}"
+                                (keypress)="onKeyPressNumberOnly($event)"
+                                (focus)="onFocusNumberRemoveCommas('soldUnitPriceDiscount')"
+                                (blur)="onaBlurNumberAddCommas(soldUnitPriceDiscount, 'soldUnitPriceDiscount')"
+                                (keyup)="onKeyUpComputeAmount($event, 'soldUnitPriceDiscount')"
+                                style="text-align: right;" disabled>
                         </mat-form-field>
                     </div>
                     <div fxFlex="50" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>TSP</mat-label>
-                            <input matInput [(ngModel)]="trnSoldUnitModel.TSP" [ngModelOptions]="{standalone: true}"
-                                [disabled]="trnSoldUnitModel.IsLocked">
+                            <input matInput [(ngModel)]="soldUnitTSP" [ngModelOptions]="{standalone: true}"
+                                (keypress)="onKeyPressNumberOnly($event)"
+                                (focus)="onFocusNumberRemoveCommas('soldUnitTSP')"
+                                (blur)="onaBlurNumberAddCommas(soldUnitTSP, 'soldUnitTSP')"
+                                (keyup)="onKeyUpComputeAmount($event, 'soldUnitTSP')" style="text-align: right;"
+                                disabled>
                         </mat-form-field>
                     </div>
                 </div>
@@ -379,8 +395,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Equity (%)</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.EquityPercent"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitEquityPercent"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitEquityPercent')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitEquityPercent, 'soldUnitEquityPercent')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitEquityPercent')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -388,8 +409,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Equity</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.EquityValue"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitEquityValue"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitEquityValue')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitEquityValue, 'soldUnitEquityValue')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitEquityValue')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -397,8 +423,12 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Discount</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.Discount"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitDiscount" [ngModelOptions]="{standalone: true}"
+                                        [disabled]="trnSoldUnitModel.IsLocked" (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitDiscount')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitDiscount, 'soldUnitDiscount')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitDiscount')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -406,8 +436,12 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Discounted Equity</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.DiscountedEquity"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitDiscountEquity"
+                                        [ngModelOptions]="{standalone: true}" (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitDiscountEquity')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitDiscountEquity, 'soldUnitDiscountEquity')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitDiscountEquity')"
+                                        style="text-align: right;" disabled>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -415,8 +449,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Reservation</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.Reservation"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitReservation"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitReservation')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitReservation, 'soldUnitReservation')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitReservation')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -424,8 +463,12 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Net Equity</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.NetEquity"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitNetEquity"
+                                        [ngModelOptions]="{standalone: true}" (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitNetEquity')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitNetEquity, 'soldUnitNetEquity')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitNetEquity')"
+                                        style="text-align: right;" disabled>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -435,8 +478,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Equity Spot Payment 1 (First)</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.EquitySpotPayment1"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitEquitySpotPayment1"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitEquitySpotPayment1')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitEquitySpotPayment1, 'soldUnitEquitySpotPayment1')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitEquitySpotPayment1')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -444,8 +492,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Equity Spot Payment 2 (Mid)</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.EquitySpotPayment2"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitEquitySpotPayment2"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitEquitySpotPayment2')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitEquitySpotPayment2, 'soldUnitEquitySpotPayment2')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitEquitySpotPayment2')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -453,8 +506,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Equity Spot Payment 3 (Last)</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.EquitySpotPayment3"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitEquitySpotPayment3"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitEquitySpotPayment3')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitEquitySpotPayment3, 'soldUnitEquitySpotPayment3')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitEquitySpotPayment3')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -464,8 +522,12 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Equity Balance</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.NetEquityBalance"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitNetEquityBalance"
+                                        [ngModelOptions]="{standalone: true}" (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitNetEquityBalance')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitNetEquityBalance, 'soldUnitNetEquityBalance')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitNetEquityBalance')"
+                                        style="text-align: right;" disabled>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -473,8 +535,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Interest</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.NetEquityInterest"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitNetEquityInterest"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitNetEquityInterest')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitNetEquityInterest, 'soldUnitNetEquityInterest')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitNetEquityInterest')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -482,8 +549,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>No. of Payments</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.NetEquityNoOfPayments"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitNetEquityNoOfPayments"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitNetEquityNoOfPayments')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitNetEquityNoOfPayments, 'soldUnitNetEquityNoOfPayments')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitNetEquityNoOfPayments')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -491,8 +563,12 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Amortization</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.NetEquityAmortization"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitNetEquityAmortization"
+                                        [ngModelOptions]="{standalone: true}" (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitNetEquityAmortization')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitNetEquityAmortization, 'soldUnitNetEquityAmortization')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitNetEquityAmortization')"
+                                        style="text-align: right;" disabled>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -531,8 +607,12 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Balance</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.Balance"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitBalance" [ngModelOptions]="{standalone: true}"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitBalance')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitBalance, 'soldUnitBalance')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitBalance')"
+                                        style="text-align: right;" disabled>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -540,8 +620,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Interest</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.BalanceInterest"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitBalanceInterest"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitBalanceInterest')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitBalanceInterest, 'soldUnitBalanceInterest')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitBalanceInterest')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -549,8 +634,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>No. of Payments</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.BalanceNoOfPayments"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitBalanceNoOfPayments"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitBalanceNoOfPayments')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitBalanceNoOfPayments, 'soldUnitBalanceNoOfPayments')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitBalanceNoOfPayments')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -558,8 +648,13 @@
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Amortization</mat-label>
-                                    <input matInput [(ngModel)]="trnSoldUnitModel.BalanceAmortization"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked">
+                                    <input matInput [(ngModel)]="soldUnitBalanceAmortization"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitBalanceAmortization')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitBalanceAmortization, 'soldUnitBalanceAmortization')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitBalanceAmortization')"
+                                        style="text-align: right;">
                                 </mat-form-field>
                             </div>
                         </div>
