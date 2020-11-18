@@ -35,6 +35,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: gainsboro;
 }
 
+.mat-header-cell {
+  /* border-right: 1px solid #cacaca; */
+  padding-left: 10px;
+}
+
+.mat-cell {
+  border-right: 1px solid #cacaca;
+  padding-left: 10px;
+}
+
 mat-table {
     width: 100%;
     border: 1px solid rgb(230, 230, 230);
@@ -44,36 +54,9 @@ mat-table {
     overflow: hidden;
 }
 
-.mat-table {
-    background: #3f51b5;
-}
-
-mat-header-row {
-    background: #3f51b5;
-}
-
-mat-header-cell {
-
-}
-
-/* .mat-header-row{
-    width: fit-content !important;
-}
-
 .mat-row{
-    width: fit-content !important;
-} */
-
-.mat-row{
-  border-bottom-style: hidden;
-}
-
-.mat-sort-header-content {
-    color: white !important;
-}
-
-.mat-sort-header-arrow {
-    color: white !important;
+    border-bottom-style: hidden;
+    white-space: nowrap;
 }
 
 mat-paginator {
