@@ -124,22 +124,16 @@
                         </mat-nav-list>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 5px;">
-                        <mat-expansion-panel-header>
+                    <mat-expansion-panel class="mat-elevation-z0" style="margin: 5px;" hideToggle>
+                        <mat-expansion-panel-header routerLink="/software/reports" #reportPanelHeader
+                            (click)="reportPanelHeader._toggle()">
                             <mat-panel-title>
                                 <img src="./../../assets/images/software-icons/report.png" height="23" />
                                 &nbsp;&nbsp; Reports
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-
-                        <mat-nav-list>
-                            <a mat-list-item routerLink="/software/setup-supplier-list"
-                                style="height: auto; padding: 10px 0px;">
-                                <img src="./../../assets/images/software-icons/report.png" height="30" />
-                                &nbsp;&nbsp; Sold Unit
-                            </a>
-                        </mat-nav-list>
                     </mat-expansion-panel>
+
                 </mat-accordion>
 
             </mat-nav-list>

@@ -23,9 +23,15 @@
             Unlock
         </button>
         <button mat-flat-button color="primary" [disabled]="isCustomerPrintButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonPrintCustomer()">
+            [matMenuTriggerFor]="printMenu">
             Print
         </button>
+        <mat-menu #printMenu="matMenu">
+            <button mat-menu-item (click)="buttonPrintCustomer()">Customer's Information Sheet</button>
+            <button mat-menu-item>Buyer's Undertaking</button>
+            <button mat-menu-item>Reservation Agreement</button>
+            <button mat-menu-item>Computation Sheet</button>
+        </mat-menu>
         <button mat-flat-button color="warn" routerLink="/software/setup-customer-list">
             Close
         </button>

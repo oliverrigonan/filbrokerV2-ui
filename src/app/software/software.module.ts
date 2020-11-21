@@ -71,6 +71,7 @@ import { PrintPdfBuyersUndertakingComponent } from './component/print-pdf-buyers
 import { PrintPdfReservationAgreementComponent } from './component/print-pdf-reservation-agreement/print-pdf-reservation-agreement.component';
 import { PrintPdfComputationSheetComponent } from './component/print-pdf-computation-sheet/print-pdf-computation-sheet.component';
 import { ConfirmationCancelComponent } from './component/confirmation-cancel/confirmation-cancel.component';
+import { ReportsComponent } from './component/reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { ConfirmationCancelComponent } from './component/confirmation-cancel/con
     PrintPdfBuyersUndertakingComponent,
     PrintPdfReservationAgreementComponent,
     PrintPdfComputationSheetComponent,
-    ConfirmationCancelComponent
+    ConfirmationCancelComponent,
+    ReportsComponent
   ],
   imports: [
     CommonModule,

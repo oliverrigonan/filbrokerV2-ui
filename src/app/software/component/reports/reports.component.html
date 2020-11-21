@@ -1,0 +1,79 @@
+<div *ngIf="isSpinnerShow" style="padding: 100px 0px 15px 0px; text-align: center;">
+    <h4>Please wait...</h4>
+    <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+</div>
+<div [hidden]="!isContentShow">
+    <mat-toolbar>
+        &nbsp;&nbsp;
+        <img src="../../../../assets/images/software-icons/report.png" class="toolBar-img-style" />
+        <span class="toolbar-title-style">
+            Reports
+        </span>
+        <span class="toolbar-spacer"></span>
+        <button mat-flat-button color="primary" style="margin-right: 5px;" (click)="buttonExport()"
+            [disabled]="isButtonExportDisabled">
+            Export
+        </button>
+        <button mat-flat-button color="warn" routerLink="/software">
+            Close
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div class="software-container">
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Start date</mat-label>
+                    <input matInput [matDatepicker]="startDatePicker" [formControl]="startDateFilterFormControl"
+                        [value]="startDateFilterFormControl.value"
+                        (dateChange)="dateRangeFiltersDateChange('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>End date</mat-label>
+                    <input matInput [matDatepicker]="endDatePicker" [formControl]="endDateFilterFormControl"
+                        [value]="endDateFilterFormControl.value"
+                        (dateChange)="dateRangeFiltersDateChange('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div fxFlex="50" style="padding: 5px;">
+
+            </div>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Sold Units">
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="soldUnitFilter($event)" placeholder="Filter" #soldUnitFilterData />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Checklist Requirements">
+
+        </mat-tab>
+        <mat-tab label="Activities">
+
+        </mat-tab>
+        <mat-tab label="Commissions">
+
+        </mat-tab>
+        <mat-tab label="Customers">
+
+        </mat-tab>
+        <mat-tab label="Brokers">
+
+        </mat-tab>
+    </mat-tab-group>
+</div>
