@@ -1,12 +1,16 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { SysDropdownModel } from './../../model/sys-dropdown.model';
 import { MstCustomerModel } from './../../model/mst-customer.model';
 
 import { SysDropdownService } from './../../service/sys-dropdown/sys-dropdown.service';
 import { MstCustomerService } from './../../service/mst-customer/mst-customer.service';
+
+import { PrintPdfCustomerComponent } from './../../component/print-pdf-customer/print-pdf-customer.component';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -22,6 +26,7 @@ export class SetupCustomerDetailComponent implements OnInit {
     private router: Router,
     private sysDropdownService: SysDropdownService,
     private mstCustomerService: MstCustomerService,
+    private printPdfCustomerDialog: MatDialog,
     private toastr: ToastrService,
   ) { }
 
@@ -39,6 +44,7 @@ export class SetupCustomerDetailComponent implements OnInit {
   public isCustomerSaveButtonDisabled: boolean = false;
   public isCustomerLockButtonDisabled: boolean = false;
   public isCustomerUnlockButtonDisabled: boolean = false;
+  public isCustomerPrintButtonDisabled: boolean = false;
 
   public birthDate: Date = new Date();
   public spouseBirthDate: Date = new Date();
@@ -169,12 +175,14 @@ export class SetupCustomerDetailComponent implements OnInit {
     this.isCustomerSaveButtonDisabled = true;
     this.isCustomerLockButtonDisabled = true;
     this.isCustomerUnlockButtonDisabled = true;
+    this.isCustomerPrintButtonDisabled = true;
   }
 
   public isLockedButtons(isLocked: boolean): void {
     this.isCustomerSaveButtonDisabled = isLocked;
     this.isCustomerLockButtonDisabled = isLocked;
     this.isCustomerUnlockButtonDisabled = !isLocked;
+    this.isCustomerPrintButtonDisabled = !isLocked;
   }
 
   public inputFileChange(): void {
@@ -273,6 +281,25 @@ export class SetupCustomerDetailComponent implements OnInit {
         this.isLockedButtons(this.mstCustomerModel.IsLocked);
       }
     );
+  }
+
+  public buttonPrintCustomer(): void {
+    if (this.mstCustomerModel.IsLocked == false) {
+      this.toastr.error("Cannot print an unlocked record.", 'Print Failed');
+    } else {
+      const openDialog = this.printPdfCustomerDialog.open(PrintPdfCustomerComponent, {
+        width: '1200px',
+        data: {
+          dialogTitle: "Print Customer",
+          dialogData: this.mstCustomerModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+      });
+    }
   }
 
   ngOnInit(): void {

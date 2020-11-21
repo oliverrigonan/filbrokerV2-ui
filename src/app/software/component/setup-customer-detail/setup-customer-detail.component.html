@@ -22,6 +22,10 @@
             (click)="buttonUnlockCustomer()">
             Unlock
         </button>
+        <button mat-flat-button color="primary" [disabled]="isCustomerPrintButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonPrintCustomer()">
+            Print
+        </button>
         <button mat-flat-button color="warn" routerLink="/software/setup-customer-list">
             Close
         </button>

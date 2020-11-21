@@ -22,6 +22,10 @@
             (click)="buttonUnlockChecklist()">
             Unlock
         </button>
+        <button mat-flat-button color="primary" [disabled]="isChecklistPrintButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonPrintChecklist()">
+            Print
+        </button>
         <button mat-flat-button color="warn" routerLink="/software/setup-checklist-list">
             Close
         </button>

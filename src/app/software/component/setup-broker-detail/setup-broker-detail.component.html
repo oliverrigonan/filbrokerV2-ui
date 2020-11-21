@@ -22,6 +22,10 @@
             (click)="buttonUnlockBroker()">
             Unlock
         </button>
+        <button mat-flat-button color="primary" [disabled]="isBrokerPrintButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonPrintBroker()">
+            Print
+        </button>
         <button mat-flat-button color="warn" routerLink="/software/setup-broker-list">
             Close
         </button>

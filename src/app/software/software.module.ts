@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 import { SoftwareRoutingModule } from './software-routing.module';
 import { SoftwareRouterActivate } from './software-router-activate';
@@ -46,6 +47,7 @@ import { SystemUserListComponent } from './component/system-user-list/system-use
 import { SystemUserDetailComponent } from './component/system-user-detail/system-user-detail.component';
 import { ActivitySoldUnitListComponent } from './component/activity-sold-unit-list/activity-sold-unit-list.component';
 import { ActivitySoldUnitDetailComponent } from './component/activity-sold-unit-detail/activity-sold-unit-detail.component';
+import { ActivitySoldUnitCancelReasonComponent } from './component/activity-sold-unit-cancel-reason/activity-sold-unit-cancel-reason.component';
 import { ActivityCollectionListComponent } from './component/activity-collection-list/activity-collection-list.component';
 import { ActivityCollectionDetailComponent } from './component/activity-collection-detail/activity-collection-detail.component';
 import { ActivityCommissionRequestListComponent } from './component/activity-commission-request-list/activity-commission-request-list.component';
@@ -59,6 +61,16 @@ import { ConfirmationAddChecklistComponent } from './component/confirmation-add-
 import { ActivitySoldUnitRequirementDetailComponent } from './component/activity-sold-unit-requirement-detail/activity-sold-unit-requirement-detail.component';
 import { ActivitySoldUnitRequirementActivityDetailComponent } from './component/activity-sold-unit-requirement-activity-detail/activity-sold-unit-requirement-activity-detail.component';
 import { ActivityCollectionPaymentDetailComponent } from './component/activity-collection-payment-detail/activity-collection-payment-detail.component';
+import { PrintPdfCustomerComponent } from './component/print-pdf-customer/print-pdf-customer.component';
+import { PrintPdfBrokerComponent } from './component/print-pdf-broker/print-pdf-broker.component';
+import { PrintPdfChecklistComponent } from './component/print-pdf-checklist/print-pdf-checklist.component';
+import { PrintPdfSoldUnitProposalComponent } from './component/print-pdf-sold-unit-proposal/print-pdf-sold-unit-proposal.component';
+import { PrintPdfSoldUnitContractComponent } from './component/print-pdf-sold-unit-contract/print-pdf-sold-unit-contract.component';
+import { PrintPdfSoldUnitEquityScheduleComponent } from './component/print-pdf-sold-unit-equity-schedule/print-pdf-sold-unit-equity-schedule.component';
+import { PrintPdfBuyersUndertakingComponent } from './component/print-pdf-buyers-undertaking/print-pdf-buyers-undertaking.component';
+import { PrintPdfReservationAgreementComponent } from './component/print-pdf-reservation-agreement/print-pdf-reservation-agreement.component';
+import { PrintPdfComputationSheetComponent } from './component/print-pdf-computation-sheet/print-pdf-computation-sheet.component';
+import { ConfirmationCancelComponent } from './component/confirmation-cancel/confirmation-cancel.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +89,7 @@ import { ActivityCollectionPaymentDetailComponent } from './component/activity-c
     SystemUserDetailComponent,
     ActivitySoldUnitListComponent,
     ActivitySoldUnitDetailComponent,
+    ActivitySoldUnitCancelReasonComponent,
     ActivityCollectionListComponent,
     ActivityCollectionDetailComponent,
     ActivityCommissionRequestListComponent,
@@ -89,7 +102,17 @@ import { ActivityCollectionPaymentDetailComponent } from './component/activity-c
     ConfirmationAddChecklistComponent,
     ActivitySoldUnitRequirementDetailComponent,
     ActivitySoldUnitRequirementActivityDetailComponent,
-    ActivityCollectionPaymentDetailComponent
+    ActivityCollectionPaymentDetailComponent,
+    PrintPdfCustomerComponent,
+    PrintPdfBrokerComponent,
+    PrintPdfChecklistComponent,
+    PrintPdfSoldUnitProposalComponent,
+    PrintPdfSoldUnitContractComponent,
+    PrintPdfSoldUnitEquityScheduleComponent,
+    PrintPdfBuyersUndertakingComponent,
+    PrintPdfReservationAgreementComponent,
+    PrintPdfComputationSheetComponent,
+    ConfirmationCancelComponent
   ],
   imports: [
     CommonModule,
@@ -97,6 +120,7 @@ import { ActivityCollectionPaymentDetailComponent } from './component/activity-c
     ReactiveFormsModule,
     SoftwareRoutingModule,
     FlexLayoutModule,
+    NgxDocViewerModule,
     MatNativeDateModule,
     MatSidenavModule,
     MatToolbarModule,

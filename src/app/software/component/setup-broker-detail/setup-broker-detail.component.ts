@@ -1,12 +1,16 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { SysDropdownModel } from './../../model/sys-dropdown.model';
 import { MstBrokerModel } from './../../model/mst-broker.model';
 
 import { SysDropdownService } from './../../service/sys-dropdown/sys-dropdown.service';
 import { MstBrokerService } from './../../service/mst-broker/mst-broker.service';
+
+import { PrintPdfBrokerComponent } from './../../component/print-pdf-broker/print-pdf-broker.component';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -22,6 +26,7 @@ export class SetupBrokerDetailComponent implements OnInit {
     private router: Router,
     private sysDropdownService: SysDropdownService,
     private mstBrokerService: MstBrokerService,
+    private printPdfBrokerDialog: MatDialog,
     private toastr: ToastrService,
   ) { }
 
@@ -39,6 +44,7 @@ export class SetupBrokerDetailComponent implements OnInit {
   public isBrokerSaveButtonDisabled: boolean = false;
   public isBrokerLockButtonDisabled: boolean = false;
   public isBrokerUnlockButtonDisabled: boolean = false;
+  public isBrokerPrintButtonDisabled: boolean = false;
 
   public birthDate: Date = new Date();
 
@@ -140,12 +146,14 @@ export class SetupBrokerDetailComponent implements OnInit {
     this.isBrokerSaveButtonDisabled = true;
     this.isBrokerLockButtonDisabled = true;
     this.isBrokerUnlockButtonDisabled = true;
+    this.isBrokerPrintButtonDisabled = true;
   }
 
   public isLockedButtons(isLocked: boolean): void {
     this.isBrokerSaveButtonDisabled = isLocked;
     this.isBrokerLockButtonDisabled = isLocked;
     this.isBrokerUnlockButtonDisabled = !isLocked;
+    this.isBrokerPrintButtonDisabled = !isLocked;
   }
 
   public buttonUploadAttachment1(): void {
@@ -401,6 +409,25 @@ export class SetupBrokerDetailComponent implements OnInit {
         this.isLockedButtons(this.mstBrokerModel.IsLocked);
       }
     );
+  }
+
+  public buttonPrintBroker(): void {
+    if (this.mstBrokerModel.IsLocked == false) {
+      this.toastr.error("Cannot print an unlocked record.", 'Print Failed');
+    } else {
+      const openDialog = this.printPdfBrokerDialog.open(PrintPdfBrokerComponent, {
+        width: '1200px',
+        data: {
+          dialogTitle: "Print Broker",
+          dialogData: this.mstBrokerModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+      });
+    }
   }
 
   ngOnInit(): void {

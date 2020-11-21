@@ -29,6 +29,10 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivitySoldUnitRequirementDetailComponent } from './../activity-sold-unit-requirement-detail/activity-sold-unit-requirement-detail.component';
 import { ConfirmationAddChecklistComponent } from './../confirmation-add-checklist/confirmation-add-checklist.component';
 
+import { PrintPdfSoldUnitProposalComponent } from './../../component/print-pdf-sold-unit-proposal/print-pdf-sold-unit-proposal.component';
+import { PrintPdfSoldUnitContractComponent } from './../../component/print-pdf-sold-unit-contract/print-pdf-sold-unit-contract.component';
+import { ActivitySoldUnitCancelReasonComponent } from './../../component/activity-sold-unit-cancel-reason/activity-sold-unit-cancel-reason.component';
+
 @Component({
   selector: 'app-activity-sold-unit-detail',
   templateUrl: './activity-sold-unit-detail.component.html',
@@ -49,7 +53,10 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     private activitySoldUnitRequirementDetailDialog: MatDialog,
     private confirmationAddChecklistDialog: MatDialog,
     private toastr: ToastrService,
-    private decimalPipe: DecimalPipe
+    private decimalPipe: DecimalPipe,
+    private printPdfSoldUnitProposalDialog: MatDialog,
+    private printPdfSoldUnitContractDialog: MatDialog,
+    private activitySoldUnitCancelReasonDialog: MatDialog,
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -304,7 +311,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     this.isSoldUnitSaveButtonDisabled = isLocked;
     this.isSoldUnitLockButtonDisabled = isLocked;
     this.isSoldUnitUnlockButtonDisabled = !isLocked;
-    this.isSoldUnitPrintButtonDisabled = !isLocked;
+    this.isSoldUnitPrintButtonDisabled = false;
     this.isSoldUnitCancelButtonDisabled = !isLocked;
     this.isSoldUnitTransferButtonDisabled = !isLocked;
   }
@@ -664,11 +671,48 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   }
 
   public buttonPrintSoldUnit(): void {
+    if (this.trnSoldUnitModel.IsLocked == true) {
+      const openDialog = this.printPdfSoldUnitContractDialog.open(PrintPdfSoldUnitContractComponent, {
+        width: '1200px',
+        data: {
+          dialogTitle: "Print Contract",
+          dialogData: this.trnSoldUnitModel
+        },
+        disableClose: true
+      });
 
+      openDialog.afterClosed().subscribe(result => {
+
+      });
+    } else {
+      const openDialog = this.printPdfSoldUnitProposalDialog.open(PrintPdfSoldUnitProposalComponent, {
+        width: '1200px',
+        data: {
+          dialogTitle: "Print Proposal",
+          dialogData: this.trnSoldUnitModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+      });
+    }
   }
 
   public buttonCancelSoldUnit(): void {
+    const openDialog = this.activitySoldUnitCancelReasonDialog.open(ActivitySoldUnitCancelReasonComponent, {
+      width: '800px',
+      data: {
+        dialogTitle: "Cancel Reason",
+        dialogData: this.trnSoldUnitModel
+      },
+      disableClose: true
+    });
 
+    openDialog.afterClosed().subscribe(result => {
+      location.reload();
+    });
   }
 
   public buttonTransferSoldUnit(): void {

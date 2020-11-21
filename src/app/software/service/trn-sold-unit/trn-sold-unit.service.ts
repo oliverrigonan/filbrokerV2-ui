@@ -304,6 +304,36 @@ export class TrnSoldUnitService {
     });
   }
 
+  public cancelSoldUnit(trnSoldUnitModel: TrnSoldUnitModel): Observable<[boolean, string]> {
+    return new Observable<[boolean, string]>((observer) => {
+      this.httpClient.put(this.defaultAPIURLHost + "/api/TrnSoldUnit/Cancel", JSON.stringify(trnSoldUnitModel), this.options).subscribe(
+        response => {
+          observer.next([true, ""]);
+          observer.complete();
+        },
+        error => {
+          observer.next([false, error.error]);
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  public transferSoldUnit(trnSoldUnitModel: TrnSoldUnitModel): Observable<[boolean, string]> {
+    return new Observable<[boolean, string]>((observer) => {
+      this.httpClient.put(this.defaultAPIURLHost + "/api/TrnSoldUnit/Transfer", JSON.stringify(trnSoldUnitModel), this.options).subscribe(
+        response => {
+          observer.next([true, ""]);
+          observer.complete();
+        },
+        error => {
+          observer.next([false, error.error]);
+          observer.complete();
+        }
+      );
+    });
+  }
+
   public deleteSoldUnit(id: number): Observable<[boolean, string]> {
     return new Observable<[boolean, string]>((observer) => {
       this.httpClient.delete(this.defaultAPIURLHost + "/api/TrnSoldUnit/delete/" + id, this.options).subscribe(

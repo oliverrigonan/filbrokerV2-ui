@@ -20,6 +20,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 import { SetupChecklistRequirementDetailComponent } from './../../component/setup-checklist-requirement-detail/setup-checklist-requirement-detail.component';
 
+import { PrintPdfChecklistComponent } from './../../component/print-pdf-checklist/print-pdf-checklist.component';
+
 @Component({
   selector: 'app-setup-checklist-detail',
   templateUrl: './setup-checklist-detail.component.html',
@@ -35,7 +37,8 @@ export class SetupChecklistDetailComponent implements OnInit {
     private mstChecklistService: MstChecklistService,
     private toastr: ToastrService,
     private confirmationDeleteDialog: MatDialog,
-    private setupChecklistRequirementDetailDialog: MatDialog
+    private setupChecklistRequirementDetailDialog: MatDialog,
+    private printPdfChecklistDialog: MatDialog,
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -48,6 +51,7 @@ export class SetupChecklistDetailComponent implements OnInit {
   public isChecklistSaveButtonDisabled: boolean = false;
   public isChecklistLockButtonDisabled: boolean = false;
   public isChecklistUnlockButtonDisabled: boolean = false;
+  public isChecklistPrintButtonDisabled: boolean = false;
 
   public checklistDate: Date = new Date();
 
@@ -116,12 +120,14 @@ export class SetupChecklistDetailComponent implements OnInit {
     this.isChecklistSaveButtonDisabled = true;
     this.isChecklistLockButtonDisabled = true;
     this.isChecklistUnlockButtonDisabled = true;
+    this.isChecklistPrintButtonDisabled = true;
   }
 
   public isLockedButtons(isLocked: boolean): void {
     this.isChecklistSaveButtonDisabled = isLocked;
     this.isChecklistLockButtonDisabled = isLocked;
     this.isChecklistUnlockButtonDisabled = !isLocked;
+    this.isChecklistPrintButtonDisabled = !isLocked;
   }
 
   public buttonSaveChecklist(): void {
@@ -177,6 +183,25 @@ export class SetupChecklistDetailComponent implements OnInit {
         this.isLockedButtons(this.mstChecklistModel.IsLocked);
       }
     );
+  }
+
+  public buttonPrintChecklist(): void {
+    if (this.mstChecklistModel.IsLocked == false) {
+      this.toastr.error("Cannot print an unlocked record.", 'Print Failed');
+    } else {
+      const openDialog = this.printPdfChecklistDialog.open(PrintPdfChecklistComponent, {
+        width: '1200px',
+        data: {
+          dialogTitle: "Print Checklist",
+          dialogData: this.mstChecklistModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+      });
+    }
   }
 
   public getChecklistRequirementData(): void {
