@@ -122,6 +122,10 @@ export class ActivityCommissionRequestListComponent implements OnInit {
       ApprovedByUser: "",
       Status: "",
       IsLocked: false,
+      CreatedBy: 0,
+      CreatedDateTime: "",
+      UpdatedBy: 0,
+      UpdatedDateTime: ""
     };
 
     this.trnCommissionRequestService.addCommissionRequest(trnCommissionRequestModel).subscribe(

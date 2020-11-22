@@ -121,6 +121,10 @@ export class ActivityCommissionRequestDetailComponent implements OnInit {
             this.trnCommissionRequestModel.ApprovedByUser = data.ApprovedByUser;
             this.trnCommissionRequestModel.Status = data.Status;
             this.trnCommissionRequestModel.IsLocked = data.IsLocked;
+            this.trnCommissionRequestModel.CreatedBy = data.CreatedBy;
+            this.trnCommissionRequestModel.CreatedDateTime = data.CreatedDateTime;
+            this.trnCommissionRequestModel.UpdatedBy = data.UpdatedBy;
+            this.trnCommissionRequestModel.UpdatedDateTime = data.UpdatedDateTime;
 
             this.isSpinnerShow = false;
             this.isContentShow = true;
