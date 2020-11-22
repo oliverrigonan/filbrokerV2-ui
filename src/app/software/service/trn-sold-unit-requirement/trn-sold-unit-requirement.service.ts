@@ -48,7 +48,12 @@ export class TrnSoldUnitRequirementService {
                 Attachment5: results[i].Attachment5,
                 Remarks: results[i].Remarks,
                 Status: results[i].Status,
-                StatusDate: results[i].StatusDate
+                StatusDate: results[i].StatusDate,
+                SoldUnitNumber: results[i].SoldUnitNumber,
+                SoldUnitDate: results[i].SoldUnitDate,
+                Project: results[i].Project,
+                Unit: results[i].Unit,
+                Customer: results[i].Customer
               });
             }
           }
@@ -86,7 +91,12 @@ export class TrnSoldUnitRequirementService {
                 Attachment5: results[i].Attachment5,
                 Remarks: results[i].Remarks,
                 Status: results[i].Status,
-                StatusDate: results[i].StatusDate
+                StatusDate: results[i].StatusDate,
+                SoldUnitNumber: results[i].SoldUnitNumber,
+                SoldUnitDate: results[i].SoldUnitDate,
+                Project: results[i].Project,
+                Unit: results[i].Unit,
+                Customer: results[i].Customer
               });
             }
           }
@@ -123,7 +133,12 @@ export class TrnSoldUnitRequirementService {
               Attachment5: results["Attachment5"],
               Remarks: results["Remarks"],
               Status: results["Status"],
-              StatusDate: results["StatusDate"]
+              StatusDate: results["StatusDate"],
+              SoldUnitNumber: results["SoldUnitNumber"],
+              SoldUnitDate: results["SoldUnitDate"],
+              Project: results["Project"],
+              Unit: results["Unit"],
+              Customer: results["Customer"]
             }
           }
 

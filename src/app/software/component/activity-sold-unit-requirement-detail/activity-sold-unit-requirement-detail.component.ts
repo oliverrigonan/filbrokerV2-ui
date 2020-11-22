@@ -105,6 +105,11 @@ export class ActivitySoldUnitRequirementDetailComponent implements OnInit {
             this.trnSoldUnitRequirementModel.Remarks = data.Remarks;
             this.trnSoldUnitRequirementModel.Status = data.Status;
             this.trnSoldUnitRequirementModel.StatusDate = data.StatusDate;
+            this.trnSoldUnitRequirementModel.SoldUnitNumber = data.SoldUnitNumber;
+            this.trnSoldUnitRequirementModel.SoldUnitDate = data.SoldUnitDate;
+            this.trnSoldUnitRequirementModel.Project = data.Project;
+            this.trnSoldUnitRequirementModel.Unit = data.Unit;
+            this.trnSoldUnitRequirementModel.Customer = data.Customer;
 
             this.getSoldUnitRequirementActivityData();
           } else {

@@ -17,4 +17,8 @@ export class TrnCommissionRequestModel {
     ApprovedByUser: string = "";
     Status: string = "";
     IsLocked: boolean = false;
+    CreatedBy: number = 0;
+    CreatedDateTime: string = "";
+    UpdatedBy: number = 0;
+    UpdatedDateTime: string = "";
 }

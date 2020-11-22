@@ -84,7 +84,13 @@ export class TrnSoldUnitService {
                 ApprovedBy: results[i].ApprovedBy,
                 ApprovedByUser: results[i].ApprovedByUser,
                 Status: results[i].Status,
-                IsLocked: results[i].IsLocked
+                IsLocked: results[i].IsLocked,
+                CreatedBy: results[i].CreatedBy,
+                CreatedDateTime: results[i].CreatedDateTime,
+                UpdatedBy: results[i].UpdatedBy,
+                UpdatedDateTime: results[i].UpdatedDateTime,
+                PriceBalance: results[i].PriceBalance,
+                PricePayment: results[i].PricePayment
               });
             }
           }
@@ -158,7 +164,13 @@ export class TrnSoldUnitService {
                 ApprovedBy: results[i].ApprovedBy,
                 ApprovedByUser: results[i].ApprovedByUser,
                 Status: results[i].Status,
-                IsLocked: results[i].IsLocked
+                IsLocked: results[i].IsLocked,
+                CreatedBy: results[i].CreatedBy,
+                CreatedDateTime: results[i].CreatedDateTime,
+                UpdatedBy: results[i].UpdatedBy,
+                UpdatedDateTime: results[i].UpdatedDateTime,
+                PriceBalance: results[i].PriceBalance,
+                PricePayment: results[i].PricePayment
               });
             }
           }
@@ -231,7 +243,13 @@ export class TrnSoldUnitService {
               ApprovedBy: results["ApprovedBy"],
               ApprovedByUser: results["ApprovedByUser"],
               Status: results["Status"],
-              IsLocked: results["IsLocked"]
+              IsLocked: results["IsLocked"],
+              CreatedBy: results["CreatedBy"],
+              CreatedDateTime: results["CreatedDateTime"],
+              UpdatedBy: results["UpdatedBy"],
+              UpdatedDateTime: results["UpdatedDateTime"],
+              PriceBalance: results["PriceBalance"],
+              PricePayment: results["PricePayment"]
             }
           }
 

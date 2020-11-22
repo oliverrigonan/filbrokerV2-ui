@@ -51,4 +51,10 @@ export class TrnSoldUnitModel {
     ApprovedByUser: string = "";
     Status: string = "";
     IsLocked: boolean = false;
+    CreatedBy: number = 0;
+    CreatedDateTime: string = "";
+    UpdatedBy: number = 0;
+    UpdatedDateTime: string = "";
+    PriceBalance: number = 0;
+    PricePayment: number = 0;
 }

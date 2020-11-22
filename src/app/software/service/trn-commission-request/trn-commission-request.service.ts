@@ -50,7 +50,11 @@ export class TrnCommissionRequestService {
                 ApprovedBy: results[i].ApprovedBy,
                 ApprovedByUser: results[i].ApprovedByUser,
                 Status: results[i].Status,
-                IsLocked: results[i].IsLocked
+                IsLocked: results[i].IsLocked,
+                CreatedBy: results[i].CreatedBy,
+                CreatedDateTime: results[i].CreatedDateTime,
+                UpdatedBy: results[i].UpdatedBy,
+                UpdatedDateTime: results[i].UpdatedDateTime
               });
             }
           }
@@ -89,7 +93,11 @@ export class TrnCommissionRequestService {
               ApprovedBy: results["ApprovedBy"],
               ApprovedByUser: results["ApprovedByUser"],
               Status: results["Status"],
-              IsLocked: results["IsLocked"]
+              IsLocked: results["IsLocked"],
+              CreatedBy: results["CreatedBy"],
+              CreatedDateTime: results["CreatedDateTime"],
+              UpdatedBy: results["UpdatedBy"],
+              UpdatedDateTime: results["UpdatedDateTime"]
             }
           }
 

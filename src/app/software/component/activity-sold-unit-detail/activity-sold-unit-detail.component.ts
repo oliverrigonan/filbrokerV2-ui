@@ -280,6 +280,12 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
             this.trnSoldUnitModel.ApprovedByUser = data.ApprovedByUser;
             this.trnSoldUnitModel.Status = data.Status;
             this.trnSoldUnitModel.IsLocked = data.IsLocked;
+            this.trnSoldUnitModel.CreatedBy = data.CreatedBy;
+            this.trnSoldUnitModel.CreatedDateTime = data.CreatedDateTime;
+            this.trnSoldUnitModel.UpdatedBy = data.UpdatedBy;
+            this.trnSoldUnitModel.UpdatedDateTime = data.UpdatedDateTime;
+            this.trnSoldUnitModel.PriceBalance = data.PriceBalance;
+            this.trnSoldUnitModel.PricePayment = data.PricePayment;
 
             this.isSpinnerShow = false;
             this.isContentShow = true;
@@ -804,7 +810,12 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
         Attachment5: "",
         Remarks: "",
         Status: "",
-        StatusDate: ""
+        StatusDate: "",
+        SoldUnitNumber: "",
+        SoldUnitDate: "",
+        Project: "",
+        Unit: "",
+        Customer: ""
       };
 
       const openDialog = this.activitySoldUnitRequirementDetailDialog.open(ActivitySoldUnitRequirementDetailComponent, {

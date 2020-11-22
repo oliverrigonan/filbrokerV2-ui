@@ -15,4 +15,9 @@ export class TrnSoldUnitRequirementModel {
     Remarks: string = "";
     Status: string = "";
     StatusDate: string = "";
+    SoldUnitNumber: string = "";
+    SoldUnitDate: string = "";
+    Project: string = "";
+    Unit: string = "";
+    Customer: string = "";
 }
