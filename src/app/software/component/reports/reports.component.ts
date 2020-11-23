@@ -51,6 +51,11 @@ export class ReportsComponent implements OnInit {
     'Project',
     'Unit',
     'Customer',
+    'Broker',
+    'Price',
+    'PriceDiscount',
+    'PricePayment',
+    'PriceBalance',
     'Status',
     'IsLocked',
     'Space'
@@ -66,13 +71,12 @@ export class ReportsComponent implements OnInit {
   public isContentShowRepSummarySoldUnitRequirements: boolean = false;
 
   public soldUnitRequirementDisplayedColumns: string[] = [
+    'SoldUnitDate',
+    'Project',
+    'Unit',
     'ChecklistRequirementNo',
     'ChecklistRequirement',
-    'ChecklistCategory',
-    'ChecklistType',
-    'ChecklistWithAttachments',
     'Status',
-    'StatusDate',
     'Space'
   ];
 
@@ -90,6 +94,9 @@ export class ReportsComponent implements OnInit {
     'Activity',
     'Remarks',
     'User',
+    'Project',
+    'UnitCode',
+    'Customer',
     'Space'
   ];
 
@@ -107,8 +114,9 @@ export class ReportsComponent implements OnInit {
     'CommissionRequestDate',
     'Broker',
     'SoldUnit',
+    'Remarks',
+    'Amount',
     'Status',
-    'IsLocked',
     'Space'
   ];
 
@@ -124,9 +132,10 @@ export class ReportsComponent implements OnInit {
   public customerDisplayedColumns: string[] = [
     'CustomerCode',
     'Customer',
+    'Gender',
     'Address',
-    'Status',
-    'IsLocked',
+    'EmailAddress',
+    'TelephoneNumber',
     'Space'
   ];
 
@@ -142,9 +151,10 @@ export class ReportsComponent implements OnInit {
   public brokerDisplayedColumns: string[] = [
     'BrokerCode',
     'Broker',
+    'Gender',
     'Address',
-    'Status',
-    'IsLocked',
+    'EmailAddress',
+    'TelephoneNumber',
     'Space'
   ];
 
