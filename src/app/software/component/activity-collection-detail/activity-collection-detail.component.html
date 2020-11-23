@@ -33,14 +33,14 @@
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="50" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Sold Unit Number</mat-label>
+                            <mat-label>Collection Number</mat-label>
                             <input matInput [(ngModel)]="trnCollectionModel.CollectionNumber"
                                 [ngModelOptions]="{standalone: true}" disabled>
                         </mat-form-field>
                     </div>
                     <div fxFlex="50" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Sold Unit Date</mat-label>
+                            <mat-label>Collection Date</mat-label>
                             <input matInput [matDatepicker]="CollectionDatePicker" [(ngModel)]="collectionDate"
                                 [ngModelOptions]="{standalone: true}" [disabled]="trnCollectionModel.IsLocked"
                                 (dateChange)="collectionDateDateChange('change', $event)">
