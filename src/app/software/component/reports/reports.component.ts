@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Inject, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -163,6 +164,8 @@ export class ReportsComponent implements OnInit {
 
   @ViewChild('brokerPaginator') public brokerPaginator: MatPaginator;
   @ViewChild('brokerSort') public brokerSort: MatSort;
+
+  public selectedTabIndex: number = 0;
 
   public getRepSummarySoldUnitListByDateRange(): void {
     this.soldUnitData = [];
@@ -372,7 +375,217 @@ export class ReportsComponent implements OnInit {
   }
 
   public buttonExport(): void {
+    switch (this.selectedTabIndex) {
+      case 0: {
+        let data: any[] = [
+          {
+            SoldUnitNumber: "Sold Unit Number",
+            SoldUnitDate: "Sold Unit Date",
+            Project: "Project",
+            Unit: "Unit",
+            Customer: "Customer",
+            Broker: "Broker",
+            Price: "Price",
+            PriceDiscount: "Discount",
+            PricePayment: "Payment",
+            PriceBalance: "Balance",
+            Status: "Status",
+          }
+        ];
 
+        if (this.soldUnitData.length > 0) {
+          for (let i = 0; i < this.soldUnitData.length; i++) {
+            data.push({
+              SoldUnitNumber: this.soldUnitData[i].SoldUnitNumber,
+              SoldUnitDate: this.soldUnitData[i].SoldUnitDate,
+              Project: this.soldUnitData[i].Project,
+              Unit: this.soldUnitData[i].Unit,
+              Customer: this.soldUnitData[i].Customer,
+              Broker: this.soldUnitData[i].Broker,
+              Price: this.soldUnitData[i].Price,
+              PriceDiscount: this.soldUnitData[i].PriceDiscount,
+              PricePayment: this.soldUnitData[i].PricePayment,
+              PriceBalance: this.soldUnitData[i].PriceBalance,
+              Status: this.soldUnitData[i].Status
+            });
+          }
+        }
+
+        let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+        let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+        new Angular5Csv(data, 'Sold Unit Data from ' + startDateFilterValue + ' to ' + endDateFilterValue);
+
+        break;
+      }
+      case 1: {
+        let data: any[] = [
+          {
+            SoldUnitDate: "Sold Unit Date",
+            Project: "Project",
+            Unit: "Unit",
+            ChecklistRequirementNo: "No.",
+            ChecklistRequirement: "Requirement",
+            Status: "Status"
+          }
+        ];
+
+        if (this.soldUnitRequirementData.length > 0) {
+          for (let i = 0; i < this.soldUnitRequirementData.length; i++) {
+            data.push({
+              SoldUnitDate: this.soldUnitRequirementData[i].SoldUnitDate,
+              Project: this.soldUnitRequirementData[i].Project,
+              Unit: this.soldUnitRequirementData[i].Unit,
+              ChecklistRequirementNo: this.soldUnitRequirementData[i].ChecklistRequirementNo,
+              ChecklistRequirement: this.soldUnitRequirementData[i].ChecklistRequirement,
+              Status: this.soldUnitRequirementData[i].Status
+            });
+          }
+        }
+
+        let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+        let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+        new Angular5Csv(data, 'Sold Unit Requirements Data from ' + startDateFilterValue + ' to ' + endDateFilterValue);
+
+        break;
+      }
+      case 2: {
+        let data: any[] = [
+          {
+            ActivityDate: "Activity Date",
+            Activity: "Activity",
+            Remarks: "Remarks",
+            User: "User",
+            Project: "Project",
+            UnitCode: "Unit Code",
+            Customer: "Customer"
+          }
+        ];
+
+        if (this.soldUnitRequirementActivityData.length > 0) {
+          for (let i = 0; i < this.soldUnitRequirementActivityData.length; i++) {
+            data.push({
+              ActivityDate: this.soldUnitRequirementActivityData[i].ActivityDate,
+              Activity: this.soldUnitRequirementActivityData[i].Activity,
+              Remarks: this.soldUnitRequirementActivityData[i].Remarks,
+              User: this.soldUnitRequirementActivityData[i].User,
+              Project: this.soldUnitRequirementActivityData[i].Project,
+              UnitCode: this.soldUnitRequirementActivityData[i].UnitCode,
+              Customer: this.soldUnitRequirementActivityData[i].Customer
+            });
+          }
+        }
+
+        let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+        let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+        new Angular5Csv(data, 'Sold Unit Requirement Activities Data from ' + startDateFilterValue + ' to ' + endDateFilterValue);
+
+        break;
+      }
+      case 3: {
+        let data: any[] = [
+          {
+            CommissionRequestNumber: "Commission Request Number",
+            CommissionRequestDate: "Commission Request Date",
+            Broker: "Broker",
+            SoldUnit: "Sold Unit",
+            Remarks: "Remarks",
+            Amount: "Amount",
+            Status: "Status"
+          }
+        ];
+
+        if (this.commissionRequestData.length > 0) {
+          for (let i = 0; i < this.commissionRequestData.length; i++) {
+            data.push({
+              CommissionRequestNumber: this.commissionRequestData[i].CommissionRequestNumber,
+              CommissionRequestDate: this.commissionRequestData[i].CommissionRequestDate,
+              Broker: this.commissionRequestData[i].Broker,
+              SoldUnit: this.commissionRequestData[i].SoldUnit,
+              Remarks: this.commissionRequestData[i].Remarks,
+              Amount: this.commissionRequestData[i].Amount,
+              Status: this.commissionRequestData[i].Status
+            });
+          }
+        }
+
+        let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+        let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+        new Angular5Csv(data, 'Commission Request Data from ' + startDateFilterValue + ' to ' + endDateFilterValue);
+
+        break;
+      }
+      case 4: {
+        let data: any[] = [
+          {
+            CustomerCode: "Customer Code",
+            Customer: "Customer",
+            Gender: "Gender",
+            Address: "Address",
+            EmailAddress: "Email Address",
+            TelephoneNumber: "Telephone Number"
+          }
+        ];
+
+        if (this.customerData.length > 0) {
+          for (let i = 0; i < this.customerData.length; i++) {
+            data.push({
+              CustomerCode: this.customerData[i].CustomerCode,
+              Customer: this.customerData[i].LastName + ", " + this.customerData[i].FirstName,
+              Gender: this.customerData[i].Gender,
+              Address: this.customerData[i].Address,
+              EmailAddress: this.customerData[i].EmailAddress,
+              TelephoneNumber: this.customerData[i].TelephoneNumber
+            });
+          }
+        }
+
+        let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+        let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+        new Angular5Csv(data, 'Customer Data from ' + startDateFilterValue + ' to ' + endDateFilterValue);
+
+        break;
+      }
+      case 5: {
+        let data: any[] = [
+          {
+            BrokerCode: "Broker Code",
+            Broker: "Broker",
+            Gender: "Gender",
+            Address: "Address",
+            EmailAddress: "Email Address",
+            TelephoneNumber: "Telephone Number"
+          }
+        ];
+
+        if (this.brokerData.length > 0) {
+          for (let i = 0; i < this.brokerData.length; i++) {
+            data.push({
+              BrokerCode: this.brokerData[i].BrokerCode,
+              Broker: this.brokerData[i].LastName + ", " + this.brokerData[i].FirstName,
+              Gender: this.brokerData[i].Gender,
+              Address: this.brokerData[i].Address,
+              EmailAddress: this.brokerData[i].EmailAddress,
+              TelephoneNumber: this.brokerData[i].TelephoneNumber
+            });
+          }
+        }
+
+        let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+        let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+        new Angular5Csv(data, 'Broker Data from ' + startDateFilterValue + ' to ' + endDateFilterValue);
+
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   }
 
   ngOnInit(): void {
@@ -383,5 +596,4 @@ export class ReportsComponent implements OnInit {
     this.getRepSummaryCustomerListByDateRange();
     this.getRepSummaryBrokerListByDateRange();
   }
-
 }

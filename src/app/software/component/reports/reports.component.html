@@ -42,7 +42,7 @@
     </div>
 </div>
 <mat-divider></mat-divider>
-<mat-tab-group mat-align-tabs="start">
+<mat-tab-group mat-align-tabs="start" [(selectedIndex)]="selectedTabIndex">
     <mat-tab label="Sold Units">
         <div *ngIf="isSpinnerShowRepSummarySoldUnit" style="padding: 100px 0px 50px 0px; text-align: center;">
             <h4>Please wait...</h4>
