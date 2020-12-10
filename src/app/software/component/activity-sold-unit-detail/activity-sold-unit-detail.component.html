@@ -30,10 +30,10 @@
             (click)="buttonCancelSoldUnit()">
             Cancel
         </button>
-        <button mat-flat-button color="warn" [disabled]="isSoldUnitTransferButtonDisabled" style="margin-right: 5px;"
+        <!-- <button mat-flat-button color="warn" [disabled]="isSoldUnitTransferButtonDisabled" style="margin-right: 5px;"
             (click)="buttonTransferSoldUnit()">
             Transfer
-        </button>
+        </button> -->
         <button mat-flat-button color="warn" routerLink="/software/activity-sold-unit-list">
             Close
         </button>
@@ -66,15 +66,24 @@
                     <div fxFlex="50" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Project</mat-label>
-                            <input matInput [(ngModel)]="trnSoldUnitModel.Project" [ngModelOptions]="{standalone: true}"
-                                [disabled]="trnSoldUnitModel.IsLocked">
+                            <mat-select [(value)]="trnSoldUnitModel.ProjectId" [disabled]="trnSoldUnitModel.IsLocked"
+                                (selectionChange)="projectSelectionChange($event)">
+                                <mat-option *ngFor="let mstProjectObject of mstProjectModel"
+                                    [value]="mstProjectObject.Id">
+                                    {{mstProjectObject.Project}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <div fxFlex="50" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Unit</mat-label>
-                            <input matInput [(ngModel)]="trnSoldUnitModel.Unit" [ngModelOptions]="{standalone: true}"
-                                [disabled]="trnSoldUnitModel.IsLocked">
+                            <mat-select [(value)]="trnSoldUnitModel.UnitId" [disabled]="trnSoldUnitModel.IsLocked"
+                                (selectionChange)="unitSelectionChange($event)">
+                                <mat-option *ngFor="let mstUnitObject of mstUnitModel" [value]="mstUnitObject.Id">
+                                    {{mstUnitObject.UnitCode}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                 </div>

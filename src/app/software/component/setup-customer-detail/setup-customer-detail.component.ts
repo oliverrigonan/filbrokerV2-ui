@@ -14,6 +14,8 @@ import { PrintPdfCustomerComponent } from './../../component/print-pdf-customer/
 
 import { ToastrService } from 'ngx-toastr';
 
+import { GlobalSoldUnitListComponent } from './../global-sold-unit-list/global-sold-unit-list.component';
+
 @Component({
   selector: 'app-setup-customer-detail',
   templateUrl: './setup-customer-detail.component.html',
@@ -28,6 +30,7 @@ export class SetupCustomerDetailComponent implements OnInit {
     private mstCustomerService: MstCustomerService,
     private printPdfCustomerDialog: MatDialog,
     private toastr: ToastrService,
+    private globalSoldUnitListDialog: MatDialog
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -292,6 +295,72 @@ export class SetupCustomerDetailComponent implements OnInit {
         data: {
           dialogTitle: "Print Customer",
           dialogData: this.mstCustomerModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+      });
+    }
+  }
+
+  public buttonPrintBuyersUndertaking(): void {
+    if (this.mstCustomerModel.IsLocked == false) {
+      this.toastr.error("Cannot print an unlocked record.", 'Print Failed');
+    } else {
+      const openDialog = this.globalSoldUnitListDialog.open(GlobalSoldUnitListComponent, {
+        width: '1200px',
+        data: {
+          dialogTitle: "Print Buyers Undertaking. Select Sold Unit No.",
+          dialogData: {
+            customerData: this.mstCustomerModel,
+            customerReport: "Buyers Undertaking"
+          }
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+      });
+    }
+  }
+
+  public buttonPrintReservationAgreement(): void {
+    if (this.mstCustomerModel.IsLocked == false) {
+      this.toastr.error("Cannot print an unlocked record.", 'Print Failed');
+    } else {
+      const openDialog = this.globalSoldUnitListDialog.open(GlobalSoldUnitListComponent, {
+        width: '1200px',
+        data: {
+          dialogTitle: "Print Reservation Agreement. Select Sold Unit No.",
+          dialogData: {
+            customerData: this.mstCustomerModel,
+            customerReport: "Reservation Agreement"
+          }
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+      });
+    }
+  }
+
+  public buttonPrintComputationSheet(): void {
+    if (this.mstCustomerModel.IsLocked == false) {
+      this.toastr.error("Cannot print an unlocked record.", 'Print Failed');
+    } else {
+      const openDialog = this.globalSoldUnitListDialog.open(GlobalSoldUnitListComponent, {
+        width: '1200px',
+        data: {
+          dialogTitle: "Print Computation Sheet. Select Sold Unit No.",
+          dialogData: {
+            customerData: this.mstCustomerModel,
+            customerReport: "Computation Sheet"
+          }
         },
         disableClose: true
       });

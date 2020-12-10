@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
+import { MstCustomerModel } from './../../model/mst-customer.model';
 import { TrnSoldUnitModel } from './../../model/trn-sold-unit.model';
 
 import { TrnSoldUnitService } from './../../service/trn-sold-unit/trn-sold-unit.service';
@@ -17,12 +18,19 @@ import { ToastrService } from 'ngx-toastr';
 
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 
+import { PrintPdfBuyersUndertakingComponent } from './../../component/print-pdf-buyers-undertaking/print-pdf-buyers-undertaking.component';
+import { PrintPdfReservationAgreementComponent } from './../../component/print-pdf-reservation-agreement/print-pdf-reservation-agreement.component';
+import { PrintPdfComputationSheetComponent } from './../../component/print-pdf-computation-sheet/print-pdf-computation-sheet.component';
+
 @Component({
   selector: 'app-activity-sold-unit-list',
   templateUrl: './activity-sold-unit-list.component.html',
   styleUrls: ['./activity-sold-unit-list.component.css']
 })
 export class ActivitySoldUnitListComponent implements OnInit {
+  @Input() public customerData: MstCustomerModel = null;
+  @Input() public customerReport: string = "";
+  @Input() public isFromCustomer: boolean = false;
 
   public soldUnitDisplayedColumns: string[] = [
     'ButtonEdit',
@@ -49,7 +57,10 @@ export class ActivitySoldUnitListComponent implements OnInit {
     private trnSoldUnitService: TrnSoldUnitService,
     private router: Router,
     private toastr: ToastrService,
-    private confirmationDeleteDialog: MatDialog
+    private confirmationDeleteDialog: MatDialog,
+    private printPdfBuyersUndertakingDialog: MatDialog,
+    private printPdfReservationAgreementDialog: MatDialog,
+    private printPdfComputationSheetDialog: MatDialog
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -72,22 +83,38 @@ export class ActivitySoldUnitListComponent implements OnInit {
     this.soldUnitDataSource.paginator = this.soldUnitPaginator;
     this.soldUnitDataSource.sort = this.soldUnitSort;
 
-    let soldUnitListStartDateFilterValue: string = new Date(this.soldUnitListStartDateFilterFormControl.value).toLocaleDateString("fr-CA");
-    let soldUnitEndDateFilterValue: string = new Date(this.soldUnitEndDateFilterFormControl.value).toLocaleDateString("fr-CA");
+    if (this.isFromCustomer == true) {
+      this.trnSoldUnitService.getSoldUnitListByCustomer(this.customerData.Id).subscribe(
+        data => {
+          if (data.length > 0) {
+            this.soldUnitData = data;
+            this.soldUnitDataSource = new MatTableDataSource(this.soldUnitData);
+            this.soldUnitDataSource.paginator = this.soldUnitPaginator;
+            this.soldUnitDataSource.sort = this.soldUnitSort;
+          }
 
-    this.trnSoldUnitService.getSoldUnitListByDateRange(soldUnitListStartDateFilterValue, soldUnitEndDateFilterValue).subscribe(
-      data => {
-        if (data.length > 0) {
-          this.soldUnitData = data;
-          this.soldUnitDataSource = new MatTableDataSource(this.soldUnitData);
-          this.soldUnitDataSource.paginator = this.soldUnitPaginator;
-          this.soldUnitDataSource.sort = this.soldUnitSort;
+          this.isSpinnerShow = false;
+          this.isContentShow = true;
         }
+      );
+    } else {
+      let soldUnitListStartDateFilterValue: string = new Date(this.soldUnitListStartDateFilterFormControl.value).toLocaleDateString("fr-CA");
+      let soldUnitEndDateFilterValue: string = new Date(this.soldUnitEndDateFilterFormControl.value).toLocaleDateString("fr-CA");
 
-        this.isSpinnerShow = false;
-        this.isContentShow = true;
-      }
-    );
+      this.trnSoldUnitService.getSoldUnitListByDateRange(soldUnitListStartDateFilterValue, soldUnitEndDateFilterValue).subscribe(
+        data => {
+          if (data.length > 0) {
+            this.soldUnitData = data;
+            this.soldUnitDataSource = new MatTableDataSource(this.soldUnitData);
+            this.soldUnitDataSource.paginator = this.soldUnitPaginator;
+            this.soldUnitDataSource.sort = this.soldUnitSort;
+          }
+
+          this.isSpinnerShow = false;
+          this.isContentShow = true;
+        }
+      );
+    }
   }
 
   public soldUnitFilter(event: Event): void {
@@ -235,7 +262,78 @@ export class ActivitySoldUnitListComponent implements OnInit {
     }
   }
 
+  public buttonPickSoldUnit(currentData: any): void {
+    if (this.isFromCustomer == true) {
+      switch (this.customerReport) {
+        case "Buyers Undertaking": {
+          const openDialog = this.printPdfBuyersUndertakingDialog.open(PrintPdfBuyersUndertakingComponent, {
+            width: '1200px',
+            data: {
+              dialogTitle: "Print Buyer's Undertaking",
+              dialogData: currentData
+            },
+            disableClose: true
+          });
+
+          openDialog.afterClosed().subscribe(result => {
+
+          });
+
+          break;
+        }
+        case "Reservation Agreement": {
+          const openDialog = this.printPdfReservationAgreementDialog.open(PrintPdfReservationAgreementComponent, {
+            width: '1200px',
+            data: {
+              dialogTitle: "Print Reservation Agreement",
+              dialogData: currentData
+            },
+            disableClose: true
+          });
+
+          openDialog.afterClosed().subscribe(result => {
+
+          });
+
+          break;
+        }
+        case "Computation Sheet": {
+          const openDialog = this.printPdfComputationSheetDialog.open(PrintPdfComputationSheetComponent, {
+            width: '1200px',
+            data: {
+              dialogTitle: "Print Computation Sheet",
+              dialogData: currentData
+            },
+            disableClose: true
+          });
+
+          openDialog.afterClosed().subscribe(result => {
+
+          });
+
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+  }
+
   ngOnInit(): void {
     this.getSoldUnitData();
+
+    if (this.isFromCustomer == true) {
+      this.soldUnitDisplayedColumns = [
+        'ButtonPick',
+        'SoldUnitNumber',
+        'SoldUnitDate',
+        'Project',
+        'Unit',
+        'Status',
+        'IsLocked',
+        'Space'
+      ];
+    }
   }
 }

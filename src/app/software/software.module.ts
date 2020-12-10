@@ -72,6 +72,7 @@ import { PrintPdfReservationAgreementComponent } from './component/print-pdf-res
 import { PrintPdfComputationSheetComponent } from './component/print-pdf-computation-sheet/print-pdf-computation-sheet.component';
 import { ConfirmationCancelComponent } from './component/confirmation-cancel/confirmation-cancel.component';
 import { ReportsComponent } from './component/reports/reports.component';
+import { GlobalSoldUnitListComponent } from './component/global-sold-unit-list/global-sold-unit-list.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { ReportsComponent } from './component/reports/reports.component';
     PrintPdfReservationAgreementComponent,
     PrintPdfComputationSheetComponent,
     ConfirmationCancelComponent,
-    ReportsComponent
+    ReportsComponent,
+    GlobalSoldUnitListComponent
   ],
   imports: [
     CommonModule,

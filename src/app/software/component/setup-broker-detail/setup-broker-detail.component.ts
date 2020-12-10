@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -28,6 +29,7 @@ export class SetupBrokerDetailComponent implements OnInit {
     private mstBrokerService: MstBrokerService,
     private printPdfBrokerDialog: MatDialog,
     private toastr: ToastrService,
+    public datepipe: DatePipe
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -139,7 +141,7 @@ export class SetupBrokerDetailComponent implements OnInit {
   }
 
   public birthDateDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
-    this.mstBrokerModel.BirthDate = this.birthDate.toString();
+    this.mstBrokerModel.BirthDate = this.datepipe.transform(this.birthDate, 'yyyy-MM-dd');
   }
 
   public disabledButtons(): void {

@@ -1,1 +1,19 @@
-<p>print-pdf-reservation-agreement works!</p>
+<h1 mat-dialog-title>
+    {{ dialogTitle }}
+</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <div *ngIf="isSpinnerShow" style="padding: 25px 0px 25px 0px; text-align: center;">
+        <h4>Please wait...</h4>
+        <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+    </div>
+    <div *ngIf="isContentShow">
+        <ngx-doc-viewer [url]="pdfSource" viewer="pdf" style="width:100%; height:65vh;"></ngx-doc-viewer>
+    </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="warn" (click)="buttonCloseClick()">
+        Close
+    </button>
+</mat-dialog-actions>

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, Input } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { RepPDFService } from './../../service/rep-PDF/rep-pdf.service';
 
 @Component({
   selector: 'app-print-pdf-reservation-agreement',
@@ -7,9 +10,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrintPdfReservationAgreementComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private printPdfReservationAgreementDialog: MatDialogRef<PrintPdfReservationAgreementComponent>,
+    @Inject(MAT_DIALOG_DATA) private printPdfReservationAgreementDialogData: any,
+    private repPDFService: RepPDFService
+  ) { }
 
-  ngOnInit(): void {
+  public dialogTitle: string = this.printPdfReservationAgreementDialogData.dialogTitle;
+  public dialogData: any = this.printPdfReservationAgreementDialogData.dialogData;
+
+  public isSpinnerShow: boolean = true;
+  public isContentShow: boolean = false;
+
+  public pdfSource: string = "";
+
+  public print(): void {
+    let id = this.dialogData.Id;
+
+    this.repPDFService.printPdfReservationAgreement(id).subscribe(
+      data => {
+
+        setTimeout(() => {
+          var binaryData = [];
+          binaryData.push(data);
+
+          this.pdfSource = URL.createObjectURL(new Blob(binaryData, { type: "application/pdf" }));
+
+          this.isSpinnerShow = false;
+          this.isContentShow = true;
+        }, 500);
+
+      }
+    );
   }
 
+  public buttonCloseClick(): void {
+    this.printPdfReservationAgreementDialog.close(null);
+  }
+
+  ngOnInit(): void {
+    this.print();
+  }
 }

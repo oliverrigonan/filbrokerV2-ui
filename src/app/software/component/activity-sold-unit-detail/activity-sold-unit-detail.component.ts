@@ -8,6 +8,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { MstProjectModel } from './../../model/mst-project.model';
+import { MstUnitModel } from './../../model/mst-unit.model';
 import { MstCustomerModel } from './../../model/mst-customer.model';
 import { MstBrokerModel } from './../../model/mst-broker.model';
 import { MstChecklistModel } from './../../model/mst-checklist.model';
@@ -16,6 +18,8 @@ import { SysDropdownModel } from './../../model/sys-dropdown.model';
 import { TrnSoldUnitModel } from './../../model/trn-sold-unit.model';
 import { TrnSoldUnitRequirementModel } from './../../model/trn-sold-unit-requirement.model';
 
+import { MstProjectService } from './../../service/mst-project/mst-project.service';
+import { MstUnitService } from './../../service/mst-unit/mst-unit.service';
 import { MstCustomerService } from './../../service/mst-customer/mst-customer.service';
 import { MstBrokerService } from './../../service/mst-broker/mst-broker.service';
 import { MstChecklistService } from './../../service/mst-checklist/mst-checklist.service';
@@ -43,6 +47,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private mstProjectService: MstProjectService,
+    private mstUnitService: MstUnitService,
     private mstCustomerService: MstCustomerService,
     private mstBrokerService: MstBrokerService,
     private mstChecklistService: MstChecklistService,
@@ -62,6 +68,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
 
+  public mstProjectModel: MstProjectModel[] = [];
+  public mstUnitModel: MstUnitModel[] = [];
   public mstCustomerModel: MstCustomerModel[] = [];
   public mstBrokerModel: MstBrokerModel[] = [];
   public mstChecklistModel: MstChecklistModel[] = [];
@@ -121,6 +129,49 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   public soldUnitBalanceInterest: string = "0.00";
   public soldUnitBalanceNoOfPayments: string = "0.00";
   public soldUnitBalanceAmortization: string = "0.00";
+
+  public getProjectList(): void {
+    this.mstProjectService.getProjectList().subscribe(
+      data => {
+        this.mstProjectModel = data;
+        this.getCustomerList();
+      }
+    );
+  }
+
+  public projectSelectionChange(event: any): void {
+    this.getUnitList();
+  }
+
+  public getUnitList(): void {
+    this.mstUnitService.getUnitListPerProject(this.trnSoldUnitModel.ProjectId).subscribe(
+      data => {
+        this.mstUnitModel = data;
+      }
+    );
+  }
+
+  public unitSelectionChange(event: any): void {
+    let price = this.mstUnitModel.filter(x => x.Id == this.trnSoldUnitModel.UnitId)[0].Price;
+
+    this.trnSoldUnitModel.Price = price;
+    this.soldUnitPrice = this.decimalPipe.transform(price, "1.2-2");
+
+    this.trnSoldUnitModel.TSP = price;
+    this.soldUnitTSP = this.decimalPipe.transform(price, "1.2-2");
+
+    this.trnSoldUnitModel.TCP = price;
+    this.soldUnitTCP = this.decimalPipe.transform(price, "1.2-2");
+
+    let TSP = this.trnSoldUnitModel.TSP;
+    let equityPercent = this.trnSoldUnitModel.EquityPercent;
+    let equityValue = TSP * (equityPercent / 100);
+
+    this.trnSoldUnitModel.EquityValue = equityValue;
+    this.soldUnitEquityValue = this.decimalPipe.transform(equityValue, "1.2-2");
+
+    this.computeAmount();
+  }
 
   public getCustomerList(): void {
     this.mstCustomerService.getCustomerList().subscribe(
@@ -187,8 +238,12 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
             this.trnSoldUnitModel.Id = data.Id;
             this.trnSoldUnitModel.SoldUnitNumber = data.SoldUnitNumber;
             this.trnSoldUnitModel.SoldUnitDate = data.SoldUnitDate;
+
             this.trnSoldUnitModel.ProjectId = data.ProjectId;
             this.trnSoldUnitModel.Project = data.Project;
+
+            this.getUnitList();
+
             this.trnSoldUnitModel.UnitId = data.UnitId;
             this.trnSoldUnitModel.Unit = data.Unit;
             this.trnSoldUnitModel.CustomerId = data.CustomerId;
@@ -836,6 +891,6 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCustomerList();
+    this.getProjectList();
   }
 }

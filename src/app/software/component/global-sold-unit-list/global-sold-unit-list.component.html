@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>
+    {{ dialogTitle }}
+</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <app-activity-sold-unit-list [customerData]="customerData" [customerReport]="customerReport"
+        [isFromCustomer]="true"></app-activity-sold-unit-list>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="warn" (click)="buttonCloseClick()">
+        Close
+    </button>
+</mat-dialog-actions>

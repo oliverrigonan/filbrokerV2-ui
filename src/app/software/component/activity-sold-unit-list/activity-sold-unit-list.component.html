@@ -3,7 +3,7 @@
     <mat-spinner style="margin:auto;display:block;"></mat-spinner>
 </div>
 <div [hidden]="!isContentShow">
-    <mat-toolbar>
+    <mat-toolbar *ngIf="isFromCustomer == false">
         &nbsp;&nbsp;
         <img src="../../../../assets/images/software-icons/sold-unit.png" class="toolBar-img-style" />
         <span class="toolbar-title-style">
@@ -18,9 +18,17 @@
             Close
         </button>
     </mat-toolbar>
-    <mat-divider></mat-divider>
+    <mat-divider *ngIf="isFromCustomer == false"></mat-divider>
     <div class="software-container">
-        <div fxLayout="row" fxLayout.xs="column">
+        <div fxLayout="row" fxLayout.xs="column" *ngIf="isFromCustomer == true">
+            <div fxFlex="100" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="soldUnitFilter($event)" placeholder="Filter" #soldUnitFilterData />
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column" *ngIf="isFromCustomer == false">
             <div fxFlex="25" style="padding: 5px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Start date</mat-label>
@@ -55,7 +63,7 @@
                 <mat-table [dataSource]="soldUnitDataSource" #soldUnitSort="matSort" matSort
                     style="overflow-x: scroll;">
 
-                    <ng-container matColumnDef="ButtonEdit">
+                    <ng-container matColumnDef="ButtonEdit" *ngIf="isFromCustomer == false">
                         <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                         <mat-cell fxFlex="100px" *matCellDef="let row">
                             <button mat-flat-button color="primary" (click)="buttonEditSoldUnit(row)">
@@ -64,11 +72,20 @@
                         </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="ButtonDelete">
+                    <ng-container matColumnDef="ButtonDelete" *ngIf="isFromCustomer == false">
                         <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                         <mat-cell fxFlex="100px" *matCellDef="let row">
                             <button mat-flat-button color="warn" (click)="buttonDeleteSoldUnit(row)">
                                 Delete
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ButtonPick" *ngIf="isFromCustomer == true">
+                        <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
+                        <mat-cell fxFlex="100px" *matCellDef="let row">
+                            <button mat-flat-button color="primary" (click)="buttonPickSoldUnit(row)">
+                                Pick
                             </button>
                         </mat-cell>
                     </ng-container>
@@ -95,7 +112,7 @@
                         <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Unit}} </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="Customer">
+                    <ng-container matColumnDef="Customer" *ngIf="isFromCustomer == false">
                         <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Customer
                         </mat-header-cell>
                         <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Customer}} </mat-cell>
@@ -113,7 +130,7 @@
                                 (click)="$event.preventDefault()"></mat-checkbox>
                         </mat-cell>
                     </ng-container>
-                    
+
                     <ng-container matColumnDef="Space">
                         <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
                         <mat-cell *matCellDef="let row">
