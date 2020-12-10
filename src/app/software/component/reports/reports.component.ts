@@ -43,6 +43,8 @@ export class ReportsComponent implements OnInit {
   public startDateFilterFormControl = new FormControl(this.firstDay);
   public endDateFilterFormControl = new FormControl(this.lastDay);
 
+  public dateAsOfFilterFormControl = new FormControl(this.date);
+
   public isSpinnerShowRepSummarySoldUnit: boolean = true;
   public isContentShowRepSummarySoldUnit: boolean = false;
 
@@ -165,7 +167,28 @@ export class ReportsComponent implements OnInit {
   @ViewChild('brokerPaginator') public brokerPaginator: MatPaginator;
   @ViewChild('brokerSort') public brokerSort: MatSort;
 
+  public isSpinnerShowRepSummaryAccountsReceivable: boolean = true;
+  public isContentShowRepSummaryAccountsReceivable: boolean = false;
+
+  public accountsReceivableDisplayedColumns: string[] = [
+    'SoldUnitNumber',
+    'SoldUnitDate',
+    'Customer',
+    'Price',
+    'PricePayment',
+    'PriceBalance',
+    'Status',
+    'Space'
+  ];
+
+  public accountsReceivableDataSource: MatTableDataSource<TrnSoldUnitModel>;
+  public accountsReceivableData: TrnSoldUnitModel[] = []
+
+  @ViewChild('accountsReceivablePaginator') public accountsReceivablePaginator: MatPaginator;
+  @ViewChild('accountsReceivableSort') public accountsReceivableSort: MatSort;
+
   public selectedTabIndex: number = 0;
+  public isAccountReceivable: boolean = false;
 
   public getRepSummarySoldUnitListByDateRange(): void {
     this.soldUnitData = [];
@@ -582,10 +605,89 @@ export class ReportsComponent implements OnInit {
 
         break;
       }
+      case 6: {
+        let data: any[] = [
+          {
+            SoldUnitNumber: "Sold Unit Number",
+            SoldUnitDate: "Sold Unit Date",
+            Customer: "Customer",
+            Price: "Amount",
+            PricePayment: "Payment",
+            PriceBalance: "Balance",
+            Status: "Status",
+          }
+        ];
+
+        if (this.accountsReceivableData.length > 0) {
+          for (let i = 0; i < this.accountsReceivableData.length; i++) {
+            data.push({
+              SoldUnitNumber: this.accountsReceivableData[i].SoldUnitNumber,
+              SoldUnitDate: this.accountsReceivableData[i].SoldUnitDate,
+              Customer: this.accountsReceivableData[i].Customer,
+              Price: this.accountsReceivableData[i].Price,
+              PricePayment: this.accountsReceivableData[i].PricePayment,
+              PriceBalance: this.accountsReceivableData[i].PriceBalance,
+              Status: this.accountsReceivableData[i].Status
+            });
+          }
+        }
+
+        let dateAsOfFilterValue: string = new Date(this.dateAsOfFilterFormControl.value).toLocaleDateString("fr-CA");
+
+        new Angular5Csv(data, 'Accounts Receivable date as of ' + dateAsOfFilterValue);
+
+        break;
+      }
       default: {
         break;
       }
     }
+  }
+
+  public onTabChanged(event: any): void {
+    if (this.selectedTabIndex == 6) {
+      this.isAccountReceivable = true;
+    }
+
+    if (this.isAccountReceivable == true) {
+
+    }
+  }
+
+  public getRepSummaryAccountsReceivableListByDateAsOf(): void {
+    this.accountsReceivableData = [];
+    this.accountsReceivableDataSource = new MatTableDataSource(this.accountsReceivableData);
+    this.accountsReceivableDataSource.paginator = this.accountsReceivablePaginator;
+    this.accountsReceivableDataSource.sort = this.accountsReceivableSort;
+
+    let dateAsOfFilterValue: string = new Date(this.dateAsOfFilterFormControl.value).toLocaleDateString("fr-CA");
+
+    this.repSummaryService.getRepSummaryAccountsReceivableListByDateAsOf(dateAsOfFilterValue).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.accountsReceivableData = data;
+          this.accountsReceivableDataSource = new MatTableDataSource(this.accountsReceivableData);
+          this.accountsReceivableDataSource.paginator = this.accountsReceivablePaginator;
+          this.accountsReceivableDataSource.sort = this.accountsReceivableSort;
+        }
+
+        this.isSpinnerShowRepSummaryAccountsReceivable = false;
+        this.isContentShowRepSummaryAccountsReceivable = true;
+      }
+    );
+  }
+
+  public accountsReceivableFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.accountsReceivableDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.accountsReceivableDataSource.paginator) {
+      this.accountsReceivableDataSource.paginator.firstPage();
+    }
+  }
+
+  public dateAsOfFiltersDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
+    this.getRepSummaryAccountsReceivableListByDateAsOf();
   }
 
   ngOnInit(): void {
@@ -595,5 +697,7 @@ export class ReportsComponent implements OnInit {
     this.getRepSummaryCommissionRequestListByDateRange();
     this.getRepSummaryCustomerListByDateRange();
     this.getRepSummaryBrokerListByDateRange();
+
+    this.getRepSummaryAccountsReceivableListByDateAsOf();
   }
 }

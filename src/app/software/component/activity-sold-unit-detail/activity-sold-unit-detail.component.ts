@@ -618,12 +618,14 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
       this.trnSoldUnitModel.EquityValue = equityValue;
       this.soldUnitEquityValue = this.decimalPipe.transform(equityValue, "1.2-2");
     } else {
-      let TSP = this.trnSoldUnitModel.TSP;
-      let equityValue = event.target.value;
-      let equityPercent = (equityValue / TSP) * 100;
+      if (field === "soldUnitEquityValue") {
+        let TSP = this.trnSoldUnitModel.TSP;
+        let equityValue = event.target.value;
+        let equityPercent = (equityValue / TSP) * 100;
 
-      this.trnSoldUnitModel.EquityPercent = equityPercent;
-      this.soldUnitEquityPercent = this.decimalPipe.transform(equityPercent, "1.2-2");
+        this.trnSoldUnitModel.EquityPercent = equityPercent;
+        this.soldUnitEquityPercent = this.decimalPipe.transform(equityPercent, "1.2-2");
+      }
     }
 
     this.computeAmount();
@@ -654,7 +656,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     let netEquityInterest = this.trnSoldUnitModel.NetEquityInterest;
     let equityBalanceNoOfPayments = this.trnSoldUnitModel.NetEquityNoOfPayments;
 
-    let netEquityValue = netEquityBalance * (netEquityInterest / 100);
+    let netEquityValue = netEquityInterest > 0 ? netEquityBalance + (netEquityBalance * (netEquityInterest / 100)) : netEquityBalance;
     let netEquityAmortization = netEquityValue / equityBalanceNoOfPayments;
 
     this.trnSoldUnitModel.NetEquityAmortization = netEquityAmortization;
