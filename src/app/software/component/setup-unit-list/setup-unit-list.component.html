@@ -7,7 +7,7 @@
         &nbsp;&nbsp;
         <img src="../../../../assets/images/software-icons/unit.png" class="toolBar-img-style" />
         <span class="toolbar-title-style">
-            Unit
+            Inventory
         </span>
         <span class="toolbar-spacer"></span>
         <button mat-flat-button color="primary" style="margin-right: 5px;" (click)="buttonAddUnit()"
@@ -66,20 +66,20 @@
                         <mat-cell fxFlex="120px" *matCellDef="let row"> {{row.UnitCode}} </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="Block">
-                        <mat-header-cell fxFlex="125px" *matHeaderCellDef mat-sort-header> Block </mat-header-cell>
-                        <mat-cell fxFlex="125px" *matCellDef="let row"> {{row.Block}} </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Lot">
-                        <mat-header-cell fxFlex="125px" *matHeaderCellDef mat-sort-header> Lot </mat-header-cell>
-                        <mat-cell fxFlex="125px" *matCellDef="let row"> {{row.Lot}} </mat-cell>
-                    </ng-container>
-
                     <ng-container matColumnDef="HouseModel">
-                        <mat-header-cell fxFlex="250px" *matHeaderCellDef mat-sort-header> House Model
+                        <mat-header-cell fxFlex="250px" *matHeaderCellDef mat-sort-header> Unit Type
                         </mat-header-cell>
                         <mat-cell fxFlex="250px" *matCellDef="let row"> {{row.HouseModel}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="UnitPrice">
+                        <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Unit Price (Net of VAT)
+                        </mat-header-cell>
+                        <mat-cell fxFlex="150px" *matCellDef="let row">
+                            <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                {{ decimalPipe.transform(row.TSP, "1.2-2") }}
+                            </div>
+                        </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="Status">

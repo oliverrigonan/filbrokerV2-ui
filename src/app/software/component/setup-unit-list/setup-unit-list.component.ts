@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, Inject, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { DecimalPipe } from '@angular/common';
+
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 
@@ -28,9 +30,8 @@ export class SetupUnitListComponent implements OnInit {
     'ButtonEdit',
     'ButtonDelete',
     'UnitCode',
-    'Block',
-    'Lot',
     'HouseModel',
+    'UnitPrice',
     'Status',
     'IsLocked',
     'Space'
@@ -49,7 +50,8 @@ export class SetupUnitListComponent implements OnInit {
     private mstUnitService: MstUnitService,
     private router: Router,
     private toastr: ToastrService,
-    private confirmationDeleteDialog: MatDialog
+    private confirmationDeleteDialog: MatDialog,
+    public decimalPipe: DecimalPipe,
   ) { }
 
   public isSpinnerShow: boolean = true;
