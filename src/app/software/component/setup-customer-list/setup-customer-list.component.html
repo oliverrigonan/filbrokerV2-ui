@@ -67,6 +67,16 @@
                         <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Address}} </mat-cell>
                     </ng-container>
 
+                    <ng-container matColumnDef="TelephoneNumber">
+                        <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Tel. No. </mat-header-cell>
+                        <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.TelephoneNumber}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="MobileNumber">
+                        <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Mobile No. </mat-header-cell>
+                        <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.MobileNumber}} </mat-cell>
+                    </ng-container>
+
                     <ng-container matColumnDef="Status">
                         <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
                         <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Status}} </mat-cell>

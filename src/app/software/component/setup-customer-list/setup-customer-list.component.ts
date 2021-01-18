@@ -26,6 +26,8 @@ export class SetupCustomerListComponent implements OnInit {
     'CustomerCode',
     'Customer',
     'Address',
+    'TelephoneNumber',
+    'MobileNumber',
     'Status',
     'IsLocked',
     'Space'

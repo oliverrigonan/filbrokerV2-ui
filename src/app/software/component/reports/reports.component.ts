@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Inject, EventEmitter } from '@angular/cor
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import { DecimalPipe } from '@angular/common';
 
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -34,6 +35,7 @@ export class ReportsComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private repSummaryService: RepSummaryService,
+    public decimalPipe: DecimalPipe,
   ) { }
 
   public date = new Date();
@@ -647,10 +649,8 @@ export class ReportsComponent implements OnInit {
   public onTabChanged(event: any): void {
     if (this.selectedTabIndex == 6) {
       this.isAccountReceivable = true;
-    }
-
-    if (this.isAccountReceivable == true) {
-
+    } else {
+      this.isAccountReceivable = false;
     }
   }
 

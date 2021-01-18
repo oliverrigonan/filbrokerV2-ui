@@ -117,25 +117,41 @@
                             <ng-container matColumnDef="Price">
                                 <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Price
                                 </mat-header-cell>
-                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Price}} </mat-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.Price, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="PriceDiscount">
                                 <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Discount
                                 </mat-header-cell>
-                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.PriceDiscount}} </mat-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.PriceDiscount, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="PricePayment">
                                 <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Payment
                                 </mat-header-cell>
-                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.PricePayment}} </mat-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.PricePayment, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="PriceBalance">
                                 <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Balance
                                 </mat-header-cell>
-                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.PriceBalance}} </mat-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.PriceBalance, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="Status">
@@ -395,7 +411,11 @@
                             <ng-container matColumnDef="Amount">
                                 <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Amount
                                 </mat-header-cell>
-                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Amount}} </mat-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.Amount, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="Status">
@@ -630,19 +650,31 @@
                             <ng-container matColumnDef="Price">
                                 <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Amount
                                 </mat-header-cell>
-                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Price}} </mat-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.Price, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="PricePayment">
                                 <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Payment
                                 </mat-header-cell>
-                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.PricePayment}} </mat-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.PricePayment, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="PriceBalance">
                                 <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Balance
                                 </mat-header-cell>
-                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.PriceBalance}} </mat-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.PriceBalance, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="Status">

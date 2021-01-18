@@ -32,6 +32,7 @@ export class SetupUnitListComponent implements OnInit {
     'UnitCode',
     'HouseModel',
     'UnitPrice',
+    'FloorArea',
     'Status',
     'IsLocked',
     'Space'

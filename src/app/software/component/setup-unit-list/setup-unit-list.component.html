@@ -82,6 +82,16 @@
                         </mat-cell>
                     </ng-container>
 
+                    <ng-container matColumnDef="FloorArea">
+                        <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Floor Area
+                        </mat-header-cell>
+                        <mat-cell fxFlex="150px" *matCellDef="let row">
+                            <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                {{ decimalPipe.transform(row.TFA, "1.2-2") }}
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
                     <ng-container matColumnDef="Status">
                         <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
                         <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Status}} </mat-cell>
