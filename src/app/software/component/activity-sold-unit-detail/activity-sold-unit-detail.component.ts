@@ -17,6 +17,7 @@ import { MstUserModel } from './../../model/mst-user.model';
 import { SysDropdownModel } from './../../model/sys-dropdown.model';
 import { TrnSoldUnitModel } from './../../model/trn-sold-unit.model';
 import { TrnSoldUnitRequirementModel } from './../../model/trn-sold-unit-requirement.model';
+import { TrnSoldUnitCoOwnerModel } from './../../model/trn-sold-unit-co-owner.model';
 
 import { MstProjectService } from './../../service/mst-project/mst-project.service';
 import { MstUnitService } from './../../service/mst-unit/mst-unit.service';
@@ -27,6 +28,7 @@ import { MstUserService } from './../../service/mst-user/mst-user.service';
 import { SysDropdownService } from './../../service/sys-dropdown/sys-dropdown.service';
 import { TrnSoldUnitService } from './../../service/trn-sold-unit/trn-sold-unit.service';
 import { TrnSoldUnitRequirementService } from './../../service/trn-sold-unit-requirement/trn-sold-unit-requirement.service';
+import { TrnSoldUnitCoOwnerService } from './../../service/trn-sold-unit-co-owner/trn-sold-unit-co-owner.service';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -36,6 +38,8 @@ import { ConfirmationAddChecklistComponent } from './../confirmation-add-checkli
 import { PrintPdfSoldUnitProposalComponent } from './../../component/print-pdf-sold-unit-proposal/print-pdf-sold-unit-proposal.component';
 import { PrintPdfSoldUnitContractComponent } from './../../component/print-pdf-sold-unit-contract/print-pdf-sold-unit-contract.component';
 import { ActivitySoldUnitCancelReasonComponent } from './../../component/activity-sold-unit-cancel-reason/activity-sold-unit-cancel-reason.component';
+import { ActivitySoldUnitCoOwnerDetailComponent } from './../activity-sold-unit-co-owner-detail/activity-sold-unit-co-owner-detail.component';
+import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 
 @Component({
   selector: 'app-activity-sold-unit-detail',
@@ -56,6 +60,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     private sysDropdownService: SysDropdownService,
     private trnSoldUnitService: TrnSoldUnitService,
     private trnSoldUnitRequirementService: TrnSoldUnitRequirementService,
+    private trnSoldUnitCoOwnerService: TrnSoldUnitCoOwnerService,
     private activitySoldUnitRequirementDetailDialog: MatDialog,
     private confirmationAddChecklistDialog: MatDialog,
     private toastr: ToastrService,
@@ -63,6 +68,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     private printPdfSoldUnitProposalDialog: MatDialog,
     private printPdfSoldUnitContractDialog: MatDialog,
     private activitySoldUnitCancelReasonDialog: MatDialog,
+    private activitySoldUnitCoOwnerDetailDialog: MatDialog,
+    private confirmationDeleteDialog: MatDialog,
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -129,6 +136,23 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   public soldUnitBalanceInterest: string = "0.00";
   public soldUnitBalanceNoOfPayments: string = "0.00";
   public soldUnitBalanceAmortization: string = "0.00";
+
+  public soldUnitCoOwnerDisplayedColumns: string[] = [
+    'ButtonEdit',
+    'ButtonDelete',
+    'CustomerCode',
+    'Customer',
+    'Address',
+    'Space'
+  ];
+
+  public soldUnitCoOwnerDataSource: MatTableDataSource<TrnSoldUnitCoOwnerModel>;
+  public soldUnitCoOwnerData: TrnSoldUnitCoOwnerModel[] = []
+
+  @ViewChild('soldUnitCoOwnerPaginator') public soldUnitCoOwnerPaginator: MatPaginator;
+  @ViewChild('soldUnitCoOwnerSort') public soldUnitCoOwnerSort: MatSort;
+
+  public isButtonAddSoldUnitCoOwnerDisabled: boolean = false;
 
   public getProjectList(): void {
     this.mstProjectService.getProjectList().subscribe(
@@ -346,6 +370,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
             this.isContentShow = true;
 
             this.getSoldUnitRequirementData();
+            this.getSoldUnitCoOwnerData();
 
             this.isLockedButtons(this.trnSoldUnitModel.IsLocked);
           }
@@ -887,6 +912,134 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
       openDialog.afterClosed().subscribe(result => {
         if (result != null) {
           this.getSoldUnitRequirementData();
+        }
+      });
+    }
+  }
+
+  public getSoldUnitCoOwnerData(): void {
+    this.soldUnitCoOwnerData = [];
+    this.soldUnitCoOwnerDataSource = new MatTableDataSource(this.soldUnitCoOwnerData);
+    this.soldUnitCoOwnerDataSource.paginator = this.soldUnitCoOwnerPaginator;
+    this.soldUnitCoOwnerDataSource.sort = this.soldUnitCoOwnerSort;
+
+    this.trnSoldUnitCoOwnerService.getSoldUnitCoOwnerListPerSoldUnit(this.trnSoldUnitModel.Id).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.soldUnitCoOwnerData = data;
+          this.soldUnitCoOwnerDataSource = new MatTableDataSource(this.soldUnitCoOwnerData);
+          this.soldUnitCoOwnerDataSource.paginator = this.soldUnitCoOwnerPaginator;
+          this.soldUnitCoOwnerDataSource.sort = this.soldUnitCoOwnerSort;
+        }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
+      }
+    );
+  }
+
+  public soldUnitCoOwnerFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.soldUnitCoOwnerDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.soldUnitCoOwnerDataSource.paginator) {
+      this.soldUnitCoOwnerDataSource.paginator.firstPage();
+    }
+  }
+
+  public buttonAddSoldUnitCoOwner(): void {
+    if (this.trnSoldUnitModel.Id == 0) {
+      this.toastr.error("No sold unit requirement data found.", 'Add Failed');
+    } else {
+      let trnSoldUnitCoOwnerModel: TrnSoldUnitCoOwnerModel = {
+        Id: 0,
+        SoldUnitId: this.trnSoldUnitModel.Id,
+        CustomerId: 0,
+        CustomerCode: "",
+        Customer: "",
+        Address: ""
+      };
+
+      const openDialog = this.activitySoldUnitCoOwnerDetailDialog.open(ActivitySoldUnitCoOwnerDetailComponent, {
+        width: '550px',
+        data: {
+          dialogTitle: "Add Co-Owner",
+          dialogData: trnSoldUnitCoOwnerModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.getSoldUnitCoOwnerData();
+        }
+      });
+    }
+  }
+
+  public buttonEditSoldUnitCoOwner(currentData: any): void {
+    if (this.trnSoldUnitModel.Id == 0) {
+      this.toastr.error("No sold unit data found.", 'Add Failed');
+    } else {
+      let id = currentData.Id;
+
+      let trnSoldUnitCoOwnerModel: TrnSoldUnitCoOwnerModel = {
+        Id: id,
+        SoldUnitId: this.trnSoldUnitModel.Id,
+        CustomerId: 0,
+        CustomerCode: "",
+        Customer: "",
+        Address: ""
+      };
+
+      const openDialog = this.activitySoldUnitCoOwnerDetailDialog.open(ActivitySoldUnitCoOwnerDetailComponent, {
+        width: '550px',
+        data: {
+          dialogTitle: "Edit Co-Owner",
+          dialogData: trnSoldUnitCoOwnerModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.getSoldUnitCoOwnerData();
+        }
+      });
+    }
+  }
+
+  public buttonDeleteSoldUnitCoOwner(currentData: any): void {
+    if (this.trnSoldUnitModel.Id == 0) {
+      this.toastr.error("No sold unit data found.", 'Add Failed');
+    } else {
+      let id = currentData.Id;
+
+      const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
+        width: '450px',
+        data: {
+          dialogDeleteTitle: "Delete Co-Owner",
+          dialogDeleteMessage: "Are you sure you want to delete this co-owner " + currentData.Activity + "?",
+          dialogDeleteId: id
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+        if (result != null) {
+          this.trnSoldUnitCoOwnerService.deleteSoldUnitCoOwner(result).subscribe(
+            data => {
+
+              if (data[0] == true) {
+                this.toastr.success('Co-Owner was successfully deleted!', 'Delete Successful');
+                this.getSoldUnitCoOwnerData();
+              } else {
+                this.toastr.error(data[1], 'Delete Failed');
+              }
+
+            }
+          );
         }
       });
     }
