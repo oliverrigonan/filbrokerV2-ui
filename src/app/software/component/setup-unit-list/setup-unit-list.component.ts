@@ -122,6 +122,10 @@ export class SetupUnitListComponent implements OnInit {
       TFA: 0,
       Price: 0,
       TSP: 0,
+      MiscellaneousFeeRate: 5,
+      MiscellaneousFeeAmount: 0,
+      VATRate: 12,
+      VATAmount: 0,
       Status: "OPEN",
       IsLocked: false
     };

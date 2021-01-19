@@ -44,6 +44,10 @@ export class MstUnitService {
                 TLA: results[i].TLA,
                 TFA: results[i].TFA,
                 Price: results[i].Price,
+                MiscellaneousFeeRate: results[i].MiscellaneousFeeRate,
+                MiscellaneousFeeAmount: results[i].MiscellaneousFeeAmount,
+                VATRate: results[i].VATRate,
+                VATAmount: results[i].VATAmount,
                 TSP: results[i].TSP,
                 Status: results[i].Status,
                 IsLocked: results[i].IsLocked
@@ -80,6 +84,10 @@ export class MstUnitService {
                 TLA: results[i].TLA,
                 TFA: results[i].TFA,
                 Price: results[i].Price,
+                MiscellaneousFeeRate: results[i].MiscellaneousFeeRate,
+                MiscellaneousFeeAmount: results[i].MiscellaneousFeeAmount,
+                VATRate: results[i].VATRate,
+                VATAmount: results[i].VATAmount,
                 TSP: results[i].TSP,
                 Status: results[i].Status,
                 IsLocked: results[i].IsLocked
@@ -116,6 +124,10 @@ export class MstUnitService {
                 TLA: results[i].TLA,
                 TFA: results[i].TFA,
                 Price: results[i].Price,
+                MiscellaneousFeeRate: results[i].MiscellaneousFeeRate,
+                MiscellaneousFeeAmount: results[i].MiscellaneousFeeAmount,
+                VATRate: results[i].VATRate,
+                VATAmount: results[i].VATAmount,
                 TSP: results[i].TSP,
                 Status: results[i].Status,
                 IsLocked: results[i].IsLocked
@@ -151,6 +163,10 @@ export class MstUnitService {
               TLA: results["TLA"],
               TFA: results["TFA"],
               Price: results["Price"],
+              MiscellaneousFeeRate: results["MiscellaneousFeeRate"],
+              MiscellaneousFeeAmount: results["MiscellaneousFeeAmount"],
+              VATRate: results["VATRate"],
+              VATAmount: results["VATAmount"],
               TSP: results["TSP"],
               Status: results["Status"],
               IsLocked: results["IsLocked"]

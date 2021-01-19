@@ -10,6 +10,10 @@ export class MstUnitModel {
     TLA: number = 0;
     TFA: number = 0;
     Price: number = 0;
+    MiscellaneousFeeRate: number = 0;
+    MiscellaneousFeeAmount: number = 0;
+    VATRate: number = 0;
+    VATAmount: number = 0;
     TSP: number = 0;
     Status: string = "";
     IsLocked: boolean = false;

@@ -29,7 +29,7 @@
     <mat-divider></mat-divider>
     <div class="software-container">
         <div fxLayout="row" fxLayout.xs="column">
-            <div fxFlex="25" style="padding: 5px;">
+            <div fxFlex="50" style="padding: 5px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Unit Code</mat-label>
                     <input matInput [(ngModel)]="mstUnitModel.UnitCode" [ngModelOptions]="{standalone: true}"
@@ -50,12 +50,9 @@
                         [disabled]="mstUnitModel.IsLocked">
                 </mat-form-field>
             </div>
-            <div fxFlex="25" style="padding: 5px;">
-
-            </div>
         </div>
         <div fxLayout="row" fxLayout.xs="column">
-            <div fxFlex="25" style="padding: 5px;">
+            <div fxFlex="50" style="padding: 5px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Project</mat-label>
                     <input matInput [(ngModel)]="mstUnitModel.Project" [ngModelOptions]="{standalone: true}" disabled>
@@ -72,50 +69,25 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div fxFlex="25" style="padding: 5px;">
-
-            </div>
         </div>
         <div fxLayout="row" fxLayout.xs="column">
             <div fxFlex="25" style="padding: 5px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Total Lot Area (sqm)</mat-label>
-                    <input matInput [(ngModel)]="mstUnitModel.TLA" [ngModelOptions]="{standalone: true}"
-                        [disabled]="mstUnitModel.IsLocked">
+                    <input matInput [(ngModel)]="unitTLA" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked" (keypress)="onKeyPressNumberOnly($event)"
+                        (blur)="onaBlurNumberAddCommas(unitTLA, 'unitTLA')" style="text-align: right;">
                 </mat-form-field>
             </div>
             <div fxFlex="25" style="padding: 5px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Total Floor Area (sqm)</mat-label>
-                    <input matInput [(ngModel)]="mstUnitModel.TFA" [ngModelOptions]="{standalone: true}"
-                        [disabled]="mstUnitModel.IsLocked">
+                    <input matInput [(ngModel)]="unitTFA" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked" (keypress)="onKeyPressNumberOnly($event)"
+                        (blur)="onaBlurNumberAddCommas(unitTFA, 'unitTFA')" style="text-align: right;">
                 </mat-form-field>
             </div>
             <div fxFlex="50" style="padding: 5px;">
-
-            </div>
-        </div>
-        <div fxLayout="row" fxLayout.xs="column">
-            <div fxFlex="25" style="padding: 5px;">
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>TUP</mat-label>
-                    <input matInput [(ngModel)]="mstUnitModel.Price" [ngModelOptions]="{standalone: true}"
-                        [disabled]="mstUnitModel.IsLocked">
-                </mat-form-field>
-            </div>
-            <div fxFlex="25" style="padding: 5px;">
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>TSP</mat-label>
-                    <input matInput [(ngModel)]="mstUnitModel.TSP" [ngModelOptions]="{standalone: true}"
-                        [disabled]="mstUnitModel.IsLocked">
-                </mat-form-field>
-            </div>
-            <div fxFlex="50" style="padding: 5px;">
-
-            </div>
-        </div>
-        <div fxLayout="row" fxLayout.xs="column">
-            <div fxFlex="25" style="padding: 3px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Status</mat-label>
                     <mat-select [(value)]="mstUnitModel.Status" [disabled]="mstUnitModel.IsLocked">
@@ -126,8 +98,38 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div fxFlex="75" style="padding: 5px;">
-
+        </div>
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>TUP</mat-label>
+                    <input matInput [(ngModel)]="unitPrice" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked" (keypress)="onKeyPressNumberOnly($event)"
+                        (focus)="onFocusNumberRemoveCommas('unitPrice')"
+                        (blur)="onaBlurNumberAddCommas(unitPrice, 'unitPrice')"
+                        (keyup)="onKeyUpComputeAmount($event, 'unitPrice')" style="text-align: right;">
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Miscellaneous Fee</mat-label>
+                    <input matInput [(ngModel)]="unitMiscellaneousFeeAmount" [ngModelOptions]="{standalone: true}"
+                        [disabled]="true" (keypress)="onKeyPressNumberOnly($event)" style="text-align: right;">
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 3px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>VAT</mat-label>
+                    <input matInput [(ngModel)]="unitVATAmount" [ngModelOptions]="{standalone: true}" [disabled]="true"
+                        (keypress)="onKeyPressNumberOnly($event)" style="text-align: right;">
+                </mat-form-field>
+            </div>
+            <div fxFlex="25" style="padding: 3px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>TSP</mat-label>
+                    <input matInput [(ngModel)]="unitTSP" [ngModelOptions]="{standalone: true}" [disabled]="true"
+                        (keypress)="onKeyPressNumberOnly($event)" style="text-align: right;">
+                </mat-form-field>
             </div>
         </div>
     </div>
