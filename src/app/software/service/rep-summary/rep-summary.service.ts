@@ -394,6 +394,7 @@ export class RepSummaryService {
                 MiddleName: results[i].MiddleName,
                 FullName: results[i].FullName,
                 LicenseNumber: results[i].LicenseNumber,
+                LicenseNumberValidUntil: results[i].LicenseNumberValidUntil,
                 BirthDate: results[i].BirthDate,
                 CivilStatus: results[i].CivilStatus,
                 Gender: results[i].Gender,
@@ -404,6 +405,7 @@ export class RepSummaryService {
                 EmailAddress: results[i].EmailAddress,
                 Facebook: results[i].Facebook,
                 TIN: results[i].TIN,
+                HLURBRegistrationNumber: results[i].HLURBRegistrationNumber,
                 RealtyFirm: results[i].RealtyFirm,
                 RealtyFirmAddress: results[i].RealtyFirmAddress,
                 RealtyFirmTelephoneNumber: results[i].RealtyFirmTelephoneNumber,
@@ -412,6 +414,9 @@ export class RepSummaryService {
                 RealtyFirmEmailAddress: results[i].RealtyFirmEmailAddress,
                 RealtyFirmWebsite: results[i].RealtyFirmWebsite,
                 RealtyFirmTIN: results[i].RealtyFirmTIN,
+                RealtyFirmLicenseNumber: results[i].RealtyFirmLicenseNumber,
+                RealtyFirmLicenseNumberValidUntil: results[i].RealtyFirmLicenseNumberValidUntil,
+                RealtyFormHLURBRegistrationNumber: results[i].RealtyFormHLURBRegistrationNumber,
                 Organization: results[i].Organization,
                 Remarks: results[i].Remarks,
                 Picture: results[i].Picture,
@@ -421,7 +426,8 @@ export class RepSummaryService {
                 Attachment4: results[i].Attachment4,
                 Attachment5: results[i].Attachment5,
                 Status: results[i].Status,
-                IsLocked: results[i].IsLocked
+                IsLocked: results[i].IsLocked,
+                Type: results[i].Type
               });
             }
           }

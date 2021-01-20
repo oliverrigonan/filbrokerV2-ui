@@ -40,6 +40,7 @@ export class MstBrokerService {
                 MiddleName: results[i].MiddleName,
                 FullName: results[i].FullName,
                 LicenseNumber: results[i].LicenseNumber,
+                LicenseNumberValidUntil: results[i].LicenseNumberValidUntil,
                 BirthDate: results[i].BirthDate,
                 CivilStatus: results[i].CivilStatus,
                 Gender: results[i].Gender,
@@ -50,6 +51,7 @@ export class MstBrokerService {
                 EmailAddress: results[i].EmailAddress,
                 Facebook: results[i].Facebook,
                 TIN: results[i].TIN,
+                HLURBRegistrationNumber: results[i].HLURBRegistrationNumber,
                 RealtyFirm: results[i].RealtyFirm,
                 RealtyFirmAddress: results[i].RealtyFirmAddress,
                 RealtyFirmTelephoneNumber: results[i].RealtyFirmTelephoneNumber,
@@ -58,6 +60,9 @@ export class MstBrokerService {
                 RealtyFirmEmailAddress: results[i].RealtyFirmEmailAddress,
                 RealtyFirmWebsite: results[i].RealtyFirmWebsite,
                 RealtyFirmTIN: results[i].RealtyFirmTIN,
+                RealtyFirmLicenseNumber: results[i].RealtyFirmLicenseNumber,
+                RealtyFirmLicenseNumberValidUntil: results[i].RealtyFirmLicenseNumberValidUntil,
+                RealtyFormHLURBRegistrationNumber: results[i].RealtyFormHLURBRegistrationNumber,
                 Organization: results[i].Organization,
                 Remarks: results[i].Remarks,
                 Picture: results[i].Picture,
@@ -67,7 +72,8 @@ export class MstBrokerService {
                 Attachment4: results[i].Attachment4,
                 Attachment5: results[i].Attachment5,
                 Status: results[i].Status,
-                IsLocked: results[i].IsLocked
+                IsLocked: results[i].IsLocked,
+                Type: results[i].Type
               });
             }
           }
@@ -96,6 +102,7 @@ export class MstBrokerService {
               MiddleName: results["MiddleName"],
               FullName: results["FullName"],
               LicenseNumber: results["LicenseNumber"],
+              LicenseNumberValidUntil: results["LicenseNumberValidUntil"],
               BirthDate: results["BirthDate"],
               CivilStatus: results["CivilStatus"],
               Gender: results["Gender"],
@@ -106,6 +113,7 @@ export class MstBrokerService {
               EmailAddress: results["EmailAddress"],
               Facebook: results["Facebook"],
               TIN: results["TIN"],
+              HLURBRegistrationNumber: results["HLURBRegistrationNumber"],
               RealtyFirm: results["RealtyFirm"],
               RealtyFirmAddress: results["RealtyFirmAddress"],
               RealtyFirmTelephoneNumber: results["RealtyFirmTelephoneNumber"],
@@ -114,6 +122,9 @@ export class MstBrokerService {
               RealtyFirmEmailAddress: results["RealtyFirmEmailAddress"],
               RealtyFirmWebsite: results["RealtyFirmWebsite"],
               RealtyFirmTIN: results["RealtyFirmTIN"],
+              RealtyFirmLicenseNumber: results["RealtyFirmLicenseNumber"],
+              RealtyFirmLicenseNumberValidUntil: results["RealtyFirmLicenseNumberValidUntil"],
+              RealtyFormHLURBRegistrationNumber: results["RealtyFormHLURBRegistrationNumber"],
               Organization: results["Organization"],
               Remarks: results["Remarks"],
               Picture: results["Picture"],
@@ -123,7 +134,8 @@ export class MstBrokerService {
               Attachment4: results["Attachment4"],
               Attachment5: results["Attachment5"],
               Status: results["Status"],
-              IsLocked: results["IsLocked"]
+              IsLocked: results["IsLocked"],
+              Type: results["Type"]
             }
           }
 

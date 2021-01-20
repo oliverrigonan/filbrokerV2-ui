@@ -92,6 +92,7 @@ export class SetupBrokerListComponent implements OnInit {
       MiddleName: "",
       FullName: "",
       LicenseNumber: "",
+      LicenseNumberValidUntil: "",
       BirthDate: currentDate.toLocaleDateString(),
       CivilStatus: "",
       Gender: "",
@@ -102,6 +103,7 @@ export class SetupBrokerListComponent implements OnInit {
       EmailAddress: "",
       Facebook: "",
       TIN: "",
+      HLURBRegistrationNumber: "",
       RealtyFirm: "",
       RealtyFirmAddress: "",
       RealtyFirmTelephoneNumber: "",
@@ -110,6 +112,9 @@ export class SetupBrokerListComponent implements OnInit {
       RealtyFirmEmailAddress: "",
       RealtyFirmWebsite: "",
       RealtyFirmTIN: "",
+      RealtyFirmLicenseNumber: "",
+      RealtyFirmLicenseNumberValidUntil: "",
+      RealtyFormHLURBRegistrationNumber: "",
       Organization: "",
       Remarks: "",
       Picture: "",
@@ -118,8 +123,9 @@ export class SetupBrokerListComponent implements OnInit {
       Attachment3: "",
       Attachment4: "",
       Attachment5: "",
-      Status: "",
-      IsLocked: false
+      Status: "ACTIVE",
+      IsLocked: false,
+      Type: "BROKER / SALES AGENT"
     };
 
     this.mstBrokerService.addBroker(mstBrokerModel).subscribe(

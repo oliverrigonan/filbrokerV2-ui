@@ -6,6 +6,7 @@ export class MstBrokerModel {
     MiddleName: string = "";
     FullName: string = "";
     LicenseNumber: string = "";
+    LicenseNumberValidUntil: string = "";
     BirthDate: string = "";
     CivilStatus: string = "";
     Gender: string = "";
@@ -16,6 +17,7 @@ export class MstBrokerModel {
     EmailAddress: string = "";
     Facebook: string = "";
     TIN: string = "";
+    HLURBRegistrationNumber: string = "";
     RealtyFirm: string = "";
     RealtyFirmAddress: string = "";
     RealtyFirmTelephoneNumber: string = "";
@@ -24,6 +26,9 @@ export class MstBrokerModel {
     RealtyFirmEmailAddress: string = "";
     RealtyFirmWebsite: string = "";
     RealtyFirmTIN: string = "";
+    RealtyFirmLicenseNumber: string = "";
+    RealtyFirmLicenseNumberValidUntil: string = "";
+    RealtyFormHLURBRegistrationNumber: string = "";
     Organization: string = "";
     Remarks: string = "";
     Picture: string = "";
@@ -34,4 +39,5 @@ export class MstBrokerModel {
     Attachment5: string = "";
     Status: string = "";
     IsLocked: boolean = false;
+    Type: string = "";
 }

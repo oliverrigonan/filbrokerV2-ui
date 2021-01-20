@@ -99,6 +99,7 @@ export class SetupBrokerDetailComponent implements OnInit {
             this.mstBrokerModel.MiddleName = data.MiddleName;
             this.mstBrokerModel.FullName = data.FullName;
             this.mstBrokerModel.LicenseNumber = data.LicenseNumber;
+            this.mstBrokerModel.LicenseNumberValidUntil = data.LicenseNumberValidUntil;
             this.mstBrokerModel.BirthDate = data.BirthDate;
             this.birthDate = new Date(data.BirthDate);
             this.mstBrokerModel.CivilStatus = data.CivilStatus;
@@ -110,6 +111,7 @@ export class SetupBrokerDetailComponent implements OnInit {
             this.mstBrokerModel.EmailAddress = data.EmailAddress;
             this.mstBrokerModel.Facebook = data.Facebook;
             this.mstBrokerModel.TIN = data.TIN;
+            this.mstBrokerModel.HLURBRegistrationNumber = data.HLURBRegistrationNumber;
             this.mstBrokerModel.RealtyFirm = data.RealtyFirm;
             this.mstBrokerModel.RealtyFirmAddress = data.RealtyFirmAddress;
             this.mstBrokerModel.RealtyFirmTelephoneNumber = data.RealtyFirmTelephoneNumber;
@@ -118,6 +120,9 @@ export class SetupBrokerDetailComponent implements OnInit {
             this.mstBrokerModel.RealtyFirmEmailAddress = data.RealtyFirmEmailAddress;
             this.mstBrokerModel.RealtyFirmWebsite = data.RealtyFirmWebsite;
             this.mstBrokerModel.RealtyFirmTIN = data.RealtyFirmTIN;
+            this.mstBrokerModel.RealtyFirmLicenseNumber = data.RealtyFirmLicenseNumber;
+            this.mstBrokerModel.RealtyFirmLicenseNumberValidUntil = data.RealtyFirmLicenseNumberValidUntil;
+            this.mstBrokerModel.RealtyFormHLURBRegistrationNumber = data.RealtyFormHLURBRegistrationNumber;
             this.mstBrokerModel.Organization = data.Organization;
             this.mstBrokerModel.Remarks = data.Remarks;
             this.mstBrokerModel.Picture = data.Picture;
@@ -128,6 +133,7 @@ export class SetupBrokerDetailComponent implements OnInit {
             this.mstBrokerModel.Attachment5 = data.Attachment5;
             this.mstBrokerModel.Status = data.Status;
             this.mstBrokerModel.IsLocked = data.IsLocked;
+            this.mstBrokerModel.Type = data.Type;
 
             this.isSpinnerShow = false;
             this.isContentShow = true;
