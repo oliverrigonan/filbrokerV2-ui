@@ -79,6 +79,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   public mstUnitModel: MstUnitModel[] = [];
   public mstCustomerModel: MstCustomerModel[] = [];
   public mstBrokerModel: MstBrokerModel[] = [];
+  public mstBrokerModelAgentType: MstBrokerModel[] = [];
+  public mstBrokerModelBrokerType: MstBrokerModel[] = [];
   public mstChecklistModel: MstChecklistModel[] = [];
   public sysDropdownModelFinancingTypes: SysDropdownModel[] = [];
   public mstUserModel: MstUserModel[] = [];
@@ -207,9 +209,27 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   }
 
   public getBrokerList(): void {
-    this.mstBrokerService.getBrokerList().subscribe(
+    this.mstBrokerService.getBrokerListByType("REALTY FIRM").subscribe(
       data => {
         this.mstBrokerModel = data;
+        this.getBrokerListByTypeAgent();
+      }
+    );
+  }
+
+  public getBrokerListByTypeAgent(): void {
+    this.mstBrokerService.getBrokerListByType("AGENT").subscribe(
+      data => {
+        this.mstBrokerModelAgentType = data;
+        this.getBrokerListByTypeBroker();
+      }
+    );
+  }
+
+  public getBrokerListByTypeBroker(): void {
+    this.mstBrokerService.getBrokerListByType("BROKER").subscribe(
+      data => {
+        this.mstBrokerModelBrokerType = data;
         this.getCheckllistList();
       }
     );
@@ -805,6 +825,30 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
 
   public buttonTransferSoldUnit(): void {
 
+  }
+
+  public realtyFirmChange(event: any): void {
+    let firm = "";
+    if (this.mstBrokerModel.filter(d => d.Id == this.trnSoldUnitModel.BrokerId)[0] != null) {
+      firm = this.mstBrokerModel.filter(d => d.Id == this.trnSoldUnitModel.BrokerId)[0].RealtyFirm;
+    }
+
+    let broker = "";
+    if (this.mstBrokerModelBrokerType.filter(d => d.AssociatedFirm == firm)[0] != null) {
+      broker = this.mstBrokerModelBrokerType.filter(d => d.AssociatedFirm == firm)[0].FullName;
+    }
+
+    let agent = "";
+    if (this.mstBrokerModelAgentType.filter(d => d.AssociatedBroker == broker)[0] != null) {
+      agent = this.mstBrokerModelAgentType.filter(d => d.AssociatedBroker == broker)[0].FullName;
+    }
+
+    this.trnSoldUnitModel.BrokerCoordinator = broker;
+    this.trnSoldUnitModel.Agent = agent;
+
+    console.log(firm);
+    console.log(broker);
+    console.log(agent);
   }
 
   public getSoldUnitRequirementData(): void {

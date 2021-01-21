@@ -67,6 +67,11 @@ export class MstCustomerService {
                 EmployerTelephoneNumber: results[i].EmployerTelephoneNumber,
                 EmployerMobileNumber: results[i].EmployerMobileNumber,
                 Picture: results[i].Picture,
+                Attachment1: results[i].Attachment1,
+                Attachment2: results[i].Attachment2,
+                Attachment3: results[i].Attachment3,
+                Attachment4: results[i].Attachment4,
+                Attachment5: results[i].Attachment5,
                 SpouseLastName: results[i].SpouseLastName,
                 SpouseFirstName: results[i].SpouseFirstName,
                 SpouseMiddleName: results[i].SpouseMiddleName,
@@ -140,6 +145,11 @@ export class MstCustomerService {
               SpouseTIN: results["SpouseTIN"],
               SpouseEmployer: results["SpouseEmployer"],
               Remarks: results["Remarks"],
+              Attachment1: results["Attachment1"],
+              Attachment2: results["Attachment2"],
+              Attachment3: results["Attachment3"],
+              Attachment4: results["Attachment4"],
+              Attachment5: results["Attachment5"],
               Status: results["Status"],
               IsLocked: results["IsLocked"]
             }
@@ -230,6 +240,30 @@ export class MstCustomerService {
   }
 
   public uploadCustomerImage(fileToUpload: any): Observable<[boolean, string]> {
+    return new Observable<[boolean, string]>((observer) => {
+      let imageOptions: any = {
+        headers: new HttpHeaders({
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        })
+      };
+
+      let input = new FormData();
+      input.append("file", fileToUpload);
+
+      this.httpClient.post(this.defaultAPIURLHost + "/api/Blob/Upload", input, imageOptions).subscribe(
+        response => {
+          observer.next([true, response[0]["FileUrl"].toString()]);
+          observer.complete();
+        },
+        error => {
+          observer.next([false, error.error]);
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  public uploadCustomerAttachment(fileToUpload: any): Observable<[boolean, string]> {
     return new Observable<[boolean, string]>((observer) => {
       let imageOptions: any = {
         headers: new HttpHeaders({

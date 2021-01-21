@@ -33,6 +33,11 @@ export class MstCustomerModel {
     EmployerTelephoneNumber: string = "";
     EmployerMobileNumber: string = "";
     Picture: string = "";
+    Attachment1: string = "";
+    Attachment2: string = "";
+    Attachment3: string = "";
+    Attachment4: string = "";
+    Attachment5: string = "";
     SpouseLastName: string = "";
     SpouseFirstName: string = "";
     SpouseMiddleName: string = "";

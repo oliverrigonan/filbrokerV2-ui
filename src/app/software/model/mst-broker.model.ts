@@ -40,4 +40,6 @@ export class MstBrokerModel {
     Status: string = "";
     IsLocked: boolean = false;
     Type: string = "";
+    AssociatedBroker: string = "";
+    AssociatedFirm: string = "";
 }

@@ -73,7 +73,9 @@ export class MstBrokerService {
                 Attachment5: results[i].Attachment5,
                 Status: results[i].Status,
                 IsLocked: results[i].IsLocked,
-                Type: results[i].Type
+                Type: results[i].Type,
+                AssociatedBroker: results[i].AssociatedBroker,
+                AssociatedFirm: results[i].AssociatedFirm
               });
             }
           }
@@ -85,6 +87,70 @@ export class MstBrokerService {
     });
   }
 
+  public getBrokerListByType(type: string): Observable<MstBrokerModel[]> {
+    return new Observable<MstBrokerModel[]>((observer) => {
+      let brokerArray: MstBrokerModel[] = [];
+
+      this.httpClient.get(this.defaultAPIURLHost + "/api/MstBroker/List/ByType/" + type, this.options).subscribe(
+        response => {
+          let results = response;
+
+          if (results["length"] > 0) {
+            for (let i = 0; i <= results["length"] - 1; i++) {
+              brokerArray.push({
+                Id: results[i].Id,
+                BrokerCode: results[i].BrokerCode,
+                LastName: results[i].LastName,
+                FirstName: results[i].FirstName,
+                MiddleName: results[i].MiddleName,
+                FullName: results[i].FullName,
+                LicenseNumber: results[i].LicenseNumber,
+                LicenseNumberValidUntil: results[i].LicenseNumberValidUntil,
+                BirthDate: results[i].BirthDate,
+                CivilStatus: results[i].CivilStatus,
+                Gender: results[i].Gender,
+                Address: results[i].Address,
+                TelephoneNumber: results[i].TelephoneNumber,
+                MobileNumber: results[i].MobileNumber,
+                Religion: results[i].Religion,
+                EmailAddress: results[i].EmailAddress,
+                Facebook: results[i].Facebook,
+                TIN: results[i].TIN,
+                HLURBRegistrationNumber: results[i].HLURBRegistrationNumber,
+                RealtyFirm: results[i].RealtyFirm,
+                RealtyFirmAddress: results[i].RealtyFirmAddress,
+                RealtyFirmTelephoneNumber: results[i].RealtyFirmTelephoneNumber,
+                RealtyFirmMobileNumber: results[i].RealtyFirmMobileNumber,
+                RealtyFirmFaxNumber: results[i].RealtyFirmFaxNumber,
+                RealtyFirmEmailAddress: results[i].RealtyFirmEmailAddress,
+                RealtyFirmWebsite: results[i].RealtyFirmWebsite,
+                RealtyFirmTIN: results[i].RealtyFirmTIN,
+                RealtyFirmLicenseNumber: results[i].RealtyFirmLicenseNumber,
+                RealtyFirmLicenseNumberValidUntil: results[i].RealtyFirmLicenseNumberValidUntil,
+                RealtyFormHLURBRegistrationNumber: results[i].RealtyFormHLURBRegistrationNumber,
+                Organization: results[i].Organization,
+                Remarks: results[i].Remarks,
+                Picture: results[i].Picture,
+                Attachment1: results[i].Attachment1,
+                Attachment2: results[i].Attachment2,
+                Attachment3: results[i].Attachment3,
+                Attachment4: results[i].Attachment4,
+                Attachment5: results[i].Attachment5,
+                Status: results[i].Status,
+                IsLocked: results[i].IsLocked,
+                Type: results[i].Type,
+                AssociatedBroker: results[i].AssociatedBroker,
+                AssociatedFirm: results[i].AssociatedFirm
+              });
+            }
+          }
+
+          observer.next(brokerArray);
+          observer.complete();
+        }
+      );
+    });
+  }
   public getBrokerDetail(id: number): Observable<MstBrokerModel> {
     return new Observable<MstBrokerModel>((observer) => {
       let mstBrokerModel: MstBrokerModel = null;
@@ -135,7 +201,9 @@ export class MstBrokerService {
               Attachment5: results["Attachment5"],
               Status: results["Status"],
               IsLocked: results["IsLocked"],
-              Type: results["Type"]
+              Type: results["Type"],
+              AssociatedBroker: results["AssociatedBroker"],
+              AssociatedFirm: results["AssociatedFirm"]
             }
           }
 

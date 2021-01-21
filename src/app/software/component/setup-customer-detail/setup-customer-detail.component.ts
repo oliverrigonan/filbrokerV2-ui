@@ -55,6 +55,12 @@ export class SetupCustomerDetailComponent implements OnInit {
   @ViewChild("imageURL") public imageURL: any;
   public isUploadDisabled: boolean = false;
 
+  @ViewChild("inputFileAttachment1") public inputFileAttachment1: any;
+  @ViewChild("inputFileAttachment2") public inputFileAttachment2: any;
+  @ViewChild("inputFileAttachment3") public inputFileAttachment3: any;
+  @ViewChild("inputFileAttachment4") public inputFileAttachment4: any;
+  @ViewChild("inputFileAttachment5") public inputFileAttachment5: any;
+
   public getDropdownListCustomerStatus(): void {
     this.sysDropdownService.getDropdownList("CUSTOMER STATUS").subscribe(
       data => {
@@ -152,6 +158,11 @@ export class SetupCustomerDetailComponent implements OnInit {
             this.mstCustomerModel.SpouseTIN = data.SpouseTIN;
             this.mstCustomerModel.SpouseEmployer = data.SpouseEmployer;
             this.mstCustomerModel.Remarks = data.Remarks;
+            this.mstCustomerModel.Attachment1 = data.Attachment1;
+            this.mstCustomerModel.Attachment2 = data.Attachment2;
+            this.mstCustomerModel.Attachment3 = data.Attachment3;
+            this.mstCustomerModel.Attachment4 = data.Attachment4;
+            this.mstCustomerModel.Attachment5 = data.Attachment5;
             this.mstCustomerModel.Status = data.Status;
             this.mstCustomerModel.IsLocked = data.IsLocked;
 
@@ -370,6 +381,207 @@ export class SetupCustomerDetailComponent implements OnInit {
       });
     }
   }
+
+  public buttonUploadAttachment1(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.inputFileAttachment1.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstCustomerService.uploadCustomerAttachment(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Attachment 1 was successfully uploaded!', 'Upload Successful');
+              let URL = data[1];
+              this.mstCustomerModel.Attachment1 = URL;
+              this.inputFileAttachment1.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearAttachment1(): void {
+    this.mstCustomerModel.Attachment1 = "";
+  }
+
+  public buttonViewAttachment1(): void {
+    let win = window.open(this.mstCustomerModel.Attachment1, '_blank');
+    win.focus();
+  }
+
+  public buttonUploadAttachment2(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.inputFileAttachment2.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstCustomerService.uploadCustomerAttachment(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Attachment 1 was successfully uploaded!', 'Upload Successful');
+              let URL = data[1];
+              this.mstCustomerModel.Attachment2 = URL;
+              this.inputFileAttachment2.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearAttachment2(): void {
+    this.mstCustomerModel.Attachment2 = "";
+  }
+
+  public buttonViewAttachment2(): void {
+    let win = window.open(this.mstCustomerModel.Attachment2, '_blank');
+    win.focus();
+  }
+
+  public buttonUploadAttachment3(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.inputFileAttachment3.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstCustomerService.uploadCustomerAttachment(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Attachment 1 was successfully uploaded!', 'Upload Successful');
+              let URL = data[1];
+              this.mstCustomerModel.Attachment3 = URL;
+              this.inputFileAttachment3.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearAttachment3(): void {
+    this.mstCustomerModel.Attachment3 = "";
+  }
+
+  public buttonViewAttachment3(): void {
+    let win = window.open(this.mstCustomerModel.Attachment3, '_blank');
+    win.focus();
+  }
+
+  public buttonUploadAttachment4(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.inputFileAttachment4.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstCustomerService.uploadCustomerAttachment(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Attachment 1 was successfully uploaded!', 'Upload Successful');
+              let URL = data[1];
+              this.mstCustomerModel.Attachment4 = URL;
+              this.inputFileAttachment4.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearAttachment4(): void {
+    this.mstCustomerModel.Attachment4 = "";
+  }
+
+  public buttonViewAttachment4(): void {
+    let win = window.open(this.mstCustomerModel.Attachment4, '_blank');
+    win.focus();
+  }
+
+  public buttonUploadAttachment5(): void {
+    this.isUploadDisabled = true;
+
+    let fi = this.inputFileAttachment5.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+
+      this.mstCustomerService.uploadCustomerAttachment(fileToUpload).subscribe(
+        data => {
+
+          setTimeout(() => {
+            if (data[0] == true) {
+              this.toastr.success('Attachment 1 was successfully uploaded!', 'Upload Successful');
+              let URL = data[1];
+              this.mstCustomerModel.Attachment5 = URL;
+              this.inputFileAttachment5.nativeElement.value = "";
+            } else {
+              this.toastr.error(data[1], 'Upload Failed');
+            }
+
+            this.isUploadDisabled = false;
+          }, 100);
+
+        }
+      );
+    } else {
+      this.toastr.error("No file chosen.", 'Upload Failed');
+      this.isUploadDisabled = false;
+    }
+  }
+
+  public buttonClearAttachment5(): void {
+    this.mstCustomerModel.Attachment5 = "";
+  }
+
+  public buttonViewAttachment5(): void {
+    let win = window.open(this.mstCustomerModel.Attachment5, '_blank');
+    win.focus();
+  }
+
 
   ngOnInit(): void {
     this.getDropdownListCustomerStatus();

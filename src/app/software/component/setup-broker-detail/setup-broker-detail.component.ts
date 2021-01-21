@@ -42,6 +42,8 @@ export class SetupBrokerDetailComponent implements OnInit {
   public sysDropdownModelGender: SysDropdownModel[] = [];
   public sysDropdownModelIDType: SysDropdownModel[] = [];
   public sysDropdownModelEmploymentStatus: SysDropdownModel[] = [];
+  public mstBrokerModelBroker: MstBrokerModel[] = [];
+  public mstBrokerModelFirm: MstBrokerModel[] = [];
 
   public isBrokerSaveButtonDisabled: boolean = false;
   public isBrokerLockButtonDisabled: boolean = false;
@@ -79,6 +81,24 @@ export class SetupBrokerDetailComponent implements OnInit {
     this.sysDropdownService.getDropdownList("GENDER").subscribe(
       data => {
         this.sysDropdownModelGender = data;
+        this.getDropdownListAssociatedBroker();
+      }
+    );
+  }
+
+  public getDropdownListAssociatedBroker(): void {
+    this.mstBrokerService.getBrokerListByType("BROKER").subscribe(
+      data => {
+        this.mstBrokerModelBroker = data;
+        this.getDropdownListAssociatedFirm();
+      }
+    );
+  }
+
+  public getDropdownListAssociatedFirm(): void {
+    this.mstBrokerService.getBrokerListByType("REALTY FIRM").subscribe(
+      data => {
+        this.mstBrokerModelFirm = data;
 
         let id = this.route.snapshot.params['id'];
         this.getBrokerDetail(id);
@@ -134,6 +154,8 @@ export class SetupBrokerDetailComponent implements OnInit {
             this.mstBrokerModel.Status = data.Status;
             this.mstBrokerModel.IsLocked = data.IsLocked;
             this.mstBrokerModel.Type = data.Type;
+            this.mstBrokerModel.AssociatedBroker = data.AssociatedBroker;
+            this.mstBrokerModel.AssociatedFirm = data.AssociatedFirm;
 
             this.isSpinnerShow = false;
             this.isContentShow = true;
@@ -367,6 +389,10 @@ export class SetupBrokerDetailComponent implements OnInit {
   public buttonSaveBroker(): void {
     this.disabledButtons();
 
+    if (this.mstBrokerModel.Type == "BROKER" || this.mstBrokerModel.Type == "REALTY FIRM") {
+      this.mstBrokerModel.AssociatedBroker = "";
+    }
+
     this.mstBrokerService.saveBroker(this.mstBrokerModel).subscribe(
       data => {
 
@@ -384,6 +410,10 @@ export class SetupBrokerDetailComponent implements OnInit {
   public buttonLockBroker(): void {
     this.mstBrokerModel.IsLocked = true;
     this.disabledButtons();
+
+    if (this.mstBrokerModel.Type == "BROKER" || this.mstBrokerModel.Type == "REALTY FIRM") {
+      this.mstBrokerModel.AssociatedBroker = "";
+    }
 
     this.mstBrokerService.lockBroker(this.mstBrokerModel).subscribe(
       data => {

@@ -7,7 +7,7 @@
         &nbsp;&nbsp;
         <img src="../../../../assets/images/software-icons/broker.png" class="toolBar-img-style" />
         <span class="toolbar-title-style">
-            Broker Detail
+            Seller Detail
         </span>
         <span class="toolbar-spacer"></span>
         <button mat-flat-button color="primary" [disabled]="isBrokerSaveButtonDisabled" style="margin-right: 5px;"
@@ -32,7 +32,7 @@
     </mat-toolbar>
     <mat-divider></mat-divider>
     <mat-tab-group mat-align-tabs="start">
-        <mat-tab label="Broker / Agent Information">
+        <mat-tab label="General Information" *ngIf="mstBrokerModel.Type != 'REALTY FIRM'">
             <div class="software-container">
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25" style="padding: 5px;">
@@ -169,12 +169,30 @@
                         </mat-form-field>
                     </div>
                     <div fxFlex="50" style="padding: 3px;">
-
+                        <mat-form-field appearance="fill" style="width: 100%;" *ngIf="mstBrokerModel.Type == 'AGENT'">
+                            <mat-label>Associated Broker</mat-label>
+                            <mat-select [(value)]="mstBrokerModel.AssociatedBroker"
+                                [disabled]="mstBrokerModel.IsLocked">
+                                <mat-option *ngFor="let mstBrokerModelBrokerObject of mstBrokerModelBroker"
+                                    [value]="mstBrokerModelBrokerObject.FullName">
+                                    {{mstBrokerModelBrokerObject.FullName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="width: 100%;" *ngIf="mstBrokerModel.Type == 'BROKER'">
+                            <mat-label>Associated Firm</mat-label>
+                            <mat-select [(value)]="mstBrokerModel.AssociatedFirm" [disabled]="mstBrokerModel.IsLocked">
+                                <mat-option *ngFor="let mstBrokerModelFirmObject of mstBrokerModelFirm"
+                                    [value]="mstBrokerModelFirmObject.RealtyFirm">
+                                    {{mstBrokerModelFirmObject.RealtyFirm}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
                 </div>
             </div>
         </mat-tab>
-        <mat-tab label="Realty Firm Information">
+        <mat-tab label="Realty Firm Information" *ngIf="mstBrokerModel.Type == 'REALTY FIRM'">
             <div class="software-container">
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25" style="padding: 5px;">
@@ -444,8 +462,11 @@
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Type</mat-label>
                     <mat-select [(value)]="mstBrokerModel.Type" [disabled]="mstBrokerModel.IsLocked">
-                        <mat-option value="BROKER / SALES AGENT">
-                            BROKER / SALES AGENT
+                        <mat-option value="AGENT">
+                            AGENT
+                        </mat-option>
+                        <mat-option value="BROKER">
+                            BROKER
                         </mat-option>
                         <mat-option value="REALTY FIRM">
                             REALTY FIRM

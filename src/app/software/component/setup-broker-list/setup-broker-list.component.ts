@@ -26,6 +26,7 @@ export class SetupBrokerListComponent implements OnInit {
     'BrokerCode',
     'Broker',
     'Address',
+    'Type',
     'Status',
     'IsLocked',
     'Space'
@@ -125,7 +126,9 @@ export class SetupBrokerListComponent implements OnInit {
       Attachment5: "",
       Status: "ACTIVE",
       IsLocked: false,
-      Type: "BROKER / SALES AGENT"
+      Type: "AGENT",
+      AssociatedBroker: "",
+      AssociatedFirm: ""
     };
 
     this.mstBrokerService.addBroker(mstBrokerModel).subscribe(

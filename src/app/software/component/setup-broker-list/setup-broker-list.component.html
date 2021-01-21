@@ -7,7 +7,7 @@
         &nbsp;&nbsp;
         <img src="../../../../assets/images/software-icons/broker.png" class="toolBar-img-style" />
         <span class="toolbar-title-style">
-            Broker
+            Seller
         </span>
         <span class="toolbar-spacer"></span>
         <button mat-flat-button color="primary" style="margin-right: 5px;" (click)="buttonAddBroker()"
@@ -57,13 +57,22 @@
                     </ng-container>
 
                     <ng-container matColumnDef="Broker">
-                        <mat-header-cell fxFlex="250px" *matHeaderCellDef mat-sort-header> Broker </mat-header-cell>
-                        <mat-cell fxFlex="250px" *matCellDef="let row"> {{row.FullName}} </mat-cell>
+                        <mat-header-cell fxFlex="250px" *matHeaderCellDef mat-sort-header> Seller </mat-header-cell>
+                        <mat-cell fxFlex="250px" *matCellDef="let row">
+                            {{row.Type == 'AGENT' || row.Type == 'BROKER' ? row.FullName : row.RealtyFirm}}
+                        </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="Address">
                         <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Address </mat-header-cell>
-                        <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Address}} </mat-cell>
+                        <mat-cell fxFlex="200px" *matCellDef="let row">
+                            {{row.Type == 'AGENT' || row.Type == 'BROKER' ? row.Address : row.RealtyFirmAddress}}
+                        </mat-cell>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="Type">
+                        <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Type </mat-header-cell>
+                        <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Type}} </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="Status">

@@ -355,6 +355,11 @@ export class RepSummaryService {
                 EmployerTelephoneNumber: results[i].EmployerTelephoneNumber,
                 EmployerMobileNumber: results[i].EmployerMobileNumber,
                 Picture: results[i].Picture,
+                Attachment1: results[i].Attachment1,
+                Attachment2: results[i].Attachment2,
+                Attachment3: results[i].Attachment3,
+                Attachment4: results[i].Attachment4,
+                Attachment5: results[i].Attachment5,
                 SpouseLastName: results[i].SpouseLastName,
                 SpouseFirstName: results[i].SpouseFirstName,
                 SpouseMiddleName: results[i].SpouseMiddleName,
@@ -427,7 +432,9 @@ export class RepSummaryService {
                 Attachment5: results[i].Attachment5,
                 Status: results[i].Status,
                 IsLocked: results[i].IsLocked,
-                Type: results[i].Type
+                Type: results[i].Type,
+                AssociatedBroker: results[i].AssociatedBroker,
+                AssociatedFirm: results[i].AssociatedFirm
               });
             }
           }
