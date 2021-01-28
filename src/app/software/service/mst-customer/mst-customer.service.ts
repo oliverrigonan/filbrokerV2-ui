@@ -81,7 +81,11 @@ export class MstCustomerService {
                 SpouseEmployer: results[i].SpouseEmployer,
                 Remarks: results[i].Remarks,
                 Status: results[i].Status,
-                IsLocked: results[i].IsLocked
+                IsLocked: results[i].IsLocked,
+                BusinessName: results[i].BusinessName,
+                BusinessAddress: results[i].BusinessAddress,
+                BusinessType: results[i].BusinessType,
+                BusinessPosition: results[i].BusinessPosition
               });
             }
           }
@@ -151,7 +155,11 @@ export class MstCustomerService {
               Attachment4: results["Attachment4"],
               Attachment5: results["Attachment5"],
               Status: results["Status"],
-              IsLocked: results["IsLocked"]
+              IsLocked: results["IsLocked"],
+              BusinessName: results["BusinessName"],
+              BusinessAddress: results["BusinessAddress"],
+              BusinessType: results["BusinessType"],
+              BusinessPosition: results["BusinessPosition"]
             }
           }
 

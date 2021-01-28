@@ -165,6 +165,10 @@ export class SetupCustomerDetailComponent implements OnInit {
             this.mstCustomerModel.Attachment5 = data.Attachment5;
             this.mstCustomerModel.Status = data.Status;
             this.mstCustomerModel.IsLocked = data.IsLocked;
+            this.mstCustomerModel.BusinessName = data.BusinessName;
+            this.mstCustomerModel.BusinessAddress = data.BusinessAddress;
+            this.mstCustomerModel.BusinessType = data.BusinessType;
+            this.mstCustomerModel.BusinessPosition = data.BusinessPosition;
 
             this.isSpinnerShow = false;
             this.isContentShow = true;

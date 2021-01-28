@@ -62,9 +62,10 @@
                         <mat-cell fxFlex="250px" *matCellDef="let row"> {{row.FullName}} </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="Address">
-                        <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Address </mat-header-cell>
-                        <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Address}} </mat-cell>
+                    <ng-container matColumnDef="EmailAddress">
+                        <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Email Address
+                        </mat-header-cell>
+                        <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.EmailAddress}} </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="TelephoneNumber">

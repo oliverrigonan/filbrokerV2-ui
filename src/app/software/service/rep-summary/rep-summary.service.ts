@@ -369,7 +369,11 @@ export class RepSummaryService {
                 SpouseEmployer: results[i].SpouseEmployer,
                 Remarks: results[i].Remarks,
                 Status: results[i].Status,
-                IsLocked: results[i].IsLocked
+                IsLocked: results[i].IsLocked,
+                BusinessName: results[i].BusinessName,
+                BusinessAddress: results[i].BusinessAddress,
+                BusinessType: results[i].BusinessType,
+                BusinessPosition: results[i].BusinessPosition
               });
             }
           }

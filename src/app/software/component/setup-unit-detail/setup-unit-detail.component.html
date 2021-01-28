@@ -60,7 +60,7 @@
             </div>
             <div fxFlex="50" style="padding: 5px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>House Model</mat-label>
+                    <mat-label>Unit Type</mat-label>
                     <mat-select [(value)]="mstUnitModel.HouseModelId" [disabled]="mstUnitModel.IsLocked">
                         <mat-option *ngFor="let mstHouseModelObject of mstHouseModelModel"
                             [value]="mstHouseModelObject.Id">

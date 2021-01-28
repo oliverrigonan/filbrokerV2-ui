@@ -48,4 +48,8 @@ export class MstCustomerModel {
     Remarks: string = "";
     Status: string = "";
     IsLocked: boolean = false;
+    BusinessName: string = "";
+    BusinessAddress: string = "";
+    BusinessType: string = "";
+    BusinessPosition: string = "";
 }

@@ -25,7 +25,7 @@ export class SetupCustomerListComponent implements OnInit {
     'ButtonDelete',
     'CustomerCode',
     'Customer',
-    'Address',
+    'EmailAddress',
     'TelephoneNumber',
     'MobileNumber',
     'Status',
@@ -135,7 +135,11 @@ export class SetupCustomerListComponent implements OnInit {
       SpouseEmployer: "",
       Remarks: "",
       Status: "ACTIVE",
-      IsLocked: false
+      IsLocked: false,
+      BusinessName: "",
+      BusinessAddress: "",
+      BusinessType: "",
+      BusinessPosition: ""
     };
 
     this.mstCustomerService.addCustomer(mstCustomerModel).subscribe(

@@ -424,6 +424,43 @@
                 </div>
             </div>
         </mat-tab>
+        <mat-tab label="Business Information">
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Business Name</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.BusinessName"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Business Type</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.BusinessType"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Position</mat-label>
+                            <input matInput [(ngModel)]="mstCustomerModel.BusinessPosition"
+                                [ngModelOptions]="{standalone: true}" [disabled]="mstCustomerModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Address</mat-label>
+                            <textarea matInput [(ngModel)]="mstCustomerModel.BusinessAddress"
+                                [ngModelOptions]="{standalone: true}" style="min-height: 73px;"
+                                [disabled]="mstCustomerModel.IsLocked"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
         <mat-tab label="Attachments">
             <div class="software-container">
                 <div fxLayout="row" fxLayout.xs="column">
