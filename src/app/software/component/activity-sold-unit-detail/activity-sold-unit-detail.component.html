@@ -596,7 +596,6 @@
                         </div>
                     </div>
                     <div fxFlex="25">
-
                     </div>
                 </div>
             </div>
@@ -617,6 +616,97 @@
                                 [ngModelOptions]="{standalone: true}" style="min-height: 300px;"
                                 [disabled]="trnSoldUnitModel.IsLocked"></textarea>
                         </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 3px; text-align: right;">
+                        <button mat-flat-button color="primary" (click)="buttonAddSoldUnitEquitySchedule()"
+                            [disabled]="trnSoldUnitModel.IsLocked">
+                            Create
+                        </button>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Equity Payment Schedule</mat-label>
+                            <input matInput (keyup)="collectionPaymentFilter($event)" placeholder="Filter"
+                                #collectionPaymentFilterData />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-table [dataSource]="soldUnitEquityScheduleDataSource" #soldUnitEquityScheduleSort="matSort" matSort
+                            style="overflow-x: scroll;">
+
+                            <ng-container matColumnDef="ButtonEdit">
+                                <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
+                                <mat-cell fxFlex="100px" *matCellDef="let row">
+                                    <button mat-flat-button color="primary" (click)="buttonEditSoldUnitEquitySchedule(row)"
+                                        [disabled]="trnSoldUnitModel.IsLocked">
+                                        Edit
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="PaymentDate">
+                                <mat-header-cell fxFlex="250px" *matHeaderCellDef mat-sort-header> Payment Date
+                                </mat-header-cell>
+                                <mat-cell fxFlex="250px" *matCellDef="let row"> {{row.PaymentDate}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Amortization">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Amortization
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Amortization}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="CheckNumber">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Check Number
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.CheckNumber}} </mat-cell>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="CheckDate">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Check Date
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.CheckDate}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="CheckBank">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Check Bank
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.CheckBank}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Remarks">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Remarks
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Remarks}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Space">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="soldUnitEquityScheduleDisplayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: soldUnitEquityScheduleDisplayedColumns;"></mat-row>
+
+                            <!-- <tr class="mat-row" *matNoDataRow>
+                                            <td class="mat-cell" colspan="6">No data matching the filter
+                                                "{{collectionPaymentFilterData.value}}"</td>
+                                        </tr> -->
+                        </mat-table>
+
+                        <mat-paginator #soldUnitEquitySchedulePaginator [pageSizeOptions]="[10, 50, 100, 200]">
+                        </mat-paginator>
                     </div>
                 </div>
             </div>

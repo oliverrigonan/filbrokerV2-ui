@@ -74,6 +74,7 @@ import { ConfirmationCancelComponent } from './component/confirmation-cancel/con
 import { ReportsComponent } from './component/reports/reports.component';
 import { GlobalSoldUnitListComponent } from './component/global-sold-unit-list/global-sold-unit-list.component';
 import { ActivitySoldUnitCoOwnerDetailComponent } from './component/activity-sold-unit-co-owner-detail/activity-sold-unit-co-owner-detail.component';
+import { ActivitySoldUnitEquityScheduleDetailComponent } from './component/activity-sold-unit-equity-schedule-detail/activity-sold-unit-equity-schedule-detail.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { ActivitySoldUnitCoOwnerDetailComponent } from './component/activity-sol
     ConfirmationCancelComponent,
     ReportsComponent,
     GlobalSoldUnitListComponent,
-    ActivitySoldUnitCoOwnerDetailComponent
+    ActivitySoldUnitCoOwnerDetailComponent,
+    ActivitySoldUnitEquityScheduleDetailComponent
   ],
   imports: [
     CommonModule,

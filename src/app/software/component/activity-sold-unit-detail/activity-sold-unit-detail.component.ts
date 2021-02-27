@@ -18,6 +18,8 @@ import { SysDropdownModel } from './../../model/sys-dropdown.model';
 import { TrnSoldUnitModel } from './../../model/trn-sold-unit.model';
 import { TrnSoldUnitRequirementModel } from './../../model/trn-sold-unit-requirement.model';
 import { TrnSoldUnitCoOwnerModel } from './../../model/trn-sold-unit-co-owner.model';
+import { TrnSoldUnitEquityScheduleModel } from '../../model/trn-sold-unit-equity-schedule.model';
+
 
 import { MstProjectService } from './../../service/mst-project/mst-project.service';
 import { MstUnitService } from './../../service/mst-unit/mst-unit.service';
@@ -29,6 +31,7 @@ import { SysDropdownService } from './../../service/sys-dropdown/sys-dropdown.se
 import { TrnSoldUnitService } from './../../service/trn-sold-unit/trn-sold-unit.service';
 import { TrnSoldUnitRequirementService } from './../../service/trn-sold-unit-requirement/trn-sold-unit-requirement.service';
 import { TrnSoldUnitCoOwnerService } from './../../service/trn-sold-unit-co-owner/trn-sold-unit-co-owner.service';
+import { TrnSoldUnitEquityScheduleService } from './../../service/trn-sold-unit-equity-schedule/trn-sold-unit-equity-schedule.service';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -39,7 +42,10 @@ import { PrintPdfSoldUnitProposalComponent } from './../../component/print-pdf-s
 import { PrintPdfSoldUnitContractComponent } from './../../component/print-pdf-sold-unit-contract/print-pdf-sold-unit-contract.component';
 import { ActivitySoldUnitCancelReasonComponent } from './../../component/activity-sold-unit-cancel-reason/activity-sold-unit-cancel-reason.component';
 import { ActivitySoldUnitCoOwnerDetailComponent } from './../activity-sold-unit-co-owner-detail/activity-sold-unit-co-owner-detail.component';
+import { ActivitySoldUnitEquityScheduleDetailComponent } from './../activity-sold-unit-equity-schedule-detail/activity-sold-unit-equity-schedule-detail.component';
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
+
+
 
 @Component({
   selector: 'app-activity-sold-unit-detail',
@@ -70,6 +76,9 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     private activitySoldUnitCancelReasonDialog: MatDialog,
     private activitySoldUnitCoOwnerDetailDialog: MatDialog,
     private confirmationDeleteDialog: MatDialog,
+    private trnSoldUnitEquityScheduleService: TrnSoldUnitEquityScheduleService,
+    private activitySoldUnitEquityScheduleDetailDialog: MatDialog,
+
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -86,6 +95,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   public mstUserModel: MstUserModel[] = [];
   public sysDropdownModel: SysDropdownModel[] = [];
   public trnSoldUnitModel: TrnSoldUnitModel = new TrnSoldUnitModel();
+
 
   public isSoldUnitSaveButtonDisabled: boolean = false;
   public isSoldUnitLockButtonDisabled: boolean = false;
@@ -153,6 +163,22 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
 
   @ViewChild('soldUnitCoOwnerPaginator') public soldUnitCoOwnerPaginator: MatPaginator;
   @ViewChild('soldUnitCoOwnerSort') public soldUnitCoOwnerSort: MatSort;
+
+  public soldUnitEquityScheduleDisplayedColumns: string[] = [
+    'ButtonEdit',
+    'PaymentDate',
+    'Amortization',
+    'CheckNumber',
+    'CheckDate',
+    'CheckBank',
+    'Remarks',
+    'Space'
+  ];
+  public soldUnitEquityScheduleDataSource: MatTableDataSource<TrnSoldUnitEquityScheduleModel>;
+  public soldUnitEquityScheduleData: TrnSoldUnitEquityScheduleModel[] = []
+
+  @ViewChild('soldUnitEquitySchedulePaginator') public soldUnitEquitySchedulePaginator: MatPaginator;
+  @ViewChild('soldUnitEquityScheduleSort') public soldUnitEquityScheduleSort: MatSort;
 
   public isButtonAddSoldUnitCoOwnerDisabled: boolean = false;
 
@@ -391,6 +417,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
 
             this.getSoldUnitRequirementData();
             this.getSoldUnitCoOwnerData();
+            this.getSoldUnitEquityScheduleData();
 
             this.isLockedButtons(this.trnSoldUnitModel.IsLocked);
           }
@@ -1084,6 +1111,76 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
 
             }
           );
+        }
+      });
+    }
+  }
+
+  public getSoldUnitEquityScheduleData(): void {
+    this.soldUnitEquityScheduleData = [];
+    this.soldUnitEquityScheduleDataSource = new MatTableDataSource(this.soldUnitEquityScheduleData);
+    this.soldUnitEquityScheduleDataSource.paginator = this.soldUnitEquitySchedulePaginator;
+    this.soldUnitEquityScheduleDataSource.sort = this.soldUnitEquityScheduleSort;
+
+    this.trnSoldUnitEquityScheduleService.getTrnSoldUnitEquitySchedule(this.trnSoldUnitModel.Id).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.soldUnitEquityScheduleData = data;
+          this.soldUnitEquityScheduleDataSource = new MatTableDataSource(this.soldUnitEquityScheduleData);
+          this.soldUnitEquityScheduleDataSource.paginator = this.soldUnitEquitySchedulePaginator;
+          this.soldUnitEquityScheduleDataSource.sort = this.soldUnitEquityScheduleSort;
+        }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
+      }
+    );
+  }
+
+
+  public buttonAddSoldUnitEquitySchedule(): void {
+    if (this.trnSoldUnitModel.Id == 0) {
+      this.toastr.error("No sold unit requirement data found.", 'Add Failed');
+    } else {
+      this.trnSoldUnitEquityScheduleService.addSoldUnitEquitySchedule(this.trnSoldUnitModel.Id).subscribe(
+        data => {
+          if (data.length > 0) {
+            this.getSoldUnitEquityScheduleData();
+          }
+        }
+      );
+    }
+  }
+
+  public buttonEditSoldUnitEquitySchedule(currentData: TrnSoldUnitEquityScheduleModel): void {
+    if (this.trnSoldUnitModel.Id == 0) {
+      this.toastr.error("No sold unit data found.", 'Add Failed');
+    } else {
+      let id = currentData.Id;
+
+      let trnSoldUnitEquityScheduleModel: TrnSoldUnitEquityScheduleModel = {
+        Id: id,
+        SoldUnitId: this.trnSoldUnitModel.Id,
+        PaymentDate: currentData.PaymentDate,
+        Amortization: currentData.Amortization,
+        CheckNumber: currentData.CheckNumber,
+        CheckDate: currentData.CheckDate,
+        CheckBank: currentData.CheckBank,
+        Remarks: currentData.Remarks,
+      };
+
+      const openDialog = this.activitySoldUnitEquityScheduleDetailDialog.open(ActivitySoldUnitEquityScheduleDetailComponent, {
+        width: '550px',
+        data: {
+          dialogTitle: "Edit Equity Schedule",
+          dialogData: trnSoldUnitEquityScheduleModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.getSoldUnitEquityScheduleData();
         }
       });
     }
