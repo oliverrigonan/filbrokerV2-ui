@@ -192,6 +192,18 @@
                                 </mat-header-cell>
                                 <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Amount}} </mat-cell>
                             </ng-container>
+                            
+                            <ng-container matColumnDef="Agent">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Agent
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Agent}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Broker">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Broker
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Broker}} </mat-cell>
+                            </ng-container>
 
                             <ng-container matColumnDef="Space">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
