@@ -61,6 +61,8 @@ export class ActivityCollectionDetailComponent implements OnInit {
     'Project',
     'PayType',
     'Amount',
+    'Agent',
+    'Broker',
     'Space'
   ];
 
@@ -237,6 +239,8 @@ export class ActivityCollectionDetailComponent implements OnInit {
         Project: "",
         PayType: "",
         Amount: 0,
+        Agent: "",
+        Broker: "",
         CheckNumber: "",
         CheckDate: "",
         CheckBank: "",
@@ -275,6 +279,8 @@ export class ActivityCollectionDetailComponent implements OnInit {
         Project: "",
         PayType: "",
         Amount: 0,
+        Agent: "",
+        Broker: "",
         CheckNumber: "",
         CheckDate: "",
         CheckBank: "",

@@ -186,7 +186,7 @@ export class TrnSoldUnitService {
     return new Observable<TrnSoldUnitModel[]>((observer) => {
       let soldUnitArray: TrnSoldUnitModel[] = [];
 
-      this.httpClient.get(this.defaultAPIURLHost + "/api/MstCustomer/list/soldunit/" + customerId, this.options).subscribe(
+      this.httpClient.get(this.defaultAPIURLHost + "/api/TrnSoldUnit/ListPerCustomer/" + customerId, this.options).subscribe(
         response => {
           let results = response;
 

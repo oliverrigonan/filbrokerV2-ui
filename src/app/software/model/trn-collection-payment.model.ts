@@ -6,6 +6,8 @@ export class TrnCollectionPaymentModel {
     Project: string = "";
     PayType: string = "";
     Amount: number = 0;
+    Agent: string = "";
+    Broker: string = "";
     CheckNumber: string = "";
     CheckDate: string = "";
     CheckBank: string = "";
