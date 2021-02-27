@@ -656,21 +656,30 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     }
 
     if (field === "soldUnitEquityPercent") {
-      let TSP = this.trnSoldUnitModel.TSP;
+      let price = this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.PriceDiscount;
       let equityPercent = event.target.value;
-      let equityValue = TSP * (equityPercent / 100);
+      let equityValue = price * (equityPercent / 100);
 
       this.trnSoldUnitModel.EquityValue = equityValue;
       this.soldUnitEquityValue = this.decimalPipe.transform(equityValue, "1.2-2");
     } else {
       if (field === "soldUnitEquityValue") {
-        let TSP = this.trnSoldUnitModel.TSP;
+        let price = this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.PriceDiscount;
         let equityValue = event.target.value;
-        let equityPercent = (equityValue / TSP) * 100;
+        let equityPercent = (equityValue / price) * 100;
 
         this.trnSoldUnitModel.EquityPercent = equityPercent;
         this.soldUnitEquityPercent = this.decimalPipe.transform(equityPercent, "1.2-2");
       }
+    }
+
+    if (field === "soldUnitPriceDiscount") {
+      let price = this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.PriceDiscount;
+      let equityPercent = this.trnSoldUnitModel.EquityPercent;
+      let equityValue = price * (equityPercent / 100);
+
+      this.trnSoldUnitModel.EquityValue = equityValue;
+      this.soldUnitEquityValue = this.decimalPipe.transform(equityValue, "1.2-2");
     }
 
     this.computeAmount();
@@ -707,8 +716,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     this.trnSoldUnitModel.NetEquityAmortization = netEquityAmortization;
     this.soldUnitNetEquityAmortization = this.decimalPipe.transform(netEquityAmortization, "1.2-2");
 
-    let TSP = this.trnSoldUnitModel.TSP;
-    let balance = TSP - equityValue;
+    let price = this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.PriceDiscount;
+    let balance = price - equityValue;
 
     this.trnSoldUnitModel.Balance = balance;
     this.soldUnitBalance = this.decimalPipe.transform(balance, "1.2-2");

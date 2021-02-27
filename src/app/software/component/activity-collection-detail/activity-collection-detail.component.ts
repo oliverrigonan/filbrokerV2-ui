@@ -101,6 +101,7 @@ export class ActivityCollectionDetailComponent implements OnInit {
             this.trnCollectionModel.Id = data.Id;
             this.trnCollectionModel.CollectionNumber = data.CollectionNumber;
             this.trnCollectionModel.CollectionDate = data.CollectionDate;
+            this.trnCollectionModel.ManualNumber = data.ManualNumber;
             this.trnCollectionModel.CustomerId = data.CustomerId;
             this.trnCollectionModel.Customer = data.Customer;
             this.trnCollectionModel.Particulars = data.Particulars;
@@ -246,7 +247,8 @@ export class ActivityCollectionDetailComponent implements OnInit {
         width: '550px',
         data: {
           dialogTitle: "Add Payment",
-          dialogData: trnCollectionPaymentModel
+          dialogData: trnCollectionPaymentModel,
+          customerId: this.trnCollectionModel.CustomerId
         },
         disableClose: true
       });
@@ -283,7 +285,8 @@ export class ActivityCollectionDetailComponent implements OnInit {
         width: '550px',
         data: {
           dialogTitle: "Edit Payment",
-          dialogData: trnCollectionPaymentModel
+          dialogData: trnCollectionPaymentModel,
+          customerId: this.trnCollectionModel.CustomerId
         },
         disableClose: true
       });

@@ -2,6 +2,7 @@ export class TrnCollectionModel {
     Id: number = 0;
     CollectionNumber: string = "";
     CollectionDate: string = "";
+    ManualNumber: string = "";
     CustomerId: number = 0;
     Customer: string = "";
     Particulars: string = "";

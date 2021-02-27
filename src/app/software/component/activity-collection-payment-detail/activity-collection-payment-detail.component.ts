@@ -33,6 +33,7 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
 
   public dialogTitle: any = this.activityCollectionPaymentDetailDialogData.dialogTitle;
   public dialogData: any = this.activityCollectionPaymentDetailDialogData.dialogData;
+  public customerId: any = this.activityCollectionPaymentDetailDialogData.customerId;
 
   public isButtonSaveConfirmationDisabled: boolean = false;
 
@@ -43,7 +44,7 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
   public checkDate: Date = new Date();
 
   public getSoldUnitList(): void {
-    this.trnSoldUnitService.getSoldUnitList().subscribe(
+    this.trnSoldUnitService.getSoldUnitListByCustomer(this.customerId).subscribe(
       data => {
         this.trnSoldUnitModel = data;
 

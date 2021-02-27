@@ -11,6 +11,11 @@ import { SysDropdownService } from './../../service/sys-dropdown/sys-dropdown.se
 import { MstUnitService } from './../../service/mst-unit/mst-unit.service';
 
 import { ToastrService } from 'ngx-toastr';
+import { MatTableDataSource } from '@angular/material/table';
+import { TrnSoldUnitModel } from '../../model/trn-sold-unit.model';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { TrnSoldUnitService } from '../../service/trn-sold-unit/trn-sold-unit.service';
 
 @Component({
   selector: 'app-setup-unit-detail',
@@ -26,7 +31,8 @@ export class SetupUnitDetailComponent implements OnInit {
     private sysDropdownService: SysDropdownService,
     private mstUnitService: MstUnitService,
     private toastr: ToastrService,
-    private decimalPipe: DecimalPipe
+    private decimalPipe: DecimalPipe,
+    private trnSoldUnitService: TrnSoldUnitService
   ) { }
 
   public isSpinnerShow: boolean = true;
@@ -47,6 +53,27 @@ export class SetupUnitDetailComponent implements OnInit {
   public unitMiscellaneousFeeAmount: string = "0.00";
   public unitVATAmount: string = "0.00";
   public unitTSP: string = "0.00";
+
+  public soldUnitDisplayedColumns: string[] = [
+    'SoldUnitNumber',
+    'SoldUnitDate',
+    'Project',
+    'Customer',
+    'Broker',
+    'Price',
+    'PriceDiscount',
+    'PricePayment',
+    'PriceBalance',
+    'Status',
+    'IsLocked',
+    'Space'
+  ];
+
+  public soldUnitDataSource: MatTableDataSource<TrnSoldUnitModel>;
+  public soldUnitData: TrnSoldUnitModel[] = []
+
+  @ViewChild('soldUnitPaginator') public soldUnitPaginator: MatPaginator;
+  @ViewChild('soldUnitSort') public soldUnitSort: MatSort;
 
   public getDropdownList(): void {
     this.sysDropdownService.getDropdownList("UNIT STATUS").subscribe(
@@ -98,6 +125,8 @@ export class SetupUnitDetailComponent implements OnInit {
             this.mstUnitModel.IsLocked = data.IsLocked;
 
             this.getHouseModelList(this.mstUnitModel.ProjectId);
+            this.getSoldUnitData();
+            
             this.isLockedButtons(this.mstUnitModel.IsLocked);
           }
         }, 500);
@@ -247,6 +276,37 @@ export class SetupUnitDetailComponent implements OnInit {
       }
     }
   }
+
+  public getSoldUnitData(): void {
+    this.soldUnitData = [];
+    this.soldUnitDataSource = new MatTableDataSource(this.soldUnitData);
+    this.soldUnitDataSource.paginator = this.soldUnitPaginator;
+    this.soldUnitDataSource.sort = this.soldUnitSort;
+
+    this.trnSoldUnitService.getSoldUnitListByUnit(this.mstUnitModel.Id).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.soldUnitData = data;
+          this.soldUnitDataSource = new MatTableDataSource(this.soldUnitData);
+          this.soldUnitDataSource.paginator = this.soldUnitPaginator;
+          this.soldUnitDataSource.sort = this.soldUnitSort;
+        }
+
+        this.isSpinnerShow = false;
+        this.isContentShow = true;
+      }
+    );
+  }
+
+  public soldUnitFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.soldUnitDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.soldUnitDataSource.paginator) {
+      this.soldUnitDataSource.paginator.firstPage();
+    }
+  }
+
 
   ngOnInit(): void {
     this.getDropdownList();

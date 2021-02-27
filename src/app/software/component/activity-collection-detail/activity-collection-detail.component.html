@@ -53,6 +53,15 @@
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="100" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Manual OR Number</mat-label>
+                            <input matInput [(ngModel)]="trnCollectionModel.ManualNumber"
+                                [ngModelOptions]="{standalone: true}" [disabled]="trnCollectionModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Customer</mat-label>
                             <mat-select [(value)]="trnCollectionModel.CustomerId"
                                 [disabled]="trnCollectionModel.IsLocked">

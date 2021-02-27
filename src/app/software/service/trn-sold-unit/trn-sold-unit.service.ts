@@ -262,6 +262,85 @@ export class TrnSoldUnitService {
     });
   }
 
+  public getSoldUnitListByUnit(unitId: number): Observable<TrnSoldUnitModel[]> {
+    return new Observable<TrnSoldUnitModel[]>((observer) => {
+      let soldUnitArray: TrnSoldUnitModel[] = [];
+
+      this.httpClient.get(this.defaultAPIURLHost + "/api/TrnSoldUnit/ListPerUnit/" + unitId, this.options).subscribe(
+        response => {
+          let results = response;
+
+          if (results["length"] > 0) {
+            for (let i = 0; i <= results["length"] - 1; i++) {
+              soldUnitArray.push({
+                Id: results[i].Id,
+                SoldUnitNumber: results[i].SoldUnitNumber,
+                SoldUnitDate: results[i].SoldUnitDate,
+                ProjectId: results[i].ProjectId,
+                Project: results[i].Project,
+                UnitId: results[i].UnitId,
+                Unit: results[i].Unit,
+                CustomerId: results[i].CustomerId,
+                Customer: results[i].Customer,
+                BrokerId: results[i].BrokerId,
+                Broker: results[i].Broker,
+                Agent: results[i].Agent,
+                BrokerCoordinator: results[i].BrokerCoordinator,
+                ChecklistId: results[i].ChecklistId,
+                Checklist: results[i].Checklist,
+                PriceDiscount: results[i].PriceDiscount,
+                Price: results[i].Price,
+                TCP: results[i].TCP,
+                TSP: results[i].TSP,
+                EquityValue: results[i].EquityValue,
+                EquityPercent: results[i].EquityPercent,
+                EquitySpotPayment1: results[i].EquitySpotPayment1,
+                EquitySpotPayment2: results[i].EquitySpotPayment2,
+                EquitySpotPayment3: results[i].EquitySpotPayment3,
+                EquitySpotPayment1Pos: results[i].EquitySpotPayment1Pos,
+                EquitySpotPayment2Pos: results[i].EquitySpotPayment2Pos,
+                EquitySpotPayment3Pos: results[i].EquitySpotPayment3Pos,
+                Discount: results[i].Discount,
+                DiscountedEquity: results[i].DiscountedEquity,
+                Reservation: results[i].Reservation,
+                NetEquity: results[i].NetEquity,
+                NetEquityBalance: results[i].NetEquityBalance,
+                NetEquityInterest: results[i].NetEquityInterest,
+                NetEquityNoOfPayments: results[i].NetEquityNoOfPayments,
+                NetEquityAmortization: results[i].NetEquityAmortization,
+                Balance: results[i].Balance,
+                BalanceInterest: results[i].BalanceInterest,
+                BalanceNoOfPayments: results[i].BalanceNoOfPayments,
+                BalanceAmortization: results[i].BalanceAmortization,
+                TotalInvestment: results[i].TotalInvestment,
+                PaymentOptions: results[i].PaymentOptions,
+                Financing: results[i].Financing,
+                Remarks: results[i].Remarks,
+                FinancingType: results[i].FinancingType,
+                PreparedBy: results[i].PreparedBy,
+                PreparedByUser: results[i].PreparedByUser,
+                CheckedBy: results[i].CheckedBy,
+                CheckedByUser: results[i].CheckedByUser,
+                ApprovedBy: results[i].ApprovedBy,
+                ApprovedByUser: results[i].ApprovedByUser,
+                Status: results[i].Status,
+                IsLocked: results[i].IsLocked,
+                CreatedBy: results[i].CreatedBy,
+                CreatedDateTime: results[i].CreatedDateTime,
+                UpdatedBy: results[i].UpdatedBy,
+                UpdatedDateTime: results[i].UpdatedDateTime,
+                PriceBalance: results[i].PriceBalance,
+                PricePayment: results[i].PricePayment
+              });
+            }
+          }
+
+          observer.next(soldUnitArray);
+          observer.complete();
+        }
+      );
+    });
+  }
 
   public getSoldUnitDetail(id: number): Observable<TrnSoldUnitModel> {
     return new Observable<TrnSoldUnitModel>((observer) => {
