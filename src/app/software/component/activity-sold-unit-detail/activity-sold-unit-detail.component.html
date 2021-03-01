@@ -671,6 +671,27 @@
                                 </mat-cell>
                             </ng-container>
 
+                            <ng-container matColumnDef="PaidAmount">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Paid
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.PaidAmount, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="BalanceAmount">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Balance
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.BalanceAmount, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+
                             <ng-container matColumnDef="CheckNumber">
                                 <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Check Number
                                 </mat-header-cell>

@@ -10,10 +10,11 @@
     <div *ngIf="isContentShow">
         <div class="software-container">
             <div fxLayout="row" fxLayout.xs="column">
-                <div fxFlex="100" style="padding: 3px;">
+                <div fxFlex="50" style="padding: 5px;">
                     <mat-form-field appearance="fill" style="width: 100%;">
                         <mat-label>Sold Unit No.</mat-label>
-                        <mat-select [(value)]="trnCollectionPaymentModel.SoldUnitId">
+                        <mat-select [(ngModel)]="trnCollectionPaymentModel.SoldUnitId"
+                            (selectionChange)="soldUnitChange($event)">
                             <mat-option *ngFor="let trnSoldUnitObject of trnSoldUnitModel"
                                 [value]="trnSoldUnitObject.Id">
                                 {{trnSoldUnitObject.SoldUnitNumber}}
@@ -21,12 +22,24 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
+                <div fxFlex="50" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Equity Schedule</mat-label>
+                        <mat-select [(ngModel)]="trnCollectionPaymentModel.SoldUnitEquityScheduleId">
+                            <mat-option *ngFor="let trnSoldUnitEquityScheduleObject of trnSoldUnitEquityScheduleModel"
+                                [value]="trnSoldUnitEquityScheduleObject.Id">
+                                {{trnSoldUnitEquityScheduleObject.PaymentDate}} -
+                                {{decimalPipe.transform(trnSoldUnitEquityScheduleObject.Amortization, "1.2-2")}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
             <div fxLayout="row" fxLayout.xs="column">
-                <div fxFlex="100" style="padding: 3px;">
+                <div fxFlex="50" style="padding: 5px;">
                     <mat-form-field appearance="fill" style="width: 100%;">
                         <mat-label>Pay Type</mat-label>
-                        <mat-select [(value)]="trnCollectionPaymentModel.PayType">
+                        <mat-select [(ngModel)]="trnCollectionPaymentModel.PayType">
                             <mat-option *ngFor="let sysDropdownObject of sysDropdownModel"
                                 [value]="sysDropdownObject.Value">
                                 {{sysDropdownObject.Description}}
@@ -34,27 +47,26 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-            </div>
-            <div fxLayout="row" fxLayout.xs="column">
-                <div fxFlex="100" style="padding: 5px;">
+                <div fxFlex="50" style="padding: 5px;">
                     <mat-form-field appearance="fill" style="width: 100%;">
                         <mat-label>Amount</mat-label>
-                        <input matInput [(ngModel)]="trnCollectionPaymentModel.Amount"
-                            [ngModelOptions]="{standalone: true}">
+                        <input matInput [(ngModel)]="collectionPaymentAmount" [ngModelOptions]="{standalone: true}"
+                            (keypress)="onKeyPressNumberOnly($event)"
+                            (focus)="onFocusNumberRemoveCommas('collectionPaymentAmount')"
+                            (blur)="onaBlurNumberAddCommas(collectionPaymentAmount, 'collectionPaymentAmount')"
+                            style="text-align: right;">
                     </mat-form-field>
                 </div>
             </div>
             <div fxLayout="row" fxLayout.xs="column">
-                <div fxFlex="100" style="padding: 5px;">
+                <div fxFlex="50" style="padding: 5px;">
                     <mat-form-field appearance="fill" style="width: 100%;">
                         <mat-label>Check No.</mat-label>
                         <input matInput [(ngModel)]="trnCollectionPaymentModel.CheckNumber"
                             [ngModelOptions]="{standalone: true}">
                     </mat-form-field>
                 </div>
-            </div>
-            <div fxLayout="row" fxLayout.xs="column">
-                <div fxFlex="100" style="padding: 5px;">
+                <div fxFlex="50" style="padding: 5px;">
                     <mat-form-field appearance="fill" style="width: 100%;">
                         <mat-label>Check Date</mat-label>
                         <input matInput [matDatepicker]="CheckDatePicker" [(ngModel)]="checkDate"

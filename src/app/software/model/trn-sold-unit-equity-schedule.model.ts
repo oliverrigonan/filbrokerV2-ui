@@ -7,4 +7,6 @@ export class TrnSoldUnitEquityScheduleModel {
     CheckDate: string = "";
     CheckBank: string = "";
     Remarks: string = "";
+    PaidAmount: number = 0;
+    BalanceAmount: number = 0;
 }

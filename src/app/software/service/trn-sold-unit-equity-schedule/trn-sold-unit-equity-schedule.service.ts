@@ -41,7 +41,8 @@ export class TrnSoldUnitEquityScheduleService {
                 CheckDate: results[i].CheckDate,
                 CheckBank: results[i].CheckBank,
                 Remarks: results[i].Remarks,
-
+                PaidAmount: results[i].PaidAmount,
+                BalanceAmount: results[i].BalanceAmount
               });
             }
           }
@@ -70,6 +71,8 @@ export class TrnSoldUnitEquityScheduleService {
               CheckDate: results["CheckDate"],
               CheckBank: results["CheckBank"],
               Remarks: results["Remarks"],
+              PaidAmount: results["PaidAmount"],
+              BalanceAmount: results["BalanceAmount"]
             }
           }
 

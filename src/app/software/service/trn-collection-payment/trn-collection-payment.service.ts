@@ -37,6 +37,8 @@ export class TrnCollectionPaymentService {
                 CollectionId: results[i].CollectionId,
                 SoldUnitId: results[i].SoldUnitId,
                 SoldUnit: results[i].SoldUnit,
+                SoldUnitEquityScheduleId: results[i].SoldUnitEquityScheduleId,
+                SoldUnitEquitySchedule: results[i].SoldUnitEquitySchedule,
                 Project: results[i].Project,
                 PayType: results[i].PayType,
                 Amount: results[i].Amount,
@@ -45,7 +47,7 @@ export class TrnCollectionPaymentService {
                 CheckNumber: results[i].CheckNumber,
                 CheckDate: results[i].CheckDate,
                 CheckBank: results[i].CheckBank,
-                OtherInformation: results[i].OtherInformation
+                OtherInformation: results[i].OtherInformation,
               });
             }
           }
@@ -71,6 +73,8 @@ export class TrnCollectionPaymentService {
               CollectionId: results["CollectionId"],
               SoldUnitId: results["SoldUnitId"],
               SoldUnit: results["SoldUnit"],
+              SoldUnitEquityScheduleId: results["SoldUnitEquityScheduleId"],
+              SoldUnitEquitySchedule: results["SoldUnitEquitySchedule"],
               Project: results["Project"],
               PayType: results["PayType"],
               Amount: results["Amount"],

@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DecimalPipe } from '@angular/common';
 
 import { TrnSoldUnitEquityScheduleModel } from './../../model/trn-sold-unit-equity-schedule.model';
 
@@ -20,6 +21,7 @@ export class ActivitySoldUnitEquityScheduleDetailComponent implements OnInit {
     private activitySoldUniEquityScheduleDetailDialog: MatDialogRef<ActivitySoldUnitEquityScheduleDetailComponent>,
     @Inject(MAT_DIALOG_DATA) private activitySoldUnitCoOwnerDetailDialogData: any,
     private toastr: ToastrService,
+    public decimalPipe: DecimalPipe,
     private trnSoldUnitEquityScheduleService: TrnSoldUnitEquityScheduleService
   ) { }
   public isSpinnerShow: boolean = true;
@@ -30,6 +32,9 @@ export class ActivitySoldUnitEquityScheduleDetailComponent implements OnInit {
 
   public isButtonSaveConfirmationDisabled: boolean = false;
 
+  public soldUnitEquityScheduleAmount: string = "0.00";
+  public soldUnitEquitySchedulePaidAmount: string = "0.00";
+  public soldUnitEquityScheduleBalanceAmount: string = "0.00";
   public trnSoldUnitEquityScheduleModel: TrnSoldUnitEquityScheduleModel = new TrnSoldUnitEquityScheduleModel();
 
   public getSoldUnitEquityScheduleDetail() {
@@ -42,6 +47,9 @@ export class ActivitySoldUnitEquityScheduleDetailComponent implements OnInit {
             this.trnSoldUnitEquityScheduleModel.SoldUnitId = data.SoldUnitId;
             this.trnSoldUnitEquityScheduleModel.PaymentDate = data.PaymentDate;
             this.trnSoldUnitEquityScheduleModel.Amortization = data.Amortization;
+            this.soldUnitEquityScheduleAmount = this.decimalPipe.transform(data.Amortization, "1.2-2");
+            this.soldUnitEquitySchedulePaidAmount = this.decimalPipe.transform(data.PaidAmount, "1.2-2");
+            this.soldUnitEquityScheduleBalanceAmount = this.decimalPipe.transform(data.BalanceAmount, "1.2-2");
             this.trnSoldUnitEquityScheduleModel.CheckNumber = data.CheckNumber;
             this.trnSoldUnitEquityScheduleModel.CheckDate = data.CheckDate;
             this.trnSoldUnitEquityScheduleModel.CheckBank = data.CheckBank;

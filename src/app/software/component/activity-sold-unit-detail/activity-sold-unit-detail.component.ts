@@ -168,6 +168,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     'ButtonEdit',
     'PaymentDate',
     'Amortization',
+    'PaidAmount',
+    'BalanceAmount',
     'CheckNumber',
     'CheckDate',
     'CheckBank',
@@ -1176,10 +1178,12 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
         CheckDate: currentData.CheckDate,
         CheckBank: currentData.CheckBank,
         Remarks: currentData.Remarks,
+        PaidAmount: currentData.PaidAmount,
+        BalanceAmount: currentData.BalanceAmount
       };
 
       const openDialog = this.activitySoldUnitEquityScheduleDetailDialog.open(ActivitySoldUnitEquityScheduleDetailComponent, {
-        width: '550px',
+        width: '650px',
         data: {
           dialogTitle: "Edit Equity Schedule",
           dialogData: trnSoldUnitEquityScheduleModel

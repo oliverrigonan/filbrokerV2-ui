@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DecimalPipe } from '@angular/common';
 
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatPaginator } from '@angular/material/paginator';
@@ -37,6 +38,7 @@ export class ActivityCollectionDetailComponent implements OnInit {
     private trnCollectionService: TrnCollectionService,
     private trnCollectionPaymentService: TrnCollectionPaymentService,
     private toastr: ToastrService,
+    public decimalPipe: DecimalPipe,
     private confirmationDeleteDialog: MatDialog,
     private activityCollectionPaymentDetailDialog: MatDialog
   ) { }
@@ -236,6 +238,8 @@ export class ActivityCollectionDetailComponent implements OnInit {
         CollectionId: this.trnCollectionModel.Id,
         SoldUnitId: 0,
         SoldUnit: "",
+        SoldUnitEquityScheduleId: 0,
+        SoldUnitEquitySchedule: "",
         Project: "",
         PayType: "",
         Amount: 0,
@@ -244,11 +248,11 @@ export class ActivityCollectionDetailComponent implements OnInit {
         CheckNumber: "",
         CheckDate: "",
         CheckBank: "",
-        OtherInformation: ""
+        OtherInformation: "",
       };
 
       const openDialog = this.activityCollectionPaymentDetailDialog.open(ActivityCollectionPaymentDetailComponent, {
-        width: '550px',
+        width: '650px',
         data: {
           dialogTitle: "Add Payment",
           dialogData: trnCollectionPaymentModel,
@@ -276,6 +280,8 @@ export class ActivityCollectionDetailComponent implements OnInit {
         CollectionId: this.trnCollectionModel.Id,
         SoldUnitId: 0,
         SoldUnit: "",
+        SoldUnitEquityScheduleId: 0,
+        SoldUnitEquitySchedule: "",
         Project: "",
         PayType: "",
         Amount: 0,
@@ -288,7 +294,7 @@ export class ActivityCollectionDetailComponent implements OnInit {
       };
 
       const openDialog = this.activityCollectionPaymentDetailDialog.open(ActivityCollectionPaymentDetailComponent, {
-        width: '550px',
+        width: '650px',
         data: {
           dialogTitle: "Edit Payment",
           dialogData: trnCollectionPaymentModel,

@@ -3,6 +3,8 @@ export class TrnCollectionPaymentModel {
     CollectionId: number = 0;
     SoldUnitId: number = 0;
     SoldUnit: string = "";
+    SoldUnitEquityScheduleId: number = 0;
+    SoldUnitEquitySchedule: string = "";
     Project: string = "";
     PayType: string = "";
     Amount: number = 0;
