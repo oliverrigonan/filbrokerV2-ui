@@ -236,6 +236,10 @@ export class ActivityCollectionDetailComponent implements OnInit {
       let trnCollectionPaymentModel: TrnCollectionPaymentModel = {
         Id: 0,
         CollectionId: this.trnCollectionModel.Id,
+        CollectionDate: "",
+        CollectionManualNumber: "",
+        CollectionCustomer: "",
+        CollectionPreparedBy: "",
         SoldUnitId: 0,
         SoldUnit: "",
         SoldUnitEquityScheduleId: 0,
@@ -278,6 +282,10 @@ export class ActivityCollectionDetailComponent implements OnInit {
       let trnCollectionPaymentModel: TrnCollectionPaymentModel = {
         Id: id,
         CollectionId: this.trnCollectionModel.Id,
+        CollectionDate: "",
+        CollectionManualNumber: "",
+        CollectionCustomer: "",
+        CollectionPreparedBy: "",
         SoldUnitId: 0,
         SoldUnit: "",
         SoldUnitEquityScheduleId: 0,

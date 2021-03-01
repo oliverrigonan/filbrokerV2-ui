@@ -1,6 +1,10 @@
 export class TrnCollectionPaymentModel {
     Id: number = 0;
     CollectionId: number = 0;
+    CollectionDate: string = "";
+    CollectionManualNumber: string = "";
+    CollectionCustomer: string = "";
+    CollectionPreparedBy: string = "";
     SoldUnitId: number = 0;
     SoldUnit: string = "";
     SoldUnitEquityScheduleId: number = 0;

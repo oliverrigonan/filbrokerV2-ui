@@ -35,6 +35,10 @@ export class TrnCollectionPaymentService {
               houseModelArray.push({
                 Id: results[i].Id,
                 CollectionId: results[i].CollectionId,
+                CollectionDate: "",
+                CollectionManualNumber: "",
+                CollectionCustomer: "",
+                CollectionPreparedBy: "",
                 SoldUnitId: results[i].SoldUnitId,
                 SoldUnit: results[i].SoldUnit,
                 SoldUnitEquityScheduleId: results[i].SoldUnitEquityScheduleId,
@@ -71,6 +75,10 @@ export class TrnCollectionPaymentService {
             mstCollectionPaymentModel = {
               Id: results["Id"],
               CollectionId: results["CollectionId"],
+              CollectionDate: "",
+              CollectionManualNumber: "",
+              CollectionCustomer: "",
+              CollectionPreparedBy: "",
               SoldUnitId: results["SoldUnitId"],
               SoldUnit: results["SoldUnit"],
               SoldUnitEquityScheduleId: results["SoldUnitEquityScheduleId"],

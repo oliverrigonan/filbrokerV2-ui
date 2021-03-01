@@ -9,6 +9,7 @@ import { TrnSoldUnitRequirementActivityModel } from './../../model/trn-sold-unit
 import { TrnCommissionRequestModel } from './../../model/trn-commission-request.model';
 import { MstCustomerModel } from './../../model/mst-customer.model';
 import { MstBrokerModel } from './../../model/mst-broker.model';
+import { TrnCollectionPaymentModel } from '../../model/trn-collection-payment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -444,6 +445,47 @@ export class RepSummaryService {
           }
 
           observer.next(brokerArray);
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  public getRepSummaryCollectionReport(startDate: string, endDate: string): Observable<TrnCollectionPaymentModel[]> {
+    return new Observable<TrnCollectionPaymentModel[]>((observer) => {
+      let houseModelArray: TrnCollectionPaymentModel[] = [];
+
+      this.httpClient.get(this.defaultAPIURLHost + "/api/TrnCollectionPayment/collection/report/" + startDate + "/" + endDate, this.options).subscribe(
+        response => {
+          let results = response;
+
+          if (results["length"] > 0) {
+            for (let i = 0; i <= results["length"] - 1; i++) {
+              houseModelArray.push({
+                Id: results[i].Id,
+                CollectionId: results[i].CollectionId,
+                CollectionDate: results[i].CollectionDate,
+                CollectionManualNumber: results[i].CollectionManualNumber,
+                CollectionCustomer: results[i].CollectionCustomer,
+                CollectionPreparedBy: results[i].CollectionPreparedBy,
+                SoldUnitId: results[i].SoldUnitId,
+                SoldUnit: results[i].SoldUnit,
+                SoldUnitEquityScheduleId: results[i].SoldUnitEquityScheduleId,
+                SoldUnitEquitySchedule: results[i].SoldUnitEquitySchedule,
+                Project: results[i].Project,
+                PayType: results[i].PayType,
+                Amount: results[i].Amount,
+                Agent: results[i].Agent,
+                Broker: results[i].Broker,
+                CheckNumber: results[i].CheckNumber,
+                CheckDate: results[i].CheckDate,
+                CheckBank: results[i].CheckBank,
+                OtherInformation: results[i].OtherInformation,
+              });
+            }
+          }
+
+          observer.next(houseModelArray);
           observer.complete();
         }
       );

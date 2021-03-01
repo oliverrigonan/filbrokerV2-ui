@@ -19,6 +19,7 @@ import { TrnSoldUnitRequirementActivityModel } from './../../model/trn-sold-unit
 import { TrnCommissionRequestModel } from './../../model/trn-commission-request.model';
 import { MstCustomerModel } from './../../model/mst-customer.model';
 import { MstBrokerModel } from './../../model/mst-broker.model';
+import { TrnCollectionPaymentModel } from './../../model/trn-collection-payment.model';
 
 import { RepSummaryService } from './../../service/rep-summary/rep-summary.service';
 
@@ -188,6 +189,26 @@ export class ReportsComponent implements OnInit {
 
   @ViewChild('accountsReceivablePaginator') public accountsReceivablePaginator: MatPaginator;
   @ViewChild('accountsReceivableSort') public accountsReceivableSort: MatSort;
+
+
+  public isSpinnerShowRepCollectionReport: boolean = true;
+  public isContentShowRepCollectionReport: boolean = false;
+
+  public collectionReportDisplayedColumns: string[] = [
+    'ManualNumber',
+    'ORDate',
+    'Customer',
+    'PayType',
+    'Amount',
+    'PreparedBy',
+    'Space'
+  ];
+
+  public collectionReportDataSource: MatTableDataSource<TrnCollectionPaymentModel>;
+  public collectionReportData: TrnCollectionPaymentModel[] = []
+
+  @ViewChild('collectionReportPaginator') public collectionReportPaginator: MatPaginator;
+  @ViewChild('collectionReportSort') public collectionReportSort: MatSort;
 
   public selectedTabIndex: number = 0;
   public isAccountReceivable: boolean = false;
@@ -397,6 +418,7 @@ export class ReportsComponent implements OnInit {
     this.getRepSummaryCommissionRequestListByDateRange();
     this.getRepSummaryCustomerListByDateRange();
     this.getRepSummaryBrokerListByDateRange();
+    this.getRepCollectionReportListByDateRange();
   }
 
   public buttonExport(): void {
@@ -640,6 +662,38 @@ export class ReportsComponent implements OnInit {
 
         break;
       }
+      case 7: {
+        let data: any[] = [
+          {
+            ManualNumber: "Manual Number",
+            ORDate: "OR Date",
+            Customer: "Customer",
+            PayType: "Pay Type",
+            Amount: "Amount",
+            PreparedBy: "Prepared By"
+          }
+        ];
+
+        if (this.collectionReportData.length > 0) {
+          for (let i = 0; i < this.collectionReportData.length; i++) {
+            data.push({
+              ManualNumber: this.collectionReportData[i].CollectionManualNumber,
+              ORDate: this.collectionReportData[i].CollectionDate,
+              Customer: this.collectionReportData[i].CollectionCustomer,
+              PayType: this.collectionReportData[i].PayType,
+              Amount: this.collectionReportData[i].Amount,
+              PreparedBy: this.collectionReportData[i].CollectionPreparedBy
+            });
+          }
+        }
+
+        let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+        let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+        new Angular5Csv(data, 'Collection Report from ' + startDateFilterValue + ' to ' + endDateFilterValue);
+
+        break;
+      }
       default: {
         break;
       }
@@ -686,6 +740,39 @@ export class ReportsComponent implements OnInit {
     }
   }
 
+  public getRepCollectionReportListByDateRange(): void {
+    this.collectionReportData = [];
+    this.collectionReportDataSource = new MatTableDataSource(this.collectionReportData);
+    this.collectionReportDataSource.paginator = this.collectionReportPaginator;
+    this.collectionReportDataSource.sort = this.collectionReportSort;
+
+    let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+    let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+    this.repSummaryService.getRepSummaryCollectionReport(startDateFilterValue, endDateFilterValue).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.collectionReportData = data;
+          this.collectionReportDataSource = new MatTableDataSource(this.collectionReportData);
+          this.collectionReportDataSource.paginator = this.collectionReportPaginator;
+          this.collectionReportDataSource.sort = this.collectionReportSort;
+        }
+
+        this.isSpinnerShowRepCollectionReport = false;
+        this.isContentShowRepCollectionReport = true;
+      }
+    );
+  }
+
+  public collectionReportFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.collectionReportDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.collectionReportDataSource.paginator) {
+      this.collectionReportDataSource.paginator.firstPage();
+    }
+  }
+
   public dateAsOfFiltersDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
     this.getRepSummaryAccountsReceivableListByDateAsOf();
   }
@@ -697,7 +784,7 @@ export class ReportsComponent implements OnInit {
     this.getRepSummaryCommissionRequestListByDateRange();
     this.getRepSummaryCustomerListByDateRange();
     this.getRepSummaryBrokerListByDateRange();
-
     this.getRepSummaryAccountsReceivableListByDateAsOf();
+    this.getRepCollectionReportListByDateRange();
   }
 }
