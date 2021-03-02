@@ -1,1 +1,62 @@
-<p>system-user-detail works!</p>
+<!-- <div *ngIf="isSpinnerShow" style="padding: 100px 0px 15px 0px; text-align: center;">
+    <h4>Please wait...</h4>
+    <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+</div> -->
+<div *ngIf="isContentShow">
+    <mat-toolbar>
+        &nbsp;&nbsp;
+        <img src="../../../../assets/images/software-icons/user.png" class="toolBar-img-style" />
+        <span class="toolbar-title-style">
+            User Detail
+        </span>
+        <span class="toolbar-spacer"></span>
+        <button mat-flat-button color="primary" [disabled]="isUserSaveButtonDisabled" style="margin-right: 5px;"
+            (click)="buttonSaveUser()">
+            Save
+        </button>
+        <button mat-flat-button color="warn" routerLink="/software/system-user-list">
+            Close
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div class="software-container">
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="50">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Username</mat-label>
+                            <input matInput [(ngModel)]="mstUserModel.Username" [ngModelOptions]="{standalone: true}"
+                                disabled>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>FullName</mat-label>
+                            <input matInput [(ngModel)]="mstUserModel.FullName" [ngModelOptions]="{standalone: true}"  >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 3px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Status</mat-label>
+                            <mat-select [(value)]="mstUserModel.Status">
+                                <mat-option *ngFor="let sysDropdownObject of sysDropdownModel"
+                                    [value]="sysDropdownObject.Value">
+                                    {{sysDropdownObject.Description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
