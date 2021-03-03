@@ -23,6 +23,7 @@ import { ActivityCommissionRequestListComponent } from './component/activity-com
 import { ActivityCommissionRequestDetailComponent } from './component/activity-commission-request-detail/activity-commission-request-detail.component';
 import { SystemUserListComponent } from './component/system-user-list/system-user-list.component';
 import { SystemUserDetailComponent } from './component/system-user-detail/system-user-detail.component';
+import {SystemUserRightsDetailComponent} from './component/system-user-rights-detail/system-user-rights-detail.component';
 import { SystemSettingsComponent } from './component/system-settings/system-settings.component';
 import { ReportsComponent } from './component/reports/reports.component';
 
@@ -53,6 +54,7 @@ const routes: Routes = [
       { path: 'activity-commission-request-detail/:id', canActivate: [SoftwareRouterActivate], component: ActivityCommissionRequestDetailComponent },
       { path: 'system-user-list', canActivate: [SoftwareRouterActivate], component: SystemUserListComponent },
       { path: 'system-settings', canActivate: [SoftwareRouterActivate], component: SystemSettingsComponent },
+      { path: 'system-user-rights-detail', canActivate: [SoftwareRouterActivate], component: SystemSettingsComponent },
       { path: 'reports', canActivate: [SoftwareRouterActivate], component: ReportsComponent },
     ]
   }

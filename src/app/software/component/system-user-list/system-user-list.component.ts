@@ -83,7 +83,7 @@ export class SystemUserListComponent implements OnInit {
       Username: "",
       FullName: "",
       Password: "",
-      Status: "OPEN",
+      Status: "ACTIVE",
     };
 
     this.mstUserService.addUser(mstUserModel).subscribe(
@@ -94,7 +94,7 @@ export class SystemUserListComponent implements OnInit {
             this.toastr.success('User was successfully added!', 'Add Successful');
 
             setTimeout(() => {
-              this.router.navigate(['/software/setup-user-detail/' + data[1]]);
+              this.router.navigate(['/software/system-user-detail/' + data[1]]);
             }, 500);
           } else {
             this.toastr.error('Somethings went wrong!', 'Add Failed');

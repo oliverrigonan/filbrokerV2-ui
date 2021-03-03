@@ -1,0 +1,73 @@
+<h1 mat-dialog-title>
+    {{ dialogTitle }}
+</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <div *ngIf="isSpinnerShow" style="padding: 25px 0px 25px 0px; text-align: center;">
+        <h4>Please wait...</h4>
+        <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+    </div>
+    <div *ngIf="isContentShow">
+        <div class="software-container">
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="50" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Page</mat-label>
+                        <input matInput [(ngModel)]="mstUserRights.Page" [ngModelOptions]="{standalone: true}" disabled>
+                    </mat-form-field>
+                </div>
+                <div fxFlex="50" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Edit</mat-label>
+                        <mat-slide-toggle [(ngModel)]="mstUserRights.CanEdit" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="50" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Save</mat-label>
+                        <mat-slide-toggle [(ngModel)]="mstUserRights.CanSave" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
+                    </mat-form-field>
+                </div>
+                <div fxFlex="50" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Lock</mat-label>
+                        <mat-slide-toggle [(ngModel)]="mstUserRights.CanLock" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="50" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Unlock</mat-label>
+                        <mat-slide-toggle [(ngModel)]="mstUserRights.CanUnlock" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
+                    </mat-form-field>
+                </div>
+                <div fxFlex="50" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Print</mat-label>
+                        <mat-slide-toggle [(ngModel)]="mstUserRights.CanPrint" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100" style="padding: 5px;">
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>Delete</mat-label>
+                        <mat-slide-toggle [(ngModel)]="mstUserRights.CanDelete" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" (click)="buttonSaveClick()" [disabled]="isButtonSaveConfirmationDisabled">
+        Save
+    </button>
+    <button mat-flat-button color="warn" (click)="buttonCloseClick()" [disabled]="isButtonSaveConfirmationDisabled">
+        Close
+    </button>
+</mat-dialog-actions>
