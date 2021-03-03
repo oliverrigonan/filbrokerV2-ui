@@ -12,6 +12,7 @@ import { MstUserService } from './../../service/mst-user/mst-user.service';
 import { ToastrService } from 'ngx-toastr';
 
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
+import { SystemUserRegisterComponent } from './../system-user-register/system-user-register.component';
 
 @Component({
   selector: 'app-system-user-list',
@@ -22,7 +23,6 @@ export class SystemUserListComponent implements OnInit {
 
   public userDisplayedColumns: string[] = [
     'ButtonEdit',
-    'ButtonDelete',
     'Username',
     'FullName',
     'Status',
@@ -40,7 +40,9 @@ export class SystemUserListComponent implements OnInit {
   constructor(private mstUserService: MstUserService,
     private router: Router,
     private toastr: ToastrService,
-    private confirmationDeleteDialog: MatDialog) { }
+    private confirmationDeleteDialog: MatDialog,
+    private systemUserRegisterDialog: MatDialog
+  ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
@@ -76,47 +78,27 @@ export class SystemUserListComponent implements OnInit {
   }
 
   public buttonAddUser(): void {
-    this.isButtonAddUserDisabled = true;
+    const openDialog = this.systemUserRegisterDialog.open(SystemUserRegisterComponent, {
+      width: '550px',
+      data: {
+        dialogTitle: "Register"
+      },
+      disableClose: true
+    });
 
-    let mstUserModel: MstUserModel = {
-      Id: 0,
-      Username: "",
-      FullName: "",
-      Password: "",
-      Status: "ACTIVE",
-    };
-
-    this.mstUserService.addUser(mstUserModel).subscribe(
-      data => {
-
-        if (data[0] == true) {
-          if (data[1] > 0) {
-            this.toastr.success('User was successfully added!', 'Add Successful');
-
-            setTimeout(() => {
-              this.router.navigate(['/software/system-user-detail/' + data[1]]);
-            }, 500);
-          } else {
-            this.toastr.error('Somethings went wrong!', 'Add Failed');
-            this.isButtonAddUserDisabled = false;
-          }
-        } else {
-          this.toastr.error(data[1], 'Add Failed');
-          this.isButtonAddUserDisabled = false;
-        }
-
+    openDialog.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.geUserData();
       }
-    );
+    });
   }
 
   public buttonEditUser(currentData: any): void {
     let id = currentData.Id;
     this.router.navigate(['/software/system-user-detail/' + id]);
   }
-  
 
   public buttonDeleteUser(currentData: any): void {
-
     let id = currentData.Id;
 
     const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
@@ -153,6 +135,7 @@ export class SystemUserListComponent implements OnInit {
       }
     });
   }
+
   ngOnInit(): void {
     this.geUserData();
   }

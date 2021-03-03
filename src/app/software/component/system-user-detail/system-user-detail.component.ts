@@ -17,7 +17,6 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDeleteComponent } from '../confirmation-delete/confirmation-delete.component';
 import { SystemUserRightsDetailComponent } from '../system-user-rights-detail/system-user-rights-detail.component';
 
-
 @Component({
   selector: 'app-system-user-detail',
   templateUrl: './system-user-detail.component.html',
@@ -39,6 +38,7 @@ export class SystemUserDetailComponent implements OnInit {
   public userRightsDisplayedColumns: string[] = [
     'ButtonEdit',
     'ButtonDelete',
+    'Page',
     'CanEdit',
     'CanSave',
     'CanLock',
@@ -125,6 +125,8 @@ export class SystemUserDetailComponent implements OnInit {
           this.toastr.error(data[1], 'Save Failed');
         }
 
+        this.isUserSaveButtonDisabled = false;
+
         // this.isLockedButtons(this.mstUserModel.IsLocked);
       }
     );
@@ -192,72 +194,72 @@ export class SystemUserDetailComponent implements OnInit {
     // if (this.mstUserRightsModel.IsLocked == true) {
     //   this.toastr.error("Cannot edit a locked record.", 'Edit Failed');
     // } else {
-      let mstUserRightsModel: MstUserRights = {
-        Id: 0,
-        UserId: 0,
-        Page: "",
-        PageId: 0,
-        PageURL: "",
-        CanEdit: false,
-        CanSave: false,
-        CanLock: false,
-        CanUnLock: false,
-        CanPrint: false,
-        CanDelete: false,
-      };
+    let mstUserRightsModel: MstUserRights = {
+      Id: 0,
+      UserId: this.mstUserModel.Id,
+      Page: "",
+      PageId: 0,
+      PageURL: "",
+      CanEdit: false,
+      CanSave: false,
+      CanLock: false,
+      CanUnLock: false,
+      CanPrint: false,
+      CanDelete: false,
+    };
 
-      const openDialog = this.setupUserRightsDetailDialog.open(SystemUserRightsDetailComponent, {
-        width: '550px',
-        data: {
-          dialogTitle: "Add User Rights",
-          dialogData: mstUserRightsModel
-        },
-        disableClose: true
-      });
+    const openDialog = this.setupUserRightsDetailDialog.open(SystemUserRightsDetailComponent, {
+      width: '550px',
+      data: {
+        dialogTitle: "Add User Rights",
+        dialogData: mstUserRightsModel
+      },
+      disableClose: true
+    });
 
-      openDialog.afterClosed().subscribe(result => {
-        if (result != null) {
-          this.getUserRightsData();
-        }
-      });
-    }
+    openDialog.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.getUserRightsData();
+      }
+    });
+  }
   // }
 
   public buttonEditUserRights(currentData: any): void {
     // if (this.mstUserRightsModel.IsLocked == true) {
     //   this.toastr.error("Cannot edit a locked record.", 'Edit Failed');
     // } else {
-      let id = currentData.Id;
+    let id = currentData.Id;
 
-      let mstUserRightsModel: MstUserRights = {
-        Id: id,
-        UserId: this.mstUserRightsModel.UserId,
-        Page: this.mstUserRightsModel.Page,
-        PageId: this.mstUserRightsModel.PageId,
-        PageURL: "",
-        CanEdit: false,
-        CanSave: false,
-        CanLock: false,
-        CanUnLock: false,
-        CanPrint: false,
-        CanDelete: false,
-      };
+    let mstUserRightsModel: MstUserRights = {
+      Id: id,
+      UserId: this.mstUserRightsModel.UserId,
+      Page: this.mstUserRightsModel.Page,
+      PageId: this.mstUserRightsModel.PageId,
+      PageURL: "",
+      CanEdit: false,
+      CanSave: false,
+      CanLock: false,
+      CanUnLock: false,
+      CanPrint: false,
+      CanDelete: false,
+    };
 
-      const openDialog = this.setupUserRightsDetailDialog.open(SystemUserRightsDetailComponent, {
-        width: '550px',
-        data: {
-          dialogTitle: "Edit User Rights",
-          dialogData: mstUserRightsModel
-        },
-        disableClose: true
-      });
+    const openDialog = this.setupUserRightsDetailDialog.open(SystemUserRightsDetailComponent, {
+      width: '550px',
+      data: {
+        dialogTitle: "Edit User Rights",
+        dialogData: mstUserRightsModel
+      },
+      disableClose: true
+    });
 
-      openDialog.afterClosed().subscribe(result => {
-        if (result != null) {
-          this.getUserRightsData();
-        }
-      });
-    }
+    openDialog.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.getUserRightsData();
+      }
+    });
+  }
   // }
 
 
@@ -265,36 +267,36 @@ export class SystemUserDetailComponent implements OnInit {
     // if (this.mstProjectModel.IsLocked == true) {
     //   this.toastr.error("Cannot delete a locked record.", 'Delete Failed');
     // } else {
-      let id = currentData.Id;
+    let id = currentData.Id;
 
-      const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
-        width: '450px',
-        data: {
-          dialogDeleteTitle: "Delete User Rights",
-          dialogDeleteMessage: "Are you sure you want to delete this user rights " + currentData.Page + "?",
-          dialogDeleteId: id
-        },
-        disableClose: true
-      });
+    const openDialog = this.confirmationDeleteDialog.open(ConfirmationDeleteComponent, {
+      width: '450px',
+      data: {
+        dialogDeleteTitle: "Delete User Rights",
+        dialogDeleteMessage: "Are you sure you want to delete this user rights " + currentData.Page + "?",
+        dialogDeleteId: id
+      },
+      disableClose: true
+    });
 
-      openDialog.afterClosed().subscribe(result => {
+    openDialog.afterClosed().subscribe(result => {
 
-        if (result != null) {
-          this.mstUserRightsService.deleteUserRights(result).subscribe(
-            data => {
+      if (result != null) {
+        this.mstUserRightsService.deleteUserRights(result).subscribe(
+          data => {
 
-              if (data[0] == true) {
-                this.toastr.success('User Rights was successfully deleted!', 'Delete Successful');
-                this.getUserRightsData();
-              } else {
-                this.toastr.error(data[1], 'Delete Failed');
-              }
-
+            if (data[0] == true) {
+              this.toastr.success('User Rights was successfully deleted!', 'Delete Successful');
+              this.getUserRightsData();
+            } else {
+              this.toastr.error(data[1], 'Delete Failed');
             }
-          );
-        }
-      });
-    }
+
+          }
+        );
+      }
+    });
+  }
   // }
 
   ngOnInit(): void {

@@ -4,8 +4,10 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { DecimalPipe } from '@angular/common';
 
 import { MstUserRights } from './../../model/mst-user-rights.model';
+import { SysPageModel } from '../../model/sys-page.model';
 
 import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
+import { SysPageService } from './../../service/sys-page/sys-page.service';
 
 import { ToastrService } from 'ngx-toastr';
 import { Inject } from '@angular/core';
@@ -22,7 +24,8 @@ export class SystemUserRightsDetailComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private systemUserRightsDetailDialogData: any,
     private toastr: ToastrService,
     public decimalPipe: DecimalPipe,
-    private mstUserRightsService: MstUserRightsService
+    private mstUserRightsService: MstUserRightsService,
+    private sysPageService: SysPageService
   ) { }
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
@@ -31,8 +34,18 @@ export class SystemUserRightsDetailComponent implements OnInit {
   public dialogData: any = this.systemUserRightsDetailDialogData.dialogData;
 
   public isButtonSaveConfirmationDisabled: boolean = false;
-  
+
   public mstUserRights: MstUserRights = new MstUserRights();
+  public sysPageModel: SysPageModel[] = [];
+
+  public getPageList(): void {
+    this.sysPageService.getPageList().subscribe(
+      data => {
+        this.sysPageModel = data;
+        this.getUserRightsDetail();
+      }
+    );
+  }
 
   public getUserRightsDetail() {
     this.mstUserRightsService.getUserRightsDetail(this.dialogData.Id).subscribe(
@@ -50,7 +63,6 @@ export class SystemUserRightsDetailComponent implements OnInit {
             this.mstUserRights.CanUnLock = data.CanUnLock;
             this.mstUserRights.CanPrint = data.CanPrint;
             this.mstUserRights.CanDelete = data.CanDelete;
-
           } else {
             this.mstUserRights.UserId = this.dialogData.UserId;
           }
@@ -67,7 +79,7 @@ export class SystemUserRightsDetailComponent implements OnInit {
     this.isButtonSaveConfirmationDisabled = true;
 
     if (this.dialogData.Id == 0) {
-      this.mstUserRightsService.saveUserRights(this.mstUserRights).subscribe(
+      this.mstUserRightsService.addUserRights(this.mstUserRights).subscribe(
         data => {
 
           if (data[0] == true) {
@@ -98,8 +110,8 @@ export class SystemUserRightsDetailComponent implements OnInit {
   public buttonCloseClick() {
     this.systemUserRightsDetailComponent.close(null);
   }
-  ngOnInit(): void {
-    this.getUserRightsDetail();
-  }
 
+  ngOnInit(): void {
+    this.getPageList();
+  }
 }

@@ -12,7 +12,7 @@
         <span class="toolbar-spacer"></span>
         <button mat-flat-button color="primary" style="margin-right: 5px;" (click)="buttonAddUser()"
             [disabled]="isButtonAddUserDisabled">
-            Add
+            Register
         </button>
         <button mat-flat-button color="warn" routerLink="/software">
             Close
@@ -41,27 +41,16 @@
                         </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="ButtonDelete">
-                        <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
-                        <mat-cell fxFlex="100px" *matCellDef="let row">
-                            <button mat-flat-button color="warn" (click)="buttonDeleteUser(row)">
-                                Delete
-                            </button>
-                        </mat-cell>
-                    </ng-container>
-
                     <ng-container matColumnDef="Username">
-                        <mat-header-cell fxFlex="120px" *matHeaderCellDef mat-sort-header> Username
+                        <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Username
                         </mat-header-cell>
-                        <mat-cell fxFlex="120px" *matCellDef="let row"> {{row.Username}} </mat-cell>
+                        <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Username}} </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="FullName">
                         <mat-header-cell fxFlex="250px" *matHeaderCellDef mat-sort-header> FullName </mat-header-cell>
                         <mat-cell fxFlex="250px" *matCellDef="let row"> {{row.FullName}} </mat-cell>
                     </ng-container>
-
-                   
 
                     <ng-container matColumnDef="Status">
                         <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Status </mat-header-cell>

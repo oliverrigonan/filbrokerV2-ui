@@ -32,7 +32,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-
 import { SoftwareComponent } from './software.component';
 import { SetupProjectListComponent } from './component/setup-project-list/setup-project-list.component';
 import { SetupProjectDetailComponent } from './component/setup-project-detail/setup-project-detail.component';
@@ -77,7 +76,7 @@ import { GlobalSoldUnitListComponent } from './component/global-sold-unit-list/g
 import { ActivitySoldUnitCoOwnerDetailComponent } from './component/activity-sold-unit-co-owner-detail/activity-sold-unit-co-owner-detail.component';
 import { ActivitySoldUnitEquityScheduleDetailComponent } from './component/activity-sold-unit-equity-schedule-detail/activity-sold-unit-equity-schedule-detail.component';
 import { SystemUserRightsDetailComponent } from './component/system-user-rights-detail/system-user-rights-detail.component';
-
+import { SystemUserRegisterComponent } from './component/system-user-register/system-user-register.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +123,8 @@ import { SystemUserRightsDetailComponent } from './component/system-user-rights-
     GlobalSoldUnitListComponent,
     ActivitySoldUnitCoOwnerDetailComponent,
     ActivitySoldUnitEquityScheduleDetailComponent,
-    SystemUserRightsDetailComponent
+    SystemUserRightsDetailComponent,
+    SystemUserRegisterComponent
   ],
   imports: [
     CommonModule,
