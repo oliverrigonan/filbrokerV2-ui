@@ -84,7 +84,7 @@ export class ActivityCollectionDetailComponent implements OnInit {
   public isButtonAddCollectionPaymentDisabled: boolean = false;
 
   public getCustomerList(): void {
-    this.mstCustomerService.getCustomerList().subscribe(
+    this.mstCustomerService.getCustomerListSorted().subscribe(
       data => {
         this.mstCustomerModel = data;
         this.getUserList();

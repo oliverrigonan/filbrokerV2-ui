@@ -97,6 +97,80 @@ export class MstCustomerService {
     });
   }
 
+  public getCustomerListSorted(): Observable<MstCustomerModel[]> {
+    return new Observable<MstCustomerModel[]>((observer) => {
+      let customerArray: MstCustomerModel[] = [];
+
+      this.httpClient.get(this.defaultAPIURLHost + "/api/MstCustomer/Sorted/List", this.options).subscribe(
+        response => {
+          let results = response;
+
+          if (results["length"] > 0) {
+            for (let i = 0; i <= results["length"] - 1; i++) {
+              customerArray.push({
+                Id: results[i].Id,
+                CustomerCode: results[i].CustomerCode,
+                LastName: results[i].LastName,
+                FirstName: results[i].FirstName,
+                MiddleName: results[i].MiddleName,
+                FullName: results[i].FullName,
+                Gender: results[i].Gender,
+                CivilStatus: results[i].CivilStatus,
+                BirthDate: results[i].BirthDate,
+                Citizen: results[i].Citizen,
+                TIN: results[i].TIN,
+                IdType: results[i].IdType,
+                IdNumber: results[i].IdNumber,
+                Address: results[i].Address,
+                City: results[i].City,
+                Province: results[i].Province,
+                Country: results[i].Country,
+                ZipCode: results[i].ZipCode,
+                EmailAddress: results[i].EmailAddress,
+                TelephoneNumber: results[i].TelephoneNumber,
+                MobileNumber: results[i].MobileNumber,
+                Employer: results[i].Employer,
+                EmployerIndustry: results[i].EmployerIndustry,
+                NoOfYearsEmployed: results[i].NoOfYearsEmployed,
+                Position: results[i].Position,
+                EmploymentStatus: results[i].EmploymentStatus,
+                EmployerAddress: results[i].EmployerAddress,
+                EmployerCity: results[i].EmployerCity,
+                EmployerProvince: results[i].EmployerProvince,
+                EmployerCountry: results[i].EmployerCountry,
+                EmployerZipCode: results[i].EmployerZipCode,
+                EmployerTelephoneNumber: results[i].EmployerTelephoneNumber,
+                EmployerMobileNumber: results[i].EmployerMobileNumber,
+                Picture: results[i].Picture,
+                Attachment1: results[i].Attachment1,
+                Attachment2: results[i].Attachment2,
+                Attachment3: results[i].Attachment3,
+                Attachment4: results[i].Attachment4,
+                Attachment5: results[i].Attachment5,
+                SpouseLastName: results[i].SpouseLastName,
+                SpouseFirstName: results[i].SpouseFirstName,
+                SpouseMiddleName: results[i].SpouseMiddleName,
+                SpouseBirthDate: results[i].SpouseBirthDate,
+                SpouseCitizen: results[i].SpouseCitizen,
+                SpouseTIN: results[i].SpouseTIN,
+                SpouseEmployer: results[i].SpouseEmployer,
+                Remarks: results[i].Remarks,
+                Status: results[i].Status,
+                IsLocked: results[i].IsLocked,
+                BusinessName: results[i].BusinessName,
+                BusinessAddress: results[i].BusinessAddress,
+                BusinessType: results[i].BusinessType,
+                BusinessPosition: results[i].BusinessPosition
+              });
+            }
+          }
+
+          observer.next(customerArray);
+          observer.complete();
+        }
+      );
+    });
+  }
   public getCustomerDetail(id: number): Observable<MstCustomerModel> {
     return new Observable<MstCustomerModel>((observer) => {
       let mstCustomerModel: MstCustomerModel = null;

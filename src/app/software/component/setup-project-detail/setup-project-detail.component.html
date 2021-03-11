@@ -41,7 +41,7 @@
             Lock
         </button>
         <button mat-flat-button color="primary" [disabled]="isProjectUnlockButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonUnlockProject()" *ngIf="mstUserRights.CanUnlock == true">
+            (click)="buttonUnlockProject()" *ngIf="mstUserRights.CanUnLock == true">
             Unlock
         </button>
         <button mat-flat-button color="warn" routerLink="/software/setup-project-list">

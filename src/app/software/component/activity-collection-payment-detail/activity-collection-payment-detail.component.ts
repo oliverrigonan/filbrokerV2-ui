@@ -45,6 +45,7 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
 
   public trnSoldUnitEquityScheduleModel: TrnSoldUnitEquityScheduleModel[] = [];
   public trnSoldUnitModel: TrnSoldUnitModel[] = [];
+  public unitCode: string = "";
   public sysDropdownModel: SysDropdownModel[] = [];
   public trnCollectionPaymentModel: TrnCollectionPaymentModel = new TrnCollectionPaymentModel();
 
@@ -55,7 +56,6 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
     this.trnSoldUnitService.getSoldUnitListByCustomer(this.customerId).subscribe(
       data => {
         this.trnSoldUnitModel = data;
-
         this.getDropdownList();
       }
     );
@@ -63,6 +63,7 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
 
   public soldUnitChange(): void {
     this.getSoldUnitEquityList();
+    this.unitCode = this.trnSoldUnitModel.filter(d => d.Id == this.trnCollectionPaymentModel.SoldUnitId)[0].Unit;
   }
 
   public getSoldUnitEquityList(): void {
@@ -95,6 +96,7 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
             this.trnCollectionPaymentModel.SoldUnitId = data.SoldUnitId;
             this.trnCollectionPaymentModel.SoldUnit = data.SoldUnit;
             this.getSoldUnitEquityList();
+            this.unitCode = this.trnSoldUnitModel.filter(d => d.Id == this.trnCollectionPaymentModel.SoldUnitId)[0].Unit;
             this.trnCollectionPaymentModel.SoldUnitEquityScheduleId = data.SoldUnitEquityScheduleId;
             this.trnCollectionPaymentModel.SoldUnitEquitySchedule = data.SoldUnitEquitySchedule;
             this.trnCollectionPaymentModel.Project = data.Project;

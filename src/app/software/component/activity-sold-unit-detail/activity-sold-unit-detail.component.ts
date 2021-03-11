@@ -235,7 +235,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   }
 
   public getCustomerList(): void {
-    this.mstCustomerService.getCustomerList().subscribe(
+    this.mstCustomerService.getCustomerListSorted().subscribe(
       data => {
         this.mstCustomerModel = data;
         this.getBrokerList();
