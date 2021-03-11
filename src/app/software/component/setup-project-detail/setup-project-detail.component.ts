@@ -19,6 +19,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 import { SetupHouseModelDetailComponent } from './../../component/setup-house-model-detail/setup-house-model-detail.component';
 
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
 @Component({
   selector: 'app-setup-project-detail',
   templateUrl: './setup-project-detail.component.html',
@@ -34,12 +36,16 @@ export class SetupProjectDetailComponent implements OnInit {
     private mstHouseModelService: MstHouseModelService,
     private toastr: ToastrService,
     private confirmationDeleteDialog: MatDialog,
-    private setupHouseModelDetailDialog: MatDialog
+    private setupHouseModelDetailDialog: MatDialog,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
 
+
+  public mstUserRights: MstUserRights = new MstUserRights();
   public mstProjectModel: MstProjectModel = new MstProjectModel();
   public sysDropdownModel: SysDropdownModel[] = [];
 
@@ -343,6 +349,85 @@ export class SetupProjectDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDropdownList();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("PROJECT DETAIL").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            if (data.CanEdit == false && data.CanDelete == false) {
+              this.houseModelDisplayedColumns = [
+                'HouseModelCode',
+                'HouseModel',
+                'TFA',
+                'Price',
+                'Space'
+              ];
+            } else {
+              if (data.CanEdit == false) {
+                this.houseModelDisplayedColumns = [
+                  'ButtonDelete',
+                  'HouseModelCode',
+                  'HouseModel',
+                  'TFA',
+                  'Price',
+                  'Space'
+                ];
+              } else if (data.CanDelete == false) {
+                this.houseModelDisplayedColumns = [
+                  'ButtonEdit',
+                  'HouseModelCode',
+                  'HouseModel',
+                  'TFA',
+                  'Price',
+                  'Space'
+                ];
+              } else {
+                this.houseModelDisplayedColumns = [
+                  'ButtonEdit',
+                  'ButtonDelete',
+                  'HouseModelCode',
+                  'HouseModel',
+                  'TFA',
+                  'Price',
+                  'Space'
+                ];
+              }
+            }
+
+            this.getDropdownList();
+
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
   }
 }

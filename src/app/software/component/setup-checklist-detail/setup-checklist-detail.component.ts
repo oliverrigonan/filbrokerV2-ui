@@ -22,6 +22,9 @@ import { SetupChecklistRequirementDetailComponent } from './../../component/setu
 
 import { PrintPdfChecklistComponent } from './../../component/print-pdf-checklist/print-pdf-checklist.component';
 
+
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
 @Component({
   selector: 'app-setup-checklist-detail',
   templateUrl: './setup-checklist-detail.component.html',
@@ -39,14 +42,17 @@ export class SetupChecklistDetailComponent implements OnInit {
     private confirmationDeleteDialog: MatDialog,
     private setupChecklistRequirementDetailDialog: MatDialog,
     private printPdfChecklistDialog: MatDialog,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
 
   public mstChecklistModel: MstChecklistModel = new MstChecklistModel();
   public mstChecklistRequirementModel: MstChecklistRequirementModel[] = [];
   public sysDropdownModel: SysDropdownModel[] = [];
+  public mstUserRights: MstUserRights = new MstUserRights();
 
   public isChecklistSaveButtonDisabled: boolean = false;
   public isChecklistLockButtonDisabled: boolean = false;
@@ -337,7 +343,89 @@ export class SetupChecklistDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDropdownList();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("CHECKLIST DETAIL").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            if (data.CanEdit == false && data.CanDelete == false) {
+              this.checklistRequirementDisplayedColumns = [
+                'RequirementNo',
+                'Requirement',
+                'Category',
+                'Type',
+                'WithAttachments',
+                'Space'
+              ];
+            } else {
+              if (data.CanEdit == false) {
+                this.checklistRequirementDisplayedColumns = [
+                  'ButtonDelete',
+                  'RequirementNo',
+                  'Requirement',
+                  'Category',
+                  'Type',
+                  'WithAttachments',
+                  'Space'
+                ];
+              } else if (data.CanDelete == false) {
+                this.checklistRequirementDisplayedColumns = [
+                  'ButtonEdit',
+                  'RequirementNo',
+                  'Requirement',
+                  'Category',
+                  'Type',
+                  'WithAttachments',
+                  'Space'
+                ];
+              } else {
+                this.checklistRequirementDisplayedColumns = [
+                  'ButtonEdit',
+                  'ButtonDelete',
+                  'RequirementNo',
+                  'Requirement',
+                  'Category',
+                  'Type',
+                  'WithAttachments',
+                  'Space'
+                ];
+              }
+            }
+
+            this.getDropdownList();
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
   }
 
 }

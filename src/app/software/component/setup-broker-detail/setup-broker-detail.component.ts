@@ -15,6 +15,9 @@ import { PrintPdfBrokerComponent } from './../../component/print-pdf-broker/prin
 
 import { ToastrService } from 'ngx-toastr';
 
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
+
 @Component({
   selector: 'app-setup-broker-detail',
   templateUrl: './setup-broker-detail.component.html',
@@ -29,11 +32,16 @@ export class SetupBrokerDetailComponent implements OnInit {
     private mstBrokerService: MstBrokerService,
     private printPdfBrokerDialog: MatDialog,
     private toastr: ToastrService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
+
+  public mstUserRights: MstUserRights = new MstUserRights();
+
 
   public mstBrokerModel: MstBrokerModel = new MstBrokerModel();
 
@@ -469,6 +477,44 @@ export class SetupBrokerDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDropdownListBrokerStatus();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("BROKER DETAIL").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            this.getDropdownListBrokerStatus();
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
   }
 }

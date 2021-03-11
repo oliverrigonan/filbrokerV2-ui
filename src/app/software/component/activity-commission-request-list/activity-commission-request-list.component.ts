@@ -17,6 +17,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
 @Component({
   selector: 'app-activity-commission-request-list',
   templateUrl: './activity-commission-request-list.component.html',
@@ -48,11 +50,13 @@ export class ActivityCommissionRequestListComponent implements OnInit {
     private trnCommissionRequestService: TrnCommissionRequestService,
     private router: Router,
     private toastr: ToastrService,
-    private confirmationDeleteDialog: MatDialog
+    private confirmationDeleteDialog: MatDialog,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
 
   public date = new Date();
   public firstDay = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
@@ -60,6 +64,8 @@ export class ActivityCommissionRequestListComponent implements OnInit {
 
   public commissionRequestListStartDateFilterFormControl = new FormControl(this.firstDay);
   public commissionRequestEndDateFilterFormControl = new FormControl(this.lastDay);
+  
+  public mstUserRights: MstUserRights = new MstUserRights();
 
   public commissionRequestDateRangeFiltersDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
     this.getCommissionRequestData();
@@ -199,6 +205,91 @@ export class ActivityCommissionRequestListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCommissionRequestData();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("COMMISSION LIST").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            if (data.CanEdit == false && data.CanDelete == false) {
+              this.commissionRequestDisplayedColumns = [
+                'CommissionRequestNumber',
+                'CommissionRequestDate',
+                'Broker',
+                'SoldUnit',
+                'Status',
+                'IsLocked',
+                'Space'
+              ];
+            } else {
+              if (data.CanEdit == false) {
+                this.commissionRequestDisplayedColumns = [
+                  'ButtonDelete',
+                  'CommissionRequestNumber',
+                  'CommissionRequestDate',
+                  'Broker',
+                  'SoldUnit',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              } else if (data.CanDelete == false) {
+                this.commissionRequestDisplayedColumns = [
+                  'ButtonEdit',
+                  'CommissionRequestNumber',
+                  'CommissionRequestDate',
+                  'Broker',
+                  'SoldUnit',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              } else {
+                this.commissionRequestDisplayedColumns = [
+                  'ButtonEdit',
+                  'ButtonDelete',
+                  'CommissionRequestNumber',
+                  'CommissionRequestDate',
+                  'Broker',
+                  'SoldUnit',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              }
+            }
+            this.getCommissionRequestData();
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
   }
 }

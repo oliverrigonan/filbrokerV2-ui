@@ -2,6 +2,28 @@
     <h4>Please wait...</h4>
     <mat-spinner style="margin:auto;display:block;"></mat-spinner>
 </div>
+<div *ngIf="isPageForbidden">
+    <div class="software-container">
+        <div style="text-align: center;">
+            <div fxLayout="row" fxLayout.xs="column" style="margin-top: 25px; margin-bottom: 15px;">
+                <div fxFlex="35" style="padding: 5px;"></div>
+                <div fxFlex="30" style="padding: 5px;">
+                    <img src="./../../../../assets/error-images/Error-403_page-forbidden.png" style="width: 100%;" />
+                </div>
+                <div fxFlex="35" style="padding: 5px;"></div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="10" style="padding: 5px;"></div>
+                <div fxFlex="80" style="padding: 5px;">
+                    <h1>
+                        Sorry, this page is forbidden. You have no rights to access this page.
+                    </h1>
+                </div>
+                <div fxFlex="10" style="padding: 5px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <div *ngIf="isContentShow">
     <mat-toolbar>
         &nbsp;&nbsp;
@@ -11,15 +33,15 @@
         </span>
         <span class="toolbar-spacer"></span>
         <button mat-flat-button color="primary" [disabled]="isProjectSaveButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonSaveProject()">
+            (click)="buttonSaveProject()" *ngIf="mstUserRights.CanSave == true">
             Save
         </button>
         <button mat-flat-button color="primary" [disabled]="isProjectLockButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonLockProject()">
+            (click)="buttonLockProject()" *ngIf="mstUserRights.CanLock == true">
             Lock
         </button>
         <button mat-flat-button color="primary" [disabled]="isProjectUnlockButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonUnlockProject()">
+            (click)="buttonUnlockProject()" *ngIf="mstUserRights.CanUnlock == true">
             Unlock
         </button>
         <button mat-flat-button color="warn" routerLink="/software/setup-project-list">
@@ -136,7 +158,7 @@
                                 <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                                 <mat-cell fxFlex="100px" *matCellDef="let row">
                                     <button mat-flat-button color="primary" (click)="buttonEditHouseModel(row)"
-                                        [disabled]="mstProjectModel.IsLocked">
+                                        [disabled]="mstProjectModel.IsLocked" *ngIf="mstUserRights.CanEdit == true">
                                         Edit
                                     </button>
                                 </mat-cell>
@@ -146,7 +168,7 @@
                                 <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                                 <mat-cell fxFlex="100px" *matCellDef="let row">
                                     <button mat-flat-button color="warn" (click)="buttonDeleteHouseModel(row)"
-                                        [disabled]="mstProjectModel.IsLocked">
+                                        [disabled]="mstProjectModel.IsLocked" *ngIf="mstUserRights.CanDelete == true">
                                         Delete
                                     </button>
                                 </mat-cell>

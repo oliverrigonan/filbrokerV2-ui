@@ -24,7 +24,7 @@
             <div fxFlex="100" style="padding: 5px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Password</mat-label>
-                    <input matInput [(ngModel)]="sysUserRegisterModel.Password" [ngModelOptions]="{standalone: true}">
+                    <input matInput [(ngModel)]="sysUserRegisterModel.Password" [ngModelOptions]="{standalone: true}" type ="password">
                 </mat-form-field>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Confirm Password</mat-label>
                     <input matInput [(ngModel)]="sysUserRegisterModel.ConfirmPassword"
-                        [ngModelOptions]="{standalone: true}">
+                        [ngModelOptions]="{standalone: true}" type ="password">
                 </mat-form-field>
             </div>
         </div>

@@ -11,19 +11,19 @@
         </span>
         <span class="toolbar-spacer"></span>
         <button mat-flat-button color="primary" [disabled]="isCustomerSaveButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonSaveCustomer()">
+            (click)="buttonSaveCustomer()" *ngIf="mstUserRights.CanSave == true">
             Save
         </button>
         <button mat-flat-button color="primary" [disabled]="isCustomerLockButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonLockCustomer()">
+            (click)="buttonLockCustomer()" *ngIf="mstUserRights.CanLock == true">
             Lock
         </button>
         <button mat-flat-button color="primary" [disabled]="isCustomerUnlockButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonUnlockCustomer()">
+            (click)="buttonUnlockCustomer()" *ngIf="mstUserRights.CanUnlock == true">
             Unlock
         </button>
         <button mat-flat-button color="primary" [disabled]="isCustomerPrintButtonDisabled" style="margin-right: 5px;"
-            [matMenuTriggerFor]="printMenu">
+            [matMenuTriggerFor]="printMenu" *ngIf="mstUserRights.CanPrint == true">
             Print
         </button>
         <mat-menu #printMenu="matMenu">

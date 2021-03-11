@@ -45,6 +45,9 @@ import { ActivitySoldUnitCoOwnerDetailComponent } from './../activity-sold-unit-
 import { ActivitySoldUnitEquityScheduleDetailComponent } from './../activity-sold-unit-equity-schedule-detail/activity-sold-unit-equity-schedule-detail.component';
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
+
 
 
 @Component({
@@ -78,11 +81,13 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     private confirmationDeleteDialog: MatDialog,
     private trnSoldUnitEquityScheduleService: TrnSoldUnitEquityScheduleService,
     private activitySoldUnitEquityScheduleDetailDialog: MatDialog,
+    private mstUserRightsService: MstUserRightsService,
 
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
 
   public mstProjectModel: MstProjectModel[] = [];
   public mstUnitModel: MstUnitModel[] = [];
@@ -95,6 +100,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   public mstUserModel: MstUserModel[] = [];
   public sysDropdownModel: SysDropdownModel[] = [];
   public trnSoldUnitModel: TrnSoldUnitModel = new TrnSoldUnitModel();
+
+  public mstUserRights: MstUserRights = new MstUserRights();
 
 
   public isSoldUnitSaveButtonDisabled: boolean = false;
@@ -1200,6 +1207,68 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProjectList();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("SOLD UNIT DETAIL").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            if (data.CanEdit == false) {
+              this.soldUnitRequirementDisplayedColumns = [
+                'ChecklistRequirementNo',
+                'ChecklistRequirement',
+                'ChecklistCategory',
+                'ChecklistType',
+                'ChecklistWithAttachments',
+                'Status',
+                'StatusDate',
+                'Space'
+              ];
+            } else {
+              this.soldUnitRequirementDisplayedColumns = [
+                'ButtonEdit',
+                'ChecklistRequirementNo',
+                'ChecklistRequirement',
+                'ChecklistCategory',
+                'ChecklistType',
+                'ChecklistWithAttachments',
+                'Status',
+                'StatusDate',
+                'Space'
+              ];
+            }
+            this.getProjectList();
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
   }
 }

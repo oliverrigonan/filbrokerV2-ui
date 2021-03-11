@@ -16,6 +16,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { GlobalSoldUnitListComponent } from './../global-sold-unit-list/global-sold-unit-list.component';
 
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
 @Component({
   selector: 'app-setup-customer-detail',
   templateUrl: './setup-customer-detail.component.html',
@@ -30,13 +32,18 @@ export class SetupCustomerDetailComponent implements OnInit {
     private mstCustomerService: MstCustomerService,
     private printPdfCustomerDialog: MatDialog,
     private toastr: ToastrService,
-    private globalSoldUnitListDialog: MatDialog
+    private globalSoldUnitListDialog: MatDialog,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
+
 
   public mstCustomerModel: MstCustomerModel = new MstCustomerModel();
+  
+  public mstUserRights: MstUserRights = new MstUserRights();
 
   public sysDropdownModelCustomerStatus: SysDropdownModel[] = [];
   public sysDropdownModelCivilStatus: SysDropdownModel[] = [];
@@ -587,8 +594,45 @@ export class SetupCustomerDetailComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-    this.getDropdownListCustomerStatus();
+  ngOnInit(): void { this.mstUserRights = {
+    Id: 0,
+    UserId: 0,
+    PageId: 0,
+    Page: "",
+    PageURL: "",
+    CanEdit: true,
+    CanSave: true,
+    CanLock: true,
+    CanUnLock: true,
+    CanPrint: true,
+    CanDelete: true
+  }
+
+  this.mstUserRightsService.getUserRightPerCurrentUser("CUSTOMER DETAIL").subscribe(
+    data => {
+
+      setTimeout(() => {
+        if (data != null) {
+          this.mstUserRights.Id = data.Id;
+          this.mstUserRights.UserId = data.UserId;
+          this.mstUserRights.PageId = data.PageId;
+          this.mstUserRights.Page = data.Page;
+          this.mstUserRights.PageURL = data.PageURL;
+          this.mstUserRights.CanEdit = data.CanEdit;
+          this.mstUserRights.CanSave = data.CanSave;
+          this.mstUserRights.CanLock = data.CanLock;
+          this.mstUserRights.CanUnLock = data.CanUnLock;
+          this.mstUserRights.CanPrint = data.CanPrint;
+          this.mstUserRights.CanDelete = data.CanDelete;
+
+          this.getDropdownListCustomerStatus();
+        } else {
+          this.isSpinnerShow = false;
+          this.isPageForbidden = true;
+        }
+      }, 500);
+    }
+  );
   }
 
 }

@@ -117,6 +117,36 @@ export class MstUserRightsService {
     });
   }
 
+  public getUserRightPerCurrentUser(page: string): Observable<MstUserRights> {
+    return new Observable<MstUserRights>((observer) => {
+      let mstUserRightsModel: MstUserRights = null;
+
+      this.httpClient.get(this.defaultAPIURLHost + "/api/MstUserRight/ListPerCurrentUser/" + page, this.options).subscribe(
+        response => {
+          let results = response;
+
+          if (results != null) {
+            mstUserRightsModel = {
+              Id: results["Id"],
+                UserId: results["UserId"],
+                PageId: results["PageId"],
+                Page: results["Page"],
+                PageURL: results["PageURL"],
+                CanEdit: results["CanEdit"],
+                CanSave: results["CanSave"],
+                CanLock: results["CanLock"],
+                CanUnLock: results["CanUnLock"],
+                CanPrint: results["CanPrint"],
+                CanDelete: results["CanDelete"],
+            }
+          }
+
+          observer.next(mstUserRightsModel);
+          observer.complete();
+        }
+      );
+    });
+  }
   public addUserRights(mstUserRightsModel: any): Observable<[boolean, any]> {
     return new Observable<[boolean, any]>((observer) => {
       this.httpClient.post(this.defaultAPIURLHost + "/api/MstUserRight/Add", JSON.stringify(mstUserRightsModel), this.options).subscribe(

@@ -11,23 +11,23 @@
         </span>
         <span class="toolbar-spacer"></span>
         <button mat-flat-button color="primary" [disabled]="isSoldUnitSaveButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonSaveSoldUnit()">
+            (click)="buttonSaveSoldUnit()" *ngIf="mstUserRights.CanSave == true">
             Save
         </button>
         <button mat-flat-button color="primary" [disabled]="isSoldUnitLockButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonLockSoldUnit()">
+            (click)="buttonLockSoldUnit()" *ngIf="mstUserRights.CanLock == true">
             Lock
         </button>
         <button mat-flat-button color="primary" [disabled]="isSoldUnitUnlockButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonUnlockSoldUnit()">
+            (click)="buttonUnlockSoldUnit()" *ngIf="mstUserRights.CanUnlock == true">
             Unlock
         </button>
         <button mat-flat-button color="primary" [disabled]="isSoldUnitPrintButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonPrintSoldUnit()">
+            (click)="buttonPrintSoldUnit()" *ngIf="mstUserRights.CanPrint == true">
             Print
         </button>
         <button mat-flat-button color="warn" [disabled]="isSoldUnitCancelButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonCancelSoldUnit()">
+            (click)="buttonCancelSoldUnit()" >
             Cancel
         </button>
         <!-- <button mat-flat-button color="warn" [disabled]="isSoldUnitTransferButtonDisabled" style="margin-right: 5px;"
@@ -644,12 +644,12 @@
                         <mat-table [dataSource]="soldUnitEquityScheduleDataSource" #soldUnitEquityScheduleSort="matSort"
                             matSort style="overflow-x: scroll;">
 
-                            <ng-container matColumnDef="ButtonEdit">
+                            <ng-container matColumnDef="ButtonEdit" >
                                 <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                                 <mat-cell fxFlex="100px" *matCellDef="let row">
                                     <button mat-flat-button color="primary"
                                         (click)="buttonEditSoldUnitEquitySchedule(row)"
-                                        [disabled]="trnSoldUnitModel.IsLocked">
+                                        [disabled]="trnSoldUnitModel.IsLocked" *ngIf="mstUserRights.CanEdit == true">
                                         Edit
                                     </button>
                                 </mat-cell>

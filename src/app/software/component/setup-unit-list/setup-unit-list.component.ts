@@ -19,6 +19,9 @@ import { ToastrService } from 'ngx-toastr';
 
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
+
 @Component({
   selector: 'app-setup-unit-list',
   templateUrl: './setup-unit-list.component.html',
@@ -53,13 +56,17 @@ export class SetupUnitListComponent implements OnInit {
     private toastr: ToastrService,
     private confirmationDeleteDialog: MatDialog,
     public decimalPipe: DecimalPipe,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
 
   public selectedProjectId: number = 0;
   public mstProjectModel: MstProjectModel[] = [];
+  public mstUserRights: MstUserRights = new MstUserRights();
+
 
   public getProjectList(): void {
     this.mstProjectService.getProjectList().subscribe(
@@ -201,6 +208,91 @@ export class SetupUnitListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProjectList();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("CHECKLIST").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            if (data.CanEdit == false && data.CanDelete == false) {
+              this.unitDisplayedColumns = [
+                'UnitCode',
+                'HouseModel',
+                'UnitPrice',
+                'FloorArea',
+                'Status',
+                'IsLocked',
+                'Space'
+              ];
+            } else {
+              if (data.CanEdit == false) {
+                this.unitDisplayedColumns = [
+                  'ButtonDelete',
+                  'UnitCode',
+                  'HouseModel',
+                  'UnitPrice',
+                  'FloorArea',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              } else if (data.CanDelete == false) {
+                this.unitDisplayedColumns = [
+                  'ButtonEdit',
+                  'UnitCode',
+                  'HouseModel',
+                  'UnitPrice',
+                  'FloorArea',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              } else {
+                this.unitDisplayedColumns = [
+                  'ButtonEdit',
+                  'ButtonDelete',
+                  'UnitCode',
+                  'HouseModel',
+                  'UnitPrice',
+                  'FloorArea',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              }
+            }
+            this.getProjectList();
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
   }
 }

@@ -63,7 +63,7 @@
                 <mat-table [dataSource]="soldUnitDataSource" #soldUnitSort="matSort" matSort
                     style="overflow-x: scroll;">
 
-                    <ng-container matColumnDef="ButtonEdit" *ngIf="isFromCustomer == false">
+                    <ng-container matColumnDef="ButtonEdit" *ngIf="isFromCustomer == false || mstUserRights.CanEdit == true" >
                         <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                         <mat-cell fxFlex="100px" *matCellDef="let row">
                             <button mat-flat-button color="primary" (click)="buttonEditSoldUnit(row)">
@@ -72,7 +72,7 @@
                         </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="ButtonDelete" *ngIf="isFromCustomer == false">
+                    <ng-container matColumnDef="ButtonDelete" *ngIf="isFromCustomer == false || mstUserRights.CanDelete == true">
                         <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                         <mat-cell fxFlex="100px" *matCellDef="let row">
                             <button mat-flat-button color="warn" (click)="buttonDeleteSoldUnit(row)">

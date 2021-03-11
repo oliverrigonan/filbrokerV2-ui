@@ -23,6 +23,9 @@ import { ActivityCollectionPaymentDetailComponent } from './../activity-collecti
 
 import { ToastrService } from 'ngx-toastr';
 
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
+
 @Component({
   selector: 'app-activity-collection-detail',
   templateUrl: './activity-collection-detail.component.html',
@@ -40,15 +43,19 @@ export class ActivityCollectionDetailComponent implements OnInit {
     private toastr: ToastrService,
     public decimalPipe: DecimalPipe,
     private confirmationDeleteDialog: MatDialog,
-    private activityCollectionPaymentDetailDialog: MatDialog
+    private activityCollectionPaymentDetailDialog: MatDialog,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
 
   public mstCustomerModel: MstCustomerModel[] = [];
   public mstUserModel: MstUserModel[] = [];
   public trnCollectionModel: TrnCollectionModel = new TrnCollectionModel();
+  
+  public mstUserRights: MstUserRights = new MstUserRights();
 
   public isCollectionSaveButtonDisabled: boolean = false;
   public isCollectionLockButtonDisabled: boolean = false;
@@ -356,6 +363,91 @@ export class ActivityCollectionDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCustomerList();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("BROKER DETAIL").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+            if (data.CanEdit == false && data.CanDelete == false) {
+              this.collectionPaymentDisplayedColumns = [
+                'SoldUnit',
+                'Project',
+                'PayType',
+                'Amount',
+                'Agent',
+                'Broker',
+                'Space'
+              ];
+            } else {
+              if (data.CanEdit == false) {
+                this.collectionPaymentDisplayedColumns = [
+                  'ButtonDelete',
+                  'SoldUnit',
+                  'Project',
+                  'PayType',
+                  'Amount',
+                  'Agent',
+                  'Broker',
+                  'Space'
+                ];
+              } else if (data.CanDelete == false) {
+                this.collectionPaymentDisplayedColumns = [
+                  'ButtonEdit',
+                  'SoldUnit',
+                  'Project',
+                  'PayType',
+                  'Amount',
+                  'Agent',
+                  'Broker',
+                  'Space'
+                ];
+              } else {
+                this.collectionPaymentDisplayedColumns = [
+                  'ButtonEdit',
+                  'ButtonDelete',
+                  'SoldUnit',
+                  'Project',
+                  'PayType',
+                  'Amount',
+                  'Agent',
+                  'Broker',
+                  'Space'
+                ];
+              }
+            }
+            this.getCustomerList();
+
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
   }
 }

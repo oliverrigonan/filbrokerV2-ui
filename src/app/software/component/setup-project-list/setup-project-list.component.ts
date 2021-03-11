@@ -13,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
 @Component({
   selector: 'app-setup-project-list',
   templateUrl: './setup-project-list.component.html',
@@ -33,6 +35,7 @@ export class SetupProjectListComponent implements OnInit {
 
   public projectDataSource: MatTableDataSource<MstProjectModel>;
   public projectData: MstProjectModel[] = []
+  public mstUserRights: MstUserRights = new MstUserRights();
 
   @ViewChild('projectPaginator') public projectPaginator: MatPaginator;
   @ViewChild('projectSort') public projectSort: MatSort;
@@ -43,11 +46,13 @@ export class SetupProjectListComponent implements OnInit {
     private mstProjectService: MstProjectService,
     private router: Router,
     private toastr: ToastrService,
-    private confirmationDeleteDialog: MatDialog
+    private confirmationDeleteDialog: MatDialog,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
 
   public getProjectData(): void {
     this.projectData = [];
@@ -163,6 +168,87 @@ export class SetupProjectListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProjectData();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("PROJECT LIST").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            if (data.CanEdit == false && data.CanDelete == false) {
+              this.projectDisplayedColumns = [
+                'ProjectCode',
+                'Project',
+                'Address',
+                'Status',
+                'IsLocked',
+                'Space'
+              ];
+            } else {
+              if (data.CanEdit == false) {
+                this.projectDisplayedColumns = [
+                  'ButtonDelete',
+                  'ProjectCode',
+                  'Project',
+                  'Address',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              } else if (data.CanDelete == false) {
+                this.projectDisplayedColumns = [
+                  'ButtonEdit',
+                  'ProjectCode',
+                  'Project',
+                  'Address',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              } else {
+                this.projectDisplayedColumns = [
+                  'ButtonEdit',
+                  'ButtonDelete',
+                  'ProjectCode',
+                  'Project',
+                  'Address',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              }
+            }
+            this.getProjectData();
+            } else {
+              this.isSpinnerShow = false;
+              this.isPageForbidden = true;
+            }
+          }, 500);
+      }
+    );
   }
 }

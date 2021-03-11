@@ -22,6 +22,9 @@ import { PrintPdfBuyersUndertakingComponent } from './../../component/print-pdf-
 import { PrintPdfReservationAgreementComponent } from './../../component/print-pdf-reservation-agreement/print-pdf-reservation-agreement.component';
 import { PrintPdfComputationSheetComponent } from './../../component/print-pdf-computation-sheet/print-pdf-computation-sheet.component';
 
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
+
 @Component({
   selector: 'app-activity-sold-unit-list',
   templateUrl: './activity-sold-unit-list.component.html',
@@ -60,15 +63,19 @@ export class ActivitySoldUnitListComponent implements OnInit {
     private confirmationDeleteDialog: MatDialog,
     private printPdfBuyersUndertakingDialog: MatDialog,
     private printPdfReservationAgreementDialog: MatDialog,
-    private printPdfComputationSheetDialog: MatDialog
+    private printPdfComputationSheetDialog: MatDialog,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
 
   public date = new Date();
   public firstDay = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
   public lastDay = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0);
+
+  public mstUserRights: MstUserRights = new MstUserRights();
 
   public soldUnitListStartDateFilterFormControl = new FormControl(this.firstDay);
   public soldUnitEndDateFilterFormControl = new FormControl(this.lastDay);
@@ -321,7 +328,96 @@ export class ActivitySoldUnitListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSoldUnitData();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("SOLD UNIT LIST").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            if (data.CanEdit == false && data.CanDelete == false) {
+              this.soldUnitDisplayedColumns = [
+                'SoldUnitNumber',
+                'SoldUnitDate',
+                'Project',
+                'Unit',
+                'Customer',
+                'Status',
+                'IsLocked',
+                'Space'
+              ];
+            } else {
+              if (data.CanEdit == false) {
+                this.soldUnitDisplayedColumns = [
+                  'ButtonDelete',
+                  'SoldUnitNumber',
+                  'SoldUnitDate',
+                  'Project',
+                  'Unit',
+                  'Customer',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              } else if (data.CanDelete == false) {
+                this.soldUnitDisplayedColumns = [
+                  'ButtonEdit',
+                  'SoldUnitNumber',
+                  'SoldUnitDate',
+                  'Project',
+                  'Unit',
+                  'Customer',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              } else {
+                this.soldUnitDisplayedColumns = [
+                  'ButtonEdit',
+                  'ButtonDelete',
+                  'SoldUnitNumber',
+                  'SoldUnitDate',
+                  'Project',
+                  'Unit',
+                  'Customer',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              }
+            }
+            this.getSoldUnitData();
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
 
     if (this.isFromCustomer == true) {
       this.soldUnitDisplayedColumns = [

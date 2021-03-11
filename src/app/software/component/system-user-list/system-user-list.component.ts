@@ -14,6 +14,10 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 import { SystemUserRegisterComponent } from './../system-user-register/system-user-register.component';
 
+
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
+
 @Component({
   selector: 'app-system-user-list',
   templateUrl: './system-user-list.component.html',
@@ -32,6 +36,7 @@ export class SystemUserListComponent implements OnInit {
   public userDataSource: MatTableDataSource<MstUserModel>;
   public userData: MstUserModel[] = []
 
+
   @ViewChild('userPaginator') public userPaginator: MatPaginator;
   @ViewChild('userSort') public userSort: MatSort;
 
@@ -41,11 +46,15 @@ export class SystemUserListComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private confirmationDeleteDialog: MatDialog,
-    private systemUserRegisterDialog: MatDialog
+    private systemUserRegisterDialog: MatDialog,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
+
+  public mstUserRights: MstUserRights = new MstUserRights();
 
   public geUserData(): void {
     this.userData = [];
@@ -137,6 +146,61 @@ export class SystemUserListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.geUserData();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("USER LIST").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            
+              if (data.CanEdit == false) {
+                this.userDisplayedColumns = [
+                  'Username',
+                  'FullName',
+                  'Status',
+                  'Space'
+                ];
+              } else {
+                this.userDisplayedColumns = [
+                  'ButtonEdit',
+                  'Username',
+                  'FullName',
+                  'Status',
+                  'Space'
+                ];
+              }
+            this.geUserData();
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
   }
 }

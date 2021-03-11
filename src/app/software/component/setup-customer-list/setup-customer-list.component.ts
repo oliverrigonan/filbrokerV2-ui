@@ -13,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmation-delete.component';
 
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
 @Component({
   selector: 'app-setup-customer-list',
   templateUrl: './setup-customer-list.component.html',
@@ -45,11 +47,16 @@ export class SetupCustomerListComponent implements OnInit {
     private mstCustomerService: MstCustomerService,
     private router: Router,
     private toastr: ToastrService,
-    private confirmationDeleteDialog: MatDialog
+    private confirmationDeleteDialog: MatDialog,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
+
+
+  public mstUserRights: MstUserRights = new MstUserRights();
 
   public getCustomerData(): void {
     this.customerData = [];
@@ -68,6 +75,7 @@ export class SetupCustomerListComponent implements OnInit {
 
         this.isSpinnerShow = false;
         this.isContentShow = true;
+
       }
     );
   }
@@ -213,6 +221,95 @@ export class SetupCustomerListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCustomerData();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("CUSTOMER LIST").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            if (data.CanEdit == false && data.CanDelete == false) {
+              this.customerDisplayedColumns = [
+                'CustomerCode',
+                'Customer',
+                'EmailAddress',
+                'TelephoneNumber',
+                'MobileNumber',
+                'Status',
+                'IsLocked',
+                'Space'
+              ];
+            } else {
+              if (data.CanEdit == false) {
+                this.customerDisplayedColumns = [
+                  'ButtonDelete',
+                  'CustomerCode',
+                  'Customer',
+                  'EmailAddress',
+                  'TelephoneNumber',
+                  'MobileNumber',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              } else if (data.CanDelete == false) {
+                this.customerDisplayedColumns = [
+                  'ButtonEdit',
+                  'CustomerCode',
+                  'Customer',
+                  'EmailAddress',
+                  'TelephoneNumber',
+                  'MobileNumber',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              } else {
+                this.customerDisplayedColumns = [
+                  'ButtonEdit',
+                  'ButtonDelete',
+                  'CustomerCode',
+                  'Customer',
+                  'EmailAddress',
+                  'TelephoneNumber',
+                  'MobileNumber',
+                  'Status',
+                  'IsLocked',
+                  'Space'
+                ];
+              }
+            }
+            this.getCustomerData();
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
   }
 }

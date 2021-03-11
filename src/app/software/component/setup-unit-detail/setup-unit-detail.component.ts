@@ -16,6 +16,8 @@ import { TrnSoldUnitModel } from '../../model/trn-sold-unit.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { TrnSoldUnitService } from '../../service/trn-sold-unit/trn-sold-unit.service';
+import { MstUserRights } from './../../model/mst-user-rights.model';
+import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
 
 @Component({
   selector: 'app-setup-unit-detail',
@@ -32,13 +34,17 @@ export class SetupUnitDetailComponent implements OnInit {
     private mstUnitService: MstUnitService,
     private toastr: ToastrService,
     private decimalPipe: DecimalPipe,
-    private trnSoldUnitService: TrnSoldUnitService
+    private trnSoldUnitService: TrnSoldUnitService,
+    private mstUserRightsService: MstUserRightsService,
   ) { }
 
   public isSpinnerShow: boolean = true;
   public isContentShow: boolean = false;
+  public isPageForbidden: boolean = false;
 
   public mstUnitModel: MstUnitModel = new MstUnitModel();
+  public mstUserRights: MstUserRights = new MstUserRights();
+
   public mstHouseModelModel: MstHouseModelModel[] = [];
   public sysDropdownModel: SysDropdownModel[] = [];
 
@@ -126,7 +132,7 @@ export class SetupUnitDetailComponent implements OnInit {
 
             this.getHouseModelList(this.mstUnitModel.ProjectId);
             this.getSoldUnitData();
-            
+
             this.isLockedButtons(this.mstUnitModel.IsLocked);
           }
         }, 500);
@@ -309,7 +315,45 @@ export class SetupUnitDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getDropdownList();
+    this.mstUserRights = {
+      Id: 0,
+      UserId: 0,
+      PageId: 0,
+      Page: "",
+      PageURL: "",
+      CanEdit: true,
+      CanSave: true,
+      CanLock: true,
+      CanUnLock: true,
+      CanPrint: true,
+      CanDelete: true
+    }
+
+    this.mstUserRightsService.getUserRightPerCurrentUser("UNIT DETAIL").subscribe(
+      data => {
+
+        setTimeout(() => {
+          if (data != null) {
+            this.mstUserRights.Id = data.Id;
+            this.mstUserRights.UserId = data.UserId;
+            this.mstUserRights.PageId = data.PageId;
+            this.mstUserRights.Page = data.Page;
+            this.mstUserRights.PageURL = data.PageURL;
+            this.mstUserRights.CanEdit = data.CanEdit;
+            this.mstUserRights.CanSave = data.CanSave;
+            this.mstUserRights.CanLock = data.CanLock;
+            this.mstUserRights.CanUnLock = data.CanUnLock;
+            this.mstUserRights.CanPrint = data.CanPrint;
+            this.mstUserRights.CanDelete = data.CanDelete;
+
+            this.getDropdownList();
+          } else {
+            this.isSpinnerShow = false;
+            this.isPageForbidden = true;
+          }
+        }, 500);
+      }
+    );
   }
 
 }

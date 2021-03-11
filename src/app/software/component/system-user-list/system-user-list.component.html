@@ -32,7 +32,7 @@
             <div fxFlex="100" style="padding: 5px;">
                 <mat-table [dataSource]="userDataSource" #userSort="matSort" matSort style="overflow-x: scroll;">
 
-                    <ng-container matColumnDef="ButtonEdit">
+                    <ng-container matColumnDef="ButtonEdit" *ngIf="mstUserRights.CanEdit == true">
                         <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                         <mat-cell fxFlex="100px" *matCellDef="let row">
                             <button mat-flat-button color="primary" (click)="buttonEditUser(row)">
