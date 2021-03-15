@@ -37,6 +37,7 @@
                             <mat-option *ngFor="let trnSoldUnitEquityScheduleObject of trnSoldUnitEquityScheduleModel"
                                 [value]="trnSoldUnitEquityScheduleObject.Id">
                                 {{trnSoldUnitEquityScheduleObject.PaymentDate}} -
+                                {{trnSoldUnitEquityScheduleObject.Remarks}}: 
                                 {{decimalPipe.transform(trnSoldUnitEquityScheduleObject.Amortization, "1.2-2")}}
                             </mat-option>
                         </mat-select>

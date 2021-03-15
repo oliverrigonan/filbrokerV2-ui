@@ -251,8 +251,6 @@ export class SetupUnitDetailComponent implements OnInit {
   }
 
   public computeAmount(): void {
-    console.log("wewew");
-
     let Price = this.mstUnitModel.Price;
 
     let MiscellaneousFeeRate = this.mstUnitModel.MiscellaneousFeeRate;

@@ -27,7 +27,7 @@
             Print
         </button>
         <button mat-flat-button color="warn" [disabled]="isSoldUnitCancelButtonDisabled" style="margin-right: 5px;"
-            (click)="buttonCancelSoldUnit()" >
+            (click)="buttonCancelSoldUnit()">
             Cancel
         </button>
         <!-- <button mat-flat-button color="warn" [disabled]="isSoldUnitTransferButtonDisabled" style="margin-right: 5px;"
@@ -215,7 +215,7 @@
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="50" style="padding: 5px;">
                         <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Price (TUP)</mat-label>
+                            <mat-label>Price (TSP)</mat-label>
                             <input matInput [(ngModel)]="soldUnitTSP" [ngModelOptions]="{standalone: true}"
                                 (keypress)="onKeyPressNumberOnly($event)"
                                 (focus)="onFocusNumberRemoveCommas('soldUnitTSP')"
@@ -233,6 +233,28 @@
                                 (blur)="onaBlurNumberAddCommas(soldUnitPriceDiscount, 'soldUnitPriceDiscount')"
                                 (keyup)="onKeyUpComputeAmount($event, 'soldUnitPriceDiscount')"
                                 style="text-align: right;" [disabled]="trnSoldUnitModel.IsLocked">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Misc. Fee</mat-label>
+                            <input matInput [(ngModel)]="soldUnitMiscellaneousFeeAmount"
+                                [ngModelOptions]="{standalone: true}" (keypress)="onKeyPressNumberOnly($event)"
+                                (focus)="onFocusNumberRemoveCommas('soldUnitMiscellaneousFeeAmount')"
+                                (blur)="onaBlurNumberAddCommas(soldUnitMiscellaneousFeeAmount, 'soldUnitMiscellaneousFeeAmount')"
+                                style="text-align: right;" disabled>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="50" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>VAT Amount</mat-label>
+                            <input matInput [(ngModel)]="soldUnitVATAmount" [ngModelOptions]="{standalone: true}"
+                                (keypress)="onKeyPressNumberOnly($event)"
+                                (focus)="onFocusNumberRemoveCommas('soldUnitVATAmount')"
+                                (blur)="onaBlurNumberAddCommas(soldUnitVATAmount, 'soldUnitVATAmount')"
+                                style="text-align: right;" disabled>
                         </mat-form-field>
                     </div>
                 </div>
@@ -416,6 +438,50 @@
                         <div fxLayout="row" fxLayout.xs="column">
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Reservation</mat-label>
+                                    <input matInput [(ngModel)]="soldUnitReservation"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitReservation')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitReservation, 'soldUnitReservation')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitReservation')"
+                                        style="text-align: right;">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Downpayment (%)</mat-label>
+                                    <input matInput [(ngModel)]="soldUnitDownpaymentPercent"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitDownpaymentPercent')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitDownpaymentPercent, 'soldUnitDownpaymentPercent')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitDownpaymentPercent')"
+                                        style="text-align: right;">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Downpayment</mat-label>
+                                    <input matInput [(ngModel)]="soldUnitDownpaymentValue"
+                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitDownpaymentValue')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitDownpaymentValue, 'soldUnitDownpaymentValue')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitDownpaymentValue')"
+                                        style="text-align: right;">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="25">
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Equity (%)</mat-label>
                                     <input matInput [(ngModel)]="soldUnitEquityPercent"
                                         [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
@@ -454,7 +520,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div fxLayout="row" fxLayout.xs="column">
+                        <!-- <div fxLayout="row" fxLayout.xs="column">
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Discounted Equity</mat-label>
@@ -466,21 +532,7 @@
                                         style="text-align: right;" disabled>
                                 </mat-form-field>
                             </div>
-                        </div>
-                        <div fxLayout="row" fxLayout.xs="column">
-                            <div fxFlex="100" style="padding: 3px;">
-                                <mat-form-field appearance="fill" style="width: 100%;">
-                                    <mat-label>Reservation</mat-label>
-                                    <input matInput [(ngModel)]="soldUnitReservation"
-                                        [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
-                                        (keypress)="onKeyPressNumberOnly($event)"
-                                        (focus)="onFocusNumberRemoveCommas('soldUnitReservation')"
-                                        (blur)="onaBlurNumberAddCommas(soldUnitReservation, 'soldUnitReservation')"
-                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitReservation')"
-                                        style="text-align: right;">
-                                </mat-form-field>
-                            </div>
-                        </div>
+                        </div> -->
                         <div fxLayout="row" fxLayout.xs="column">
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
@@ -595,8 +647,6 @@
                             </div>
                         </div>
                     </div>
-                    <div fxFlex="25">
-                    </div>
                 </div>
             </div>
             <mat-divider></mat-divider>
@@ -644,7 +694,7 @@
                         <mat-table [dataSource]="soldUnitEquityScheduleDataSource" #soldUnitEquityScheduleSort="matSort"
                             matSort style="overflow-x: scroll;">
 
-                            <ng-container matColumnDef="ButtonEdit" >
+                            <ng-container matColumnDef="ButtonEdit">
                                 <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header></mat-header-cell>
                                 <mat-cell fxFlex="100px" *matCellDef="let row">
                                     <button mat-flat-button color="primary"
@@ -659,6 +709,12 @@
                                 <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header> Date
                                 </mat-header-cell>
                                 <mat-cell fxFlex="100px" *matCellDef="let row"> {{row.PaymentDate}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Remarks">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Remarks
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Remarks}} </mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="Amortization">
@@ -708,12 +764,6 @@
                                 <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Check Bank
                                 </mat-header-cell>
                                 <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.CheckBank}} </mat-cell>
-                            </ng-container>
-
-                            <ng-container matColumnDef="Remarks">
-                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Remarks
-                                </mat-header-cell>
-                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Remarks}} </mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="Space">

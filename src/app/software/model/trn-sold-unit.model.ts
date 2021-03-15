@@ -14,10 +14,14 @@ export class TrnSoldUnitModel {
     BrokerCoordinator: string = "";
     ChecklistId: number = 0;
     Checklist: string = "";
+    MiscellaneousFeeAmount: number = 0;
+    VATAmount: number = 0;
     PriceDiscount: number = 0;
     Price: number = 0;
     TCP: number = 0;
     TSP: number = 0;
+    DownpaymentValue: number = 0;
+    DownpaymentPercent: number = 0;
     EquityValue: number = 0;
     EquityPercent: number = 0;
     EquitySpotPayment1: number = 0;

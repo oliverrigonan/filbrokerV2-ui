@@ -133,10 +133,16 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
 
   public isButtonAddSoldUnitRequirementDisabled: boolean = false;
 
+  public soldUnitMiscellaneousFeeAmount: string = "0.00";
+  public soldUnitVATAmount: string = "0.00";
+
   public soldUnitPrice: string = "0.00";
   public soldUnitTCP: string = "0.00";
   public soldUnitPriceDiscount: string = "0.00";
   public soldUnitTSP: string = "0.00";
+
+  public soldUnitDownpaymentValue: string = "0.00";
+  public soldUnitDownpaymentPercent: string = "0.00";
 
   public soldUnitEquityPercent: string = "0.00";
   public soldUnitEquityValue: string = "0.00";
@@ -174,13 +180,13 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   public soldUnitEquityScheduleDisplayedColumns: string[] = [
     'ButtonEdit',
     'PaymentDate',
+    'Remarks',
     'Amortization',
     'PaidAmount',
     'BalanceAmount',
     'CheckNumber',
     'CheckDate',
     'CheckBank',
-    'Remarks',
     'Space'
   ];
   public soldUnitEquityScheduleDataSource: MatTableDataSource<TrnSoldUnitEquityScheduleModel>;
@@ -213,7 +219,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   }
 
   public unitSelectionChange(event: any): void {
-    let price = this.mstUnitModel.filter(x => x.Id == this.trnSoldUnitModel.UnitId)[0].Price;
+    let price = this.mstUnitModel.filter(x => x.Id == this.trnSoldUnitModel.UnitId)[0].TSP;
 
     this.trnSoldUnitModel.Price = price;
     this.soldUnitPrice = this.decimalPipe.transform(price, "1.2-2");
@@ -224,7 +230,16 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     this.trnSoldUnitModel.TCP = price;
     this.soldUnitTCP = this.decimalPipe.transform(price, "1.2-2");
 
-    let TSP = this.trnSoldUnitModel.TSP;
+    let miscellaneousFeeAmount = this.mstUnitModel.filter(x => x.Id == this.trnSoldUnitModel.UnitId)[0].MiscellaneousFeeAmount;
+    let VATAmount = this.mstUnitModel.filter(x => x.Id == this.trnSoldUnitModel.UnitId)[0].VATAmount;
+
+    this.trnSoldUnitModel.MiscellaneousFeeAmount = miscellaneousFeeAmount;
+    this.soldUnitMiscellaneousFeeAmount = this.decimalPipe.transform(miscellaneousFeeAmount, "1.2-2");
+
+    this.trnSoldUnitModel.VATAmount = VATAmount;
+    this.soldUnitVATAmount = this.decimalPipe.transform(VATAmount, "1.2-2");
+
+    let TSP = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
     let equityPercent = this.trnSoldUnitModel.EquityPercent;
     let equityValue = TSP * (equityPercent / 100);
 
@@ -334,6 +349,13 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
             this.trnSoldUnitModel.ChecklistId = data.ChecklistId;
             this.trnSoldUnitModel.Checklist = data.Checklist;
 
+
+            this.trnSoldUnitModel.MiscellaneousFeeAmount = data.MiscellaneousFeeAmount;
+            this.soldUnitMiscellaneousFeeAmount = this.decimalPipe.transform(data.MiscellaneousFeeAmount, "1.2-2");
+
+            this.trnSoldUnitModel.VATAmount = data.VATAmount;
+            this.soldUnitVATAmount = this.decimalPipe.transform(data.VATAmount, "1.2-2");
+
             this.trnSoldUnitModel.Price = data.Price;
             this.soldUnitPrice = this.decimalPipe.transform(data.Price, "1.2-2");
 
@@ -345,6 +367,12 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
 
             this.trnSoldUnitModel.TSP = data.TSP;
             this.soldUnitTSP = this.decimalPipe.transform(data.TSP, "1.2-2");
+
+            this.trnSoldUnitModel.DownpaymentValue = data.DownpaymentValue;
+            this.soldUnitDownpaymentValue = this.decimalPipe.transform(data.DownpaymentValue, "1.2-2");
+
+            this.trnSoldUnitModel.DownpaymentPercent = data.DownpaymentPercent;
+            this.soldUnitDownpaymentPercent = this.decimalPipe.transform(data.DownpaymentPercent, "1.2-2");
 
             this.trnSoldUnitModel.EquityPercent = data.EquityPercent;
             this.soldUnitEquityPercent = this.decimalPipe.transform(data.EquityPercent, "1.2-2");
@@ -484,6 +512,12 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     if (field === "soldUnitTSP") {
       this.soldUnitTSP = this.soldUnitTSP.split(',').join("");
     }
+    if (field === "soldUnitDownpaymentPercent") {
+      this.soldUnitDownpaymentPercent = this.soldUnitDownpaymentPercent.split(',').join("");
+    }
+    if (field === "soldUnitDownpaymentValue") {
+      this.soldUnitDownpaymentValue = this.soldUnitDownpaymentValue.split(',').join("");
+    }
     if (field === "soldUnitEquityPercent") {
       this.soldUnitEquityPercent = this.soldUnitEquityPercent.split(',').join("");
     }
@@ -553,6 +587,14 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     if (field === "soldUnitTSP") {
       this.soldUnitTSP = this.decimalPipe.transform(numberValue, "1.2-2");
       this.trnSoldUnitModel.TSP = parseFloat(this.soldUnitTSP.split(',').join(""));
+    }
+    if (field === "soldUnitDownpaymentPercent") {
+      this.soldUnitDownpaymentPercent = this.decimalPipe.transform(numberValue, "1.2-2");
+      this.trnSoldUnitModel.DownpaymentPercent = parseFloat(this.soldUnitDownpaymentPercent.split(',').join(""));
+    }
+    if (field === "soldUnitDownpaymentValue") {
+      this.soldUnitDownpaymentValue = this.decimalPipe.transform(numberValue, "1.2-2");
+      this.trnSoldUnitModel.DownpaymentValue = parseFloat(this.soldUnitDownpaymentValue.split(',').join(""));
     }
     if (field === "soldUnitEquityPercent") {
       this.soldUnitEquityPercent = this.decimalPipe.transform(numberValue, "1.2-2");
@@ -639,6 +681,12 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     if (field === "soldUnitTSP") {
       this.trnSoldUnitModel.TSP = value;
     }
+    if (field === "soldUnitDownpaymentPercent") {
+      this.trnSoldUnitModel.DownpaymentPercent = value;
+    }
+    if (field === "soldUnitDownpaymentValue") {
+      this.trnSoldUnitModel.DownpaymentValue = value;
+    }
     if (field === "soldUnitEquityPercent") {
       this.trnSoldUnitModel.EquityPercent = value;
     }
@@ -691,8 +739,26 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
       this.trnSoldUnitModel.BalanceAmortization = value;
     }
 
+    if (field === "soldUnitDownpaymentPercent") {
+      let price = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
+      let downpaymentPercent = event.target.value;
+      let downpaymentValue = price * (downpaymentPercent / 100);
+
+      this.trnSoldUnitModel.DownpaymentValue = downpaymentValue;
+      this.soldUnitDownpaymentValue = this.decimalPipe.transform(downpaymentValue, "1.2-2");
+    } else {
+      if (field === "soldUnitDownpaymentValue") {
+        let price = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
+        let downpaymentValue = event.target.value;
+        let downpaymentPercent = (downpaymentValue / price) * 100;
+
+        this.trnSoldUnitModel.DownpaymentPercent = downpaymentPercent;
+        this.soldUnitDownpaymentPercent = this.decimalPipe.transform(downpaymentPercent, "1.2-2");
+      }
+    }
+
     if (field === "soldUnitEquityPercent") {
-      let price = this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.PriceDiscount;
+      let price = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
       let equityPercent = event.target.value;
       let equityValue = price * (equityPercent / 100);
 
@@ -700,7 +766,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
       this.soldUnitEquityValue = this.decimalPipe.transform(equityValue, "1.2-2");
     } else {
       if (field === "soldUnitEquityValue") {
-        let price = this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.PriceDiscount;
+        let price = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
         let equityValue = event.target.value;
         let equityPercent = (equityValue / price) * 100;
 
@@ -709,8 +775,9 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
       }
     }
 
+
     if (field === "soldUnitPriceDiscount") {
-      let price = this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.PriceDiscount;
+      let price = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
       let equityPercent = this.trnSoldUnitModel.EquityPercent;
       let equityValue = price * (equityPercent / 100);
 
@@ -729,8 +796,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     this.trnSoldUnitModel.DiscountedEquity = discountedEquity;
     this.soldUnitDiscountEquity = this.decimalPipe.transform(discountedEquity, "1.2-2");
 
-    let reservation = this.trnSoldUnitModel.Reservation;
-    let netEquity = discountedEquity - reservation;
+    let netEquity = discountedEquity;
 
     this.trnSoldUnitModel.NetEquity = netEquity;
     this.soldUnitNetEquity = this.decimalPipe.transform(netEquity, "1.2-2");
@@ -752,8 +818,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     this.trnSoldUnitModel.NetEquityAmortization = netEquityAmortization;
     this.soldUnitNetEquityAmortization = this.decimalPipe.transform(netEquityAmortization, "1.2-2");
 
-    let price = this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.PriceDiscount;
-    let balance = price - equityValue;
+    let price = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
+    let balance = price - this.trnSoldUnitModel.DownpaymentValue - equityValue;
 
     this.trnSoldUnitModel.Balance = balance;
     this.soldUnitBalance = this.decimalPipe.transform(balance, "1.2-2");
