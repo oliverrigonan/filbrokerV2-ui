@@ -33,11 +33,12 @@
                 <div fxFlex="100" style="padding: 5px;">
                     <mat-form-field appearance="fill" style="width: 100%;">
                         <mat-label>Equity Schedule</mat-label>
-                        <mat-select [(ngModel)]="trnCollectionPaymentModel.SoldUnitEquityScheduleId">
+                        <mat-select [(ngModel)]="trnCollectionPaymentModel.SoldUnitEquityScheduleId"
+                            (selectionChange)="soldUnitEquityScheduleSelectionChange($event)">
                             <mat-option *ngFor="let trnSoldUnitEquityScheduleObject of trnSoldUnitEquityScheduleModel"
                                 [value]="trnSoldUnitEquityScheduleObject.Id">
                                 {{trnSoldUnitEquityScheduleObject.PaymentDate}} -
-                                {{trnSoldUnitEquityScheduleObject.Remarks}}: 
+                                {{trnSoldUnitEquityScheduleObject.Remarks}}:
                                 {{decimalPipe.transform(trnSoldUnitEquityScheduleObject.Amortization, "1.2-2")}}
                             </mat-option>
                         </mat-select>

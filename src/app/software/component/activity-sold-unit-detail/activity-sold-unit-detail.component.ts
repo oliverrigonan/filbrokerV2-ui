@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, DatePipe } from '@angular/common';
 
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatPaginator } from '@angular/material/paginator';
@@ -74,6 +74,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     private confirmationAddChecklistDialog: MatDialog,
     private toastr: ToastrService,
     private decimalPipe: DecimalPipe,
+    private datePipe: DatePipe,
     private printPdfSoldUnitProposalDialog: MatDialog,
     private printPdfSoldUnitContractDialog: MatDialog,
     private activitySoldUnitCancelReasonDialog: MatDialog,
@@ -332,6 +333,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
             this.trnSoldUnitModel.Id = data.Id;
             this.trnSoldUnitModel.SoldUnitNumber = data.SoldUnitNumber;
             this.trnSoldUnitModel.SoldUnitDate = data.SoldUnitDate;
+            this.soldUnitDate = new Date(data.SoldUnitDate);
 
             this.trnSoldUnitModel.ProjectId = data.ProjectId;
             this.trnSoldUnitModel.Project = data.Project;
@@ -465,7 +467,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
   }
 
   public soldUnitDateDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
-    this.trnSoldUnitModel.SoldUnitDate = this.soldUnitDate.toString();
+    this.trnSoldUnitModel.SoldUnitDate = this.datePipe.transform(this.soldUnitDate, 'MM/dd/yyyy');
   }
 
   public disabledButtons(): void {

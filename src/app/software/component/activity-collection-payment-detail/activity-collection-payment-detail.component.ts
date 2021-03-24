@@ -125,6 +125,13 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
     this.trnCollectionPaymentModel.CheckDate = this.checkDate.toLocaleDateString();
   }
 
+  public soldUnitEquityScheduleSelectionChange(event: any): void {
+    let amount = this.trnSoldUnitEquityScheduleModel.filter(x => x.Id == this.trnCollectionPaymentModel.SoldUnitEquityScheduleId)[0].Amortization;
+
+    this.trnCollectionPaymentModel.Amount = amount;
+    this.collectionPaymentAmount = this.decimalPipe.transform(amount, "1.2-2");
+  }
+
   public buttonSaveClick() {
     this.isButtonSaveConfirmationDisabled = true;
 
