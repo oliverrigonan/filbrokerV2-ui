@@ -35,6 +35,8 @@ export class TrnSoldUnitEquityScheduleService {
               soldUnitEquityScheduleArray.push({
                 Id: results[i].Id,
                 SoldUnitId: results[i].SoldUnitId,
+                SoldUnitNumber: results[i].SoldUnitNumber,
+                SoldUnitCustomer: results[i].SoldUnitCustomer,
                 PaymentDate: results[i].PaymentDate,
                 Amortization: results[i].Amortization,
                 CheckNumber: results[i].CheckNumber,
@@ -65,6 +67,8 @@ export class TrnSoldUnitEquityScheduleService {
             soldUnitEquityScheduleModel = {
               Id: results["Id"],
               SoldUnitId: results["SoldUnitId"],
+              SoldUnitNumber: results["SoldUnitNumber"],
+              SoldUnitCustomer: results["SoldUnitCustomer"],
               PaymentDate: results["PaymentDate"],
               Amortization: results["Amortization"],
               CheckNumber: results["CheckNumber"],

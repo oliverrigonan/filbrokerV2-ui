@@ -781,4 +781,213 @@
             </div>
         </div>
     </mat-tab>
+    <mat-tab label="Collection Report for Capital Gains">
+        <div *ngIf="isSpinnerShowRepSummaryCapitalGains" style="padding: 100px 0px 50px 0px; text-align: center;">
+            <h4>Please wait...</h4>
+            <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+        </div>
+        <div [hidden]="!isContentShowRepSummaryCapitalGains">
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="capitalGainsFilter($event)" placeholder="Filter"
+                                #capitalGainsFilterData />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-table [dataSource]="capitalGainsDataSource" #capitalGainsSort="matSort" matSort
+                            style="overflow-x: scroll;">
+
+                            <ng-container matColumnDef="SoldUnitNumber">
+                                <mat-header-cell fxFlex="120px" *matHeaderCellDef mat-sort-header> Sold Unit No.
+                                </mat-header-cell>
+                                <mat-cell fxFlex="120px" *matCellDef="let row"> {{row.SoldUnitNumber}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="SoldUnitDate">
+                                <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header> Date
+                                </mat-header-cell>
+                                <mat-cell fxFlex="100px" *matCellDef="let row"> {{row.SoldUnitDate}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Customer">
+                                <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Customer
+                                </mat-header-cell>
+                                <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Customer}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Unit">
+                                <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Unit
+                                </mat-header-cell>
+                                <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Unit}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="TSP">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> TSP
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.Price, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="PricePayment">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Payment
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.PricePayment, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="LastPaymentDate">
+                                <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header> Last Payment
+                                </mat-header-cell>
+                                <mat-cell fxFlex="100px" *matCellDef="let row"> {{row.LastPaymentDate}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Ratio">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Ratio
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.PricePayment, "1.0-0") }} %
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Space">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="capitalGainsDisplayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: capitalGainsDisplayedColumns;"></mat-row>
+
+                        </mat-table>
+
+                        <mat-paginator #capitalGainsPaginator [pageSizeOptions]="[10, 50, 100, 200]"></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="PDC Monitoring Report">
+        <div *ngIf="isSpinnerShowRepSummaryPDCMonitoring" style="padding: 100px 0px 50px 0px; text-align: center;">
+            <h4>Please wait...</h4>
+            <mat-spinner style="margin:auto;display:block;"></mat-spinner>
+        </div>
+        <div [hidden]="!isContentShowRepSummaryPDCMonitoring">
+            <div class="software-container">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Equity Payment Schedule</mat-label>
+                            <input matInput (keyup)="soldUnitEquityScheduleFilter($event)" placeholder="Filter"
+                                #soldUnitEquityScheduleFilterData />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="100" style="padding: 5px;">
+                        <mat-table [dataSource]="soldUnitEquityScheduleDataSource" #soldUnitEquityScheduleSort="matSort"
+                            matSort style="overflow-x: scroll;">
+
+                            <ng-container matColumnDef="PaymentDate">
+                                <mat-header-cell fxFlex="100px" *matHeaderCellDef mat-sort-header> Date
+                                </mat-header-cell>
+                                <mat-cell fxFlex="100px" *matCellDef="let row"> {{row.PaymentDate}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="SoldUnitNumber">
+                                <mat-header-cell fxFlex="120px" *matHeaderCellDef mat-sort-header> Sold Unit No.
+                                </mat-header-cell>
+                                <mat-cell fxFlex="120px" *matCellDef="let row"> {{row.SoldUnitNumber}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="SoldUnitCustomer">
+                                <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Customer
+                                </mat-header-cell>
+                                <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.SoldUnitCustomer}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="CheckNumber">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Check Number
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.CheckNumber}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="CheckDate">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Check Date
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.CheckDate}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="CheckBank">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Check Bank
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.CheckBank}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Remarks">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Remarks
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.Remarks}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Amortization">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Amortization
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.Amortization, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="PaidAmount">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Paid
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.PaidAmount, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="BalanceAmount">
+                                <mat-header-cell fxFlex="150px" *matHeaderCellDef mat-sort-header> Balance
+                                </mat-header-cell>
+                                <mat-cell fxFlex="150px" *matCellDef="let row">
+                                    <div style="width: 100%; text-align: right; padding-right: 10px;">
+                                        {{ decimalPipe.transform(row.BalanceAmount, "1.2-2") }}
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Space">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="soldUnitEquityScheduleDisplayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: soldUnitEquityScheduleDisplayedColumns;"></mat-row>
+                        </mat-table>
+
+                        <mat-paginator #soldUnitEquitySchedulePaginator [pageSizeOptions]="[10, 50, 100, 200]">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
 </mat-tab-group>

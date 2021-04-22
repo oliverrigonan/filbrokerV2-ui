@@ -61,4 +61,6 @@ export class TrnSoldUnitModel {
     UpdatedDateTime: string = "";
     PriceBalance: number = 0;
     PricePayment: number = 0;
+    LastPaymentDate: string = "";
+    Ratio: number = 0;
 }

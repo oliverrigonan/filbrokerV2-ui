@@ -674,7 +674,7 @@
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="100" style="padding: 3px; text-align: right;">
                         <button mat-flat-button color="primary" (click)="buttonAddSoldUnitEquitySchedule()"
-                            [disabled]="trnSoldUnitModel.IsLocked">
+                            [disabled]="!trnSoldUnitModel.IsLocked">
                             Create
                         </button>
                     </div>
@@ -699,7 +699,7 @@
                                 <mat-cell fxFlex="100px" *matCellDef="let row">
                                     <button mat-flat-button color="primary"
                                         (click)="buttonEditSoldUnitEquitySchedule(row)"
-                                        [disabled]="trnSoldUnitModel.IsLocked" *ngIf="mstUserRights.CanEdit == true">
+                                        [disabled]="!trnSoldUnitModel.IsLocked" *ngIf="mstUserRights.CanEdit == true">
                                         Edit
                                     </button>
                                 </mat-cell>

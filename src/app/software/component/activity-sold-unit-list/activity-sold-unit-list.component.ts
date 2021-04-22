@@ -200,7 +200,9 @@ export class ActivitySoldUnitListComponent implements OnInit {
       UpdatedBy: 0,
       UpdatedDateTime: "",
       PriceBalance: 0,
-      PricePayment: 0
+      PricePayment: 0,
+      LastPaymentDate: "",
+      Ratio: 0
     };
 
     this.trnSoldUnitService.addSoldUnit(trnSoldUnitModel).subscribe(

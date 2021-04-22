@@ -10,6 +10,7 @@ import { TrnCommissionRequestModel } from './../../model/trn-commission-request.
 import { MstCustomerModel } from './../../model/mst-customer.model';
 import { MstBrokerModel } from './../../model/mst-broker.model';
 import { TrnCollectionPaymentModel } from '../../model/trn-collection-payment.model';
+import { TrnSoldUnitEquityScheduleModel } from '../../model/trn-sold-unit-equity-schedule.model';
 
 @Injectable({
   providedIn: 'root'
@@ -101,7 +102,9 @@ export class RepSummaryService {
                 UpdatedBy: results[i].UpdatedBy,
                 UpdatedDateTime: results[i].UpdatedDateTime,
                 PriceBalance: results[i].PriceBalance,
-                PricePayment: results[i].PricePayment
+                PricePayment: results[i].PricePayment,
+                LastPaymentDate: "",
+                Ratio: 0
               });
             }
           }
@@ -185,7 +188,9 @@ export class RepSummaryService {
                 UpdatedBy: results[i].UpdatedBy,
                 UpdatedDateTime: results[i].UpdatedDateTime,
                 PriceBalance: results[i].PriceBalance,
-                PricePayment: results[i].PricePayment
+                PricePayment: results[i].PricePayment,
+                LastPaymentDate: "",
+                Ratio: 0
               });
             }
           }
@@ -196,7 +201,6 @@ export class RepSummaryService {
       );
     });
   }
-
 
   public getRepSummarySoldUnitRequirementListByDateRange(dateStart: string, dateEnd: string): Observable<TrnSoldUnitRequirementModel[]> {
     return new Observable<TrnSoldUnitRequirementModel[]>((observer) => {
@@ -494,6 +498,126 @@ export class RepSummaryService {
           }
 
           observer.next(houseModelArray);
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  public getTrnSoldUnitForCapitalGains(dateStart: string, dateEnd: string): Observable<TrnSoldUnitModel[]> {
+    return new Observable<TrnSoldUnitModel[]>((observer) => {
+      let soldUnitArray: TrnSoldUnitModel[] = [];
+
+      this.httpClient.get(this.defaultAPIURLHost + "/api/RepSummary/ListCapitalGains/" + dateStart + "/" + dateEnd, this.options).subscribe(
+        response => {
+          let results = response;
+
+          if (results["length"] > 0) {
+            for (let i = 0; i <= results["length"] - 1; i++) {
+              soldUnitArray.push({
+                Id: results[i].Id,
+                SoldUnitNumber: results[i].SoldUnitNumber,
+                SoldUnitDate: results[i].SoldUnitDate,
+                ProjectId: results[i].ProjectId,
+                Project: results[i].Project,
+                UnitId: results[i].UnitId,
+                Unit: results[i].Unit,
+                CustomerId: results[i].CustomerId,
+                Customer: results[i].Customer,
+                BrokerId: results[i].BrokerId,
+                Broker: results[i].Broker,
+                Agent: results[i].Agent,
+                BrokerCoordinator: results[i].BrokerCoordinator,
+                ChecklistId: results[i].ChecklistId,
+                Checklist: results[i].Checklist,
+                MiscellaneousFeeAmount: results[i].MiscellaneousFeeAmount,
+                VATAmount: results[i].VATAmount,
+                PriceDiscount: results[i].PriceDiscount,
+                Price: results[i].Price,
+                TCP: results[i].TCP,
+                TSP: results[i].TSP,
+                DownpaymentValue: results[i].DownpaymentValue,
+                DownpaymentPercent: results[i].DownpaymentPercent,
+                EquityValue: results[i].EquityValue,
+                EquityPercent: results[i].EquityPercent,
+                EquitySpotPayment1: results[i].EquitySpotPayment1,
+                EquitySpotPayment2: results[i].EquitySpotPayment2,
+                EquitySpotPayment3: results[i].EquitySpotPayment3,
+                EquitySpotPayment1Pos: results[i].EquitySpotPayment1Pos,
+                EquitySpotPayment2Pos: results[i].EquitySpotPayment2Pos,
+                EquitySpotPayment3Pos: results[i].EquitySpotPayment3Pos,
+                Discount: results[i].Discount,
+                DiscountedEquity: results[i].DiscountedEquity,
+                Reservation: results[i].Reservation,
+                NetEquity: results[i].NetEquity,
+                NetEquityBalance: results[i].NetEquityBalance,
+                NetEquityInterest: results[i].NetEquityInterest,
+                NetEquityNoOfPayments: results[i].NetEquityNoOfPayments,
+                NetEquityAmortization: results[i].NetEquityAmortization,
+                Balance: results[i].Balance,
+                BalanceInterest: results[i].BalanceInterest,
+                BalanceNoOfPayments: results[i].BalanceNoOfPayments,
+                BalanceAmortization: results[i].BalanceAmortization,
+                TotalInvestment: results[i].TotalInvestment,
+                PaymentOptions: results[i].PaymentOptions,
+                Financing: results[i].Financing,
+                Remarks: results[i].Remarks,
+                FinancingType: results[i].FinancingType,
+                PreparedBy: results[i].PreparedBy,
+                PreparedByUser: results[i].PreparedByUser,
+                CheckedBy: results[i].CheckedBy,
+                CheckedByUser: results[i].CheckedByUser,
+                ApprovedBy: results[i].ApprovedBy,
+                ApprovedByUser: results[i].ApprovedByUser,
+                Status: results[i].Status,
+                IsLocked: results[i].IsLocked,
+                CreatedBy: results[i].CreatedBy,
+                CreatedDateTime: results[i].CreatedDateTime,
+                UpdatedBy: results[i].UpdatedBy,
+                UpdatedDateTime: results[i].UpdatedDateTime,
+                PriceBalance: results[i].PriceBalance,
+                PricePayment: results[i].PricePayment,
+                LastPaymentDate: results[i].LastPaymentDate,
+                Ratio: results[i].Ratio
+              });
+            }
+          }
+
+          observer.next(soldUnitArray);
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  public getTrnSoldUnitPDCMonitoring(dateStart: string, dateEnd: string): Observable<TrnSoldUnitEquityScheduleModel[]> {
+    return new Observable<TrnSoldUnitEquityScheduleModel[]>((observer) => {
+      let soldUnitEquityScheduleArray: TrnSoldUnitEquityScheduleModel[] = [];
+
+      this.httpClient.get(this.defaultAPIURLHost + "/api/RepSummary/ListPDCMonitoring/" + dateStart + "/" + dateEnd, this.options).subscribe(
+        response => {
+          let results = response;
+
+          if (results["length"] > 0) {
+            for (let i = 0; i <= results["length"] - 1; i++) {
+              soldUnitEquityScheduleArray.push({
+                Id: results[i].Id,
+                SoldUnitId: results[i].SoldUnitId,
+                SoldUnitNumber: results[i].SoldUnitNumber,
+                SoldUnitCustomer: results[i].SoldUnitCustomer,
+                PaymentDate: results[i].PaymentDate,
+                Amortization: results[i].Amortization,
+                CheckNumber: results[i].CheckNumber,
+                CheckDate: results[i].CheckDate,
+                CheckBank: results[i].CheckBank,
+                Remarks: results[i].Remarks,
+                PaidAmount: results[i].PaidAmount,
+                BalanceAmount: results[i].BalanceAmount
+              });
+            }
+          }
+
+          observer.next(soldUnitEquityScheduleArray);
           observer.complete();
         }
       );

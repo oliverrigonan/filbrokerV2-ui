@@ -1247,6 +1247,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
       let trnSoldUnitEquityScheduleModel: TrnSoldUnitEquityScheduleModel = {
         Id: id,
         SoldUnitId: this.trnSoldUnitModel.Id,
+        SoldUnitNumber: "",
+        SoldUnitCustomer: "",
         PaymentDate: currentData.PaymentDate,
         Amortization: currentData.Amortization,
         CheckNumber: currentData.CheckNumber,

@@ -94,7 +94,9 @@ export class TrnSoldUnitService {
                 UpdatedBy: results[i].UpdatedBy,
                 UpdatedDateTime: results[i].UpdatedDateTime,
                 PriceBalance: results[i].PriceBalance,
-                PricePayment: results[i].PricePayment
+                PricePayment: results[i].PricePayment,
+                LastPaymentDate: "",
+                Ratio: 0
               });
             }
           }
@@ -178,7 +180,9 @@ export class TrnSoldUnitService {
                 UpdatedBy: results[i].UpdatedBy,
                 UpdatedDateTime: results[i].UpdatedDateTime,
                 PriceBalance: results[i].PriceBalance,
-                PricePayment: results[i].PricePayment
+                PricePayment: results[i].PricePayment,
+                LastPaymentDate: "",
+                Ratio: 0
               });
             }
           }
@@ -262,7 +266,9 @@ export class TrnSoldUnitService {
                 UpdatedBy: results[i].UpdatedBy,
                 UpdatedDateTime: results[i].UpdatedDateTime,
                 PriceBalance: results[i].PriceBalance,
-                PricePayment: results[i].PricePayment
+                PricePayment: results[i].PricePayment,
+                LastPaymentDate: "",
+                Ratio: 0
               });
             }
           }
@@ -346,7 +352,9 @@ export class TrnSoldUnitService {
                 UpdatedBy: results[i].UpdatedBy,
                 UpdatedDateTime: results[i].UpdatedDateTime,
                 PriceBalance: results[i].PriceBalance,
-                PricePayment: results[i].PricePayment
+                PricePayment: results[i].PricePayment,
+                LastPaymentDate: "",
+                Ratio: 0
               });
             }
           }
@@ -429,7 +437,9 @@ export class TrnSoldUnitService {
               UpdatedBy: results["UpdatedBy"],
               UpdatedDateTime: results["UpdatedDateTime"],
               PriceBalance: results["PriceBalance"],
-              PricePayment: results["PricePayment"]
+              PricePayment: results["PricePayment"],
+              LastPaymentDate: "",
+              Ratio: 0
             }
           }
 

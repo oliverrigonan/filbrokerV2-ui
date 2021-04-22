@@ -20,6 +20,7 @@ import { TrnCommissionRequestModel } from './../../model/trn-commission-request.
 import { MstCustomerModel } from './../../model/mst-customer.model';
 import { MstBrokerModel } from './../../model/mst-broker.model';
 import { TrnCollectionPaymentModel } from './../../model/trn-collection-payment.model';
+import { TrnSoldUnitEquityScheduleModel } from '../../model/trn-sold-unit-equity-schedule.model';
 
 import { RepSummaryService } from './../../service/rep-summary/rep-summary.service';
 
@@ -209,6 +210,50 @@ export class ReportsComponent implements OnInit {
 
   @ViewChild('collectionReportPaginator') public collectionReportPaginator: MatPaginator;
   @ViewChild('collectionReportSort') public collectionReportSort: MatSort;
+
+  public isSpinnerShowRepSummaryCapitalGains: boolean = true;
+  public isContentShowRepSummaryCapitalGains: boolean = false;
+
+  public capitalGainsDisplayedColumns: string[] = [
+    'SoldUnitNumber',
+    'SoldUnitDate',
+    'Customer',
+    'Unit',
+    'TSP',
+    'PricePayment',
+    'LastPaymentDate',
+    'Ratio',
+    'Space'
+  ];
+
+  public capitalGainsDataSource: MatTableDataSource<TrnSoldUnitModel>;
+  public capitalGainsData: TrnSoldUnitModel[] = []
+
+  @ViewChild('capitalGainsPaginator') public capitalGainsPaginator: MatPaginator;
+  @ViewChild('capitalGainsSort') public capitalGainsSort: MatSort;
+
+  public isSpinnerShowRepSummaryPDCMonitoring: boolean = true;
+  public isContentShowRepSummaryPDCMonitoring: boolean = false;
+
+  public soldUnitEquityScheduleDisplayedColumns: string[] = [
+    'PaymentDate',
+    'SoldUnitNumber',
+    'SoldUnitCustomer',
+    'CheckNumber',
+    'CheckDate',
+    'CheckBank',
+    'Remarks',
+    'Amortization',
+    'PaidAmount',
+    'BalanceAmount',
+    'Space'
+  ];
+
+  public soldUnitEquityScheduleDataSource: MatTableDataSource<TrnSoldUnitEquityScheduleModel>;
+  public soldUnitEquityScheduleData: TrnSoldUnitEquityScheduleModel[] = []
+
+  @ViewChild('soldUnitEquitySchedulePaginator') public soldUnitEquitySchedulePaginator: MatPaginator;
+  @ViewChild('soldUnitEquityScheduleSort') public soldUnitEquityScheduleSort: MatSort;
 
   public selectedTabIndex: number = 0;
   public isAccountReceivable: boolean = false;
@@ -419,6 +464,8 @@ export class ReportsComponent implements OnInit {
     this.getRepSummaryCustomerListByDateRange();
     this.getRepSummaryBrokerListByDateRange();
     this.getRepCollectionReportListByDateRange();
+    this.getRepSummaryCapitalGainsListByDateRange();
+    this.getSoldUnitEquityScheduleData();
   }
 
   public buttonExport(): void {
@@ -694,6 +741,82 @@ export class ReportsComponent implements OnInit {
 
         break;
       }
+      case 8: {
+        let data: any[] = [
+          {
+            SoldUnitNumber: "Sold Unit Number",
+            SoldUnitDate: "Sold Unit Date",
+            Customer: "Customer",
+            Unit: "Unit",
+            TSP: "TSP",
+            PricePayment: "Payment",
+            LastPaymentDate: "LastPaymentDate",
+            Ratio: "Ratio",
+          }
+        ];
+
+        if (this.capitalGainsData.length > 0) {
+          for (let i = 0; i < this.capitalGainsData.length; i++) {
+            data.push({
+              SoldUnitNumber: this.capitalGainsData[i].SoldUnitNumber,
+              SoldUnitDate: this.capitalGainsData[i].SoldUnitDate,
+              Customer: this.capitalGainsData[i].Customer,
+              Unit: this.capitalGainsData[i].Unit,
+              TSP: this.capitalGainsData[i].Price,
+              PricePayment: this.capitalGainsData[i].PricePayment,
+              LastPaymentDate: this.capitalGainsData[i].LastPaymentDate,
+              Ratio: this.capitalGainsData[i].Ratio
+            });
+          }
+        }
+
+        let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+        let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+        new Angular5Csv(data, 'Collection Report for Capital Gains from ' + startDateFilterValue + ' to ' + endDateFilterValue);
+
+        break;
+      }
+      case 9: {
+        let data: any[] = [
+          {
+            PaymentDate: "Payment Date",
+            SoldUnitNumber: "Sold Unit Number",
+            SoldUnitCustomer: "Customer",
+            CheckNumber: "Check Number",
+            CheckDate: "Check Date",
+            CheckBank: "Check Bank",
+            Remarks: "Remarks",
+            Amortization: "Amortization",
+            PaidAmount: "Paid Amount",
+            BalanceAmount: "Balance Amount",
+          }
+        ];
+
+        if (this.soldUnitEquityScheduleData.length > 0) {
+          for (let i = 0; i < this.soldUnitEquityScheduleData.length; i++) {
+            data.push({
+              PaymentDate: this.soldUnitEquityScheduleData[i].PaymentDate,
+              SoldUnitNumber: this.soldUnitEquityScheduleData[i].SoldUnitNumber,
+              SoldUnitCustomer: this.soldUnitEquityScheduleData[i].SoldUnitCustomer,
+              CheckNumber: this.soldUnitEquityScheduleData[i].CheckNumber,
+              CheckDate: this.soldUnitEquityScheduleData[i].CheckDate,
+              CheckBank: this.soldUnitEquityScheduleData[i].CheckBank,
+              Remarks: this.soldUnitEquityScheduleData[i].Remarks,
+              Amortization: this.soldUnitEquityScheduleData[i].Amortization,
+              PaidAmount: this.soldUnitEquityScheduleData[i].PaidAmount,
+              BalanceAmount: this.soldUnitEquityScheduleData[i].BalanceAmount,
+            });
+          }
+        }
+
+        let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+        let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+        new Angular5Csv(data, 'PDC Monitoring Report from ' + startDateFilterValue + ' to ' + endDateFilterValue);
+
+        break;
+      }
       default: {
         break;
       }
@@ -777,6 +900,72 @@ export class ReportsComponent implements OnInit {
     this.getRepSummaryAccountsReceivableListByDateAsOf();
   }
 
+  public getRepSummaryCapitalGainsListByDateRange(): void {
+    this.capitalGainsData = [];
+    this.capitalGainsDataSource = new MatTableDataSource(this.capitalGainsData);
+    this.capitalGainsDataSource.paginator = this.capitalGainsPaginator;
+    this.capitalGainsDataSource.sort = this.capitalGainsSort;
+
+    let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+    let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+    this.repSummaryService.getTrnSoldUnitForCapitalGains(startDateFilterValue, endDateFilterValue).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.capitalGainsData = data;
+          this.capitalGainsDataSource = new MatTableDataSource(this.capitalGainsData);
+          this.capitalGainsDataSource.paginator = this.capitalGainsPaginator;
+          this.capitalGainsDataSource.sort = this.capitalGainsSort;
+        }
+
+        this.isSpinnerShowRepSummaryCapitalGains = false;
+        this.isContentShowRepSummaryCapitalGains = true;
+      }
+    );
+  }
+
+  public capitalGainsFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.capitalGainsDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.capitalGainsDataSource.paginator) {
+      this.capitalGainsDataSource.paginator.firstPage();
+    }
+  }
+
+  public getSoldUnitEquityScheduleData(): void {
+    this.soldUnitEquityScheduleData = [];
+    this.soldUnitEquityScheduleDataSource = new MatTableDataSource(this.soldUnitEquityScheduleData);
+    this.soldUnitEquityScheduleDataSource.paginator = this.soldUnitEquitySchedulePaginator;
+    this.soldUnitEquityScheduleDataSource.sort = this.soldUnitEquityScheduleSort;
+
+    let startDateFilterValue: string = new Date(this.startDateFilterFormControl.value).toLocaleDateString("fr-CA");
+    let endDateFilterValue: string = new Date(this.endDateFilterFormControl.value).toLocaleDateString("fr-CA");
+
+    this.repSummaryService.getTrnSoldUnitPDCMonitoring(startDateFilterValue, endDateFilterValue).subscribe(
+      data => {
+        if (data.length > 0) {
+          this.soldUnitEquityScheduleData = data;
+          this.soldUnitEquityScheduleDataSource = new MatTableDataSource(this.soldUnitEquityScheduleData);
+          this.soldUnitEquityScheduleDataSource.paginator = this.soldUnitEquitySchedulePaginator;
+          this.soldUnitEquityScheduleDataSource.sort = this.soldUnitEquityScheduleSort;
+        }
+
+        this.isSpinnerShowRepSummaryPDCMonitoring = false;
+        this.isContentShowRepSummaryPDCMonitoring = true;
+      }
+    );
+  }
+
+  public soldUnitEquityScheduleFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.soldUnitEquityScheduleDataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.soldUnitEquityScheduleDataSource.paginator) {
+      this.soldUnitEquityScheduleDataSource.paginator.firstPage();
+    }
+  }
+
   ngOnInit(): void {
     this.getRepSummarySoldUnitListByDateRange();
     this.getRepSummarySoldUnitRequirementListByDateRange();
@@ -786,5 +975,7 @@ export class ReportsComponent implements OnInit {
     this.getRepSummaryBrokerListByDateRange();
     this.getRepSummaryAccountsReceivableListByDateAsOf();
     this.getRepCollectionReportListByDateRange();
+    this.getRepSummaryCapitalGainsListByDateRange();
+    this.getSoldUnitEquityScheduleData();
   }
 }
