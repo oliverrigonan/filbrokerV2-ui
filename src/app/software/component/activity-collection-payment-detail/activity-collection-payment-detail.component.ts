@@ -56,14 +56,35 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
     this.trnSoldUnitService.getSoldUnitListByCustomer(this.customerId).subscribe(
       data => {
         this.trnSoldUnitModel = data;
-        this.getDropdownList();
+
+        if (this.trnSoldUnitModel.length > 0) {
+          this.trnCollectionPaymentModel.SoldUnitId = this.trnSoldUnitModel[0].Id;
+        }
+
+        this.getSoldUnitEquityList();
       }
     );
   }
 
   public soldUnitChange(): void {
-    this.getSoldUnitEquityList();
-    this.unitCode = this.trnSoldUnitModel.filter(d => d.Id == this.trnCollectionPaymentModel.SoldUnitId)[0].Unit;
+    this.trnSoldUnitEquityScheduleService.getTrnSoldUnitEquitySchedule(this.trnCollectionPaymentModel.SoldUnitId).subscribe(
+      data => {
+        this.trnSoldUnitEquityScheduleModel = data;
+        this.unitCode = this.trnSoldUnitModel.filter(d => d.Id == this.trnCollectionPaymentModel.SoldUnitId)[0].Unit;
+
+        if (this.trnSoldUnitEquityScheduleModel.length > 0) {
+          this.trnCollectionPaymentModel.SoldUnitEquityScheduleId = this.trnSoldUnitEquityScheduleModel[0].Id;
+
+          let amount = this.trnSoldUnitEquityScheduleModel[0].Amortization;
+          this.trnCollectionPaymentModel.Amount = amount;
+          this.collectionPaymentAmount = this.decimalPipe.transform(amount, "1.2-2");
+        } else {
+          this.trnCollectionPaymentModel.SoldUnitEquityScheduleId = 0;
+          this.trnCollectionPaymentModel.Amount = 0;
+          this.collectionPaymentAmount = this.decimalPipe.transform(0, "1.2-2");
+        }
+      }
+    );
   }
 
   public getSoldUnitEquityList(): void {
@@ -71,18 +92,41 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
       data => {
         this.trnSoldUnitEquityScheduleModel = data;
 
+        if (this.trnSoldUnitEquityScheduleModel.length > 0) {
+          this.trnCollectionPaymentModel.SoldUnitEquityScheduleId = this.trnSoldUnitEquityScheduleModel[0].Id;
+
+          let amount = this.trnSoldUnitEquityScheduleModel[0].Amortization;
+          this.trnCollectionPaymentModel.Amount = amount;
+          this.collectionPaymentAmount = this.decimalPipe.transform(amount, "1.2-2");
+        } else {
+          this.trnCollectionPaymentModel.SoldUnitEquityScheduleId = 0;
+          this.trnCollectionPaymentModel.Amount = 0;
+          this.collectionPaymentAmount = this.decimalPipe.transform(0, "1.2-2");
+        }
+
         this.getDropdownList();
       }
     );
   }
+
+  public soldUnitEquityScheduleSelectionChange(event: any): void {
+    let amount = this.trnSoldUnitEquityScheduleModel.filter(x => x.Id == this.trnCollectionPaymentModel.SoldUnitEquityScheduleId)[0].Amortization;
+
+    this.trnCollectionPaymentModel.Amount = amount;
+    this.collectionPaymentAmount = this.decimalPipe.transform(amount, "1.2-2");
+  }
+
   public getDropdownList(): void {
     this.sysDropdownService.getDropdownList("PAY TYPE").subscribe(
       data => {
         this.sysDropdownModel = data;
-
         this.getCollectionPaymentDetail();
       }
     );
+  }
+
+  public checkDateDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
+    this.trnCollectionPaymentModel.CheckDate = this.checkDate.toLocaleDateString();
   }
 
   public getCollectionPaymentDetail() {
@@ -95,7 +139,6 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
             this.trnCollectionPaymentModel.CollectionId = data.CollectionId;
             this.trnCollectionPaymentModel.SoldUnitId = data.SoldUnitId;
             this.trnCollectionPaymentModel.SoldUnit = data.SoldUnit;
-            this.getSoldUnitEquityList();
             this.unitCode = this.trnSoldUnitModel.filter(d => d.Id == this.trnCollectionPaymentModel.SoldUnitId)[0].Unit;
             this.trnCollectionPaymentModel.SoldUnitEquityScheduleId = data.SoldUnitEquityScheduleId;
             this.trnCollectionPaymentModel.SoldUnitEquitySchedule = data.SoldUnitEquitySchedule;
@@ -119,17 +162,6 @@ export class ActivityCollectionPaymentDetailComponent implements OnInit {
 
       }
     );
-  }
-
-  public checkDateDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
-    this.trnCollectionPaymentModel.CheckDate = this.checkDate.toLocaleDateString();
-  }
-
-  public soldUnitEquityScheduleSelectionChange(event: any): void {
-    let amount = this.trnSoldUnitEquityScheduleModel.filter(x => x.Id == this.trnCollectionPaymentModel.SoldUnitEquityScheduleId)[0].Amortization;
-
-    this.trnCollectionPaymentModel.Amount = amount;
-    this.collectionPaymentAmount = this.decimalPipe.transform(amount, "1.2-2");
   }
 
   public buttonSaveClick() {

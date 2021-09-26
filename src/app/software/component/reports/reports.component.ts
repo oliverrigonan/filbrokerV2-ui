@@ -143,6 +143,8 @@ export class ReportsComponent implements OnInit {
     'Address',
     'EmailAddress',
     'TelephoneNumber',
+    'Citizen',
+    'Position',
     'Space'
   ];
 
@@ -620,7 +622,9 @@ export class ReportsComponent implements OnInit {
             Gender: "Gender",
             Address: "Address",
             EmailAddress: "Email Address",
-            TelephoneNumber: "Telephone Number"
+            TelephoneNumber: "Telephone Number",
+            Citizen: "Nationality",
+            Position: "Occupation"
           }
         ];
 
@@ -632,7 +636,9 @@ export class ReportsComponent implements OnInit {
               Gender: this.customerData[i].Gender,
               Address: this.customerData[i].Address,
               EmailAddress: this.customerData[i].EmailAddress,
-              TelephoneNumber: this.customerData[i].TelephoneNumber
+              TelephoneNumber: this.customerData[i].TelephoneNumber,
+              Citizen: this.customerData[i].Citizen,
+              Position: this.customerData[i].Position
             });
           }
         }

@@ -47,6 +47,7 @@ import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmati
 
 import { MstUserRights } from './../../model/mst-user-rights.model';
 import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
 
 
@@ -1274,6 +1275,42 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
         }
       });
     }
+  }
+
+  public buttonExportSoldUnitEquitySchedule(): void {
+    let data: any[] = [
+      {
+        SoldUnitNumber: "Sold Unit Number",
+        SoldUnitCustomer: "Customer",
+        PaymentDate: "Payment Date",
+        Remarks: "Remarks",
+        Amortization: "Amortization",
+        PaidAmount: "Paid Amount",
+        BalanceAmount: "Balance Amount",
+        CheckNumber: "Check Number",
+        CheckDate: "Check Date",
+        CheckBank: "Check Bank"
+      }
+    ];
+
+    if (this.soldUnitEquityScheduleData.length > 0) {
+      for (let i = 0; i < this.soldUnitEquityScheduleData.length; i++) {
+        data.push({
+          SoldUnitNumber: this.trnSoldUnitModel.SoldUnitNumber,
+          SoldUnitCustomer: this.trnSoldUnitModel.Customer,
+          PaymentDate: this.soldUnitEquityScheduleData[i].PaymentDate,
+          Remarks: this.soldUnitEquityScheduleData[i].Remarks,
+          Amortization: this.soldUnitEquityScheduleData[i].Amortization,
+          PaidAmount: this.soldUnitEquityScheduleData[i].PaidAmount,
+          BalanceAmount: this.soldUnitEquityScheduleData[i].BalanceAmount,
+          CheckNumber: this.soldUnitEquityScheduleData[i].CheckNumber,
+          CheckDate: this.soldUnitEquityScheduleData[i].CheckDate,
+          CheckBank: this.soldUnitEquityScheduleData[i].CheckBank
+        });
+      }
+    }
+
+    new Angular5Csv(data, 'PDC Report');
   }
 
   ngOnInit(): void {

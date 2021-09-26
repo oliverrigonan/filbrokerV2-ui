@@ -410,7 +410,7 @@
 
             </div>
         </mat-tab>
-        <mat-tab label="Total Investments">
+        <mat-tab label="Total Investments" *ngIf="false">
             <div class="software-container">
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="100" style="padding: 3px; text-align: right;">
@@ -649,7 +649,7 @@
                     </div>
                 </div>
             </div>
-            <mat-divider></mat-divider>
+            <!-- <mat-divider></mat-divider>
             <div class="software-container">
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="100" style="padding: 3px; text-align: right;">
@@ -668,11 +668,15 @@
                         </mat-form-field>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <mat-divider></mat-divider>
             <div class="software-container">
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="100" style="padding: 3px; text-align: right;">
+                        <button mat-flat-button color="primary" (click)="buttonExportSoldUnitEquitySchedule()"
+                            [disabled]="!trnSoldUnitModel.IsLocked" style="margin-right: 3px;">
+                            Export
+                        </button>
                         <button mat-flat-button color="primary" (click)="buttonAddSoldUnitEquitySchedule()"
                             [disabled]="!trnSoldUnitModel.IsLocked">
                             Create
@@ -852,7 +856,7 @@
                     </div>
                 </div>
             </div>
-            <mat-divider></mat-divider>
+            <!-- <mat-divider></mat-divider>
             <div class="software-container">
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="100" style="padding: 3px; text-align: right;">
@@ -871,7 +875,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </mat-tab>
         <mat-tab label="Co-Owner">
             <div class="software-container">

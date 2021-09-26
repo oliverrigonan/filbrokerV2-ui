@@ -517,6 +517,18 @@
                                 <mat-cell fxFlex="150px" *matCellDef="let row"> {{row.TelephoneNumber}} </mat-cell>
                             </ng-container>
 
+                            <ng-container matColumnDef="Citizen">
+                                <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Nationality
+                                </mat-header-cell>
+                                <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Citizen}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Position">
+                                <mat-header-cell fxFlex="200px" *matHeaderCellDef mat-sort-header> Occupation
+                                </mat-header-cell>
+                                <mat-cell fxFlex="200px" *matCellDef="let row"> {{row.Position}} </mat-cell>
+                            </ng-container>
+
                             <ng-container matColumnDef="Space">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
                                 <mat-cell *matCellDef="let row">
