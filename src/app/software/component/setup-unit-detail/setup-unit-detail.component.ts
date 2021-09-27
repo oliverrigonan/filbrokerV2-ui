@@ -57,6 +57,7 @@ export class SetupUnitDetailComponent implements OnInit {
 
   public unitPrice: string = "0.00";
   public unitMiscellaneousFeeAmount: string = "0.00";
+  public unitVATRate: string = "0.00";
   public unitVATAmount: string = "0.00";
   public unitTSP: string = "0.00";
 
@@ -121,6 +122,8 @@ export class SetupUnitDetailComponent implements OnInit {
             this.unitMiscellaneousFeeAmount = this.decimalPipe.transform(data.MiscellaneousFeeAmount, "1.2-2");
 
             this.mstUnitModel.VATRate = data.VATRate;
+            this.unitVATRate = this.decimalPipe.transform(data.VATRate, "1.2-2");
+
             this.mstUnitModel.VATAmount = data.VATAmount;
             this.unitVATAmount = this.decimalPipe.transform(data.VATAmount, "1.2-2");
 
@@ -223,6 +226,9 @@ export class SetupUnitDetailComponent implements OnInit {
     if (field === "unitPrice") {
       this.unitPrice = this.unitPrice.split(',').join("");
     }
+    if (field === "unitVATRate") {
+      this.unitVATRate = this.unitVATRate.split(',').join("");
+    }
   }
 
   public onaBlurNumberAddCommas(numberValue: string, field: string) {
@@ -238,6 +244,10 @@ export class SetupUnitDetailComponent implements OnInit {
       this.unitTFA = this.decimalPipe.transform(numberValue, "1.2-2");
       this.mstUnitModel.TFA = parseFloat(this.unitTFA.split(',').join(""));
     }
+    if (field === "unitVATRate") {
+      this.unitVATRate = this.decimalPipe.transform(numberValue, "1.2-2");
+      this.mstUnitModel.VATRate = parseFloat(this.unitVATRate.split(',').join(""));
+    }
   }
 
   public onKeyUpComputeAmount(event: any, field: string) {
@@ -245,6 +255,9 @@ export class SetupUnitDetailComponent implements OnInit {
 
     if (field === "unitPrice") {
       this.mstUnitModel.Price = value;
+    }
+    if (field === "unitVATRate") {
+      this.mstUnitModel.VATRate = value;
     }
 
     this.computeAmount();

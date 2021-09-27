@@ -139,14 +139,24 @@
                         [disabled]="true" (keypress)="onKeyPressNumberOnly($event)" style="text-align: right;">
                 </mat-form-field>
             </div>
-            <div fxFlex="25" style="padding: 3px;">
+            <div fxFlex="10" style="padding: 5px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>VAT</mat-label>
+                    <mat-label>VAT Rate</mat-label>
+                    <input matInput [(ngModel)]="unitVATRate" [ngModelOptions]="{standalone: true}"
+                        [disabled]="mstUnitModel.IsLocked" (keypress)="onKeyPressNumberOnly($event)"
+                        (focus)="onFocusNumberRemoveCommas('unitVATRate')"
+                        (blur)="onaBlurNumberAddCommas(unitVATRate, 'unitVATRate')"
+                        (keyup)="onKeyUpComputeAmount($event, 'unitVATRate')" style="text-align: right;">
+                </mat-form-field>
+            </div>
+            <div fxFlex="15" style="padding: 5px;">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>VAT Amount</mat-label>
                     <input matInput [(ngModel)]="unitVATAmount" [ngModelOptions]="{standalone: true}" [disabled]="true"
                         (keypress)="onKeyPressNumberOnly($event)" style="text-align: right;">
                 </mat-form-field>
             </div>
-            <div fxFlex="25" style="padding: 3px;">
+            <div fxFlex="25" style="padding: 5px;">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>TSP</mat-label>
                     <input matInput [(ngModel)]="unitTSP" [ngModelOptions]="{standalone: true}" [disabled]="true"
