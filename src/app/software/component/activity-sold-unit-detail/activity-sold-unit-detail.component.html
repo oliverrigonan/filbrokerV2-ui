@@ -452,6 +452,19 @@
                         <div fxLayout="row" fxLayout.xs="column">
                             <div fxFlex="100" style="padding: 3px;">
                                 <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Net Price</mat-label>
+                                    <input matInput [(ngModel)]="soldUnitNetPrice" [ngModelOptions]="{standalone: true}"
+                                        (keypress)="onKeyPressNumberOnly($event)"
+                                        (focus)="onFocusNumberRemoveCommas('soldUnitNetPrice')"
+                                        (blur)="onaBlurNumberAddCommas(soldUnitNetPrice, 'soldUnitNetPrice')"
+                                        (keyup)="onKeyUpComputeAmount($event, 'soldUnitNetPrice')"
+                                        style="text-align: right;" disabled>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column">
+                            <div fxFlex="100" style="padding: 3px;">
+                                <mat-form-field appearance="fill" style="width: 100%;">
                                     <mat-label>Downpayment (%)</mat-label>
                                     <input matInput [(ngModel)]="soldUnitDownpaymentPercent"
                                         [ngModelOptions]="{standalone: true}" [disabled]="trnSoldUnitModel.IsLocked"
