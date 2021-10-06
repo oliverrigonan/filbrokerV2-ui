@@ -189,11 +189,11 @@ export class SetupCustomerDetailComponent implements OnInit {
   }
 
   public birthDateDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
-    this.mstCustomerModel.BirthDate = this.birthDate.toString();
+    this.mstCustomerModel.BirthDate = this.birthDate.toLocaleDateString();
   }
 
   public spouseBirthDateDateDateChange(type: string, event: MatDatepickerInputEvent<Date>): void {
-    this.mstCustomerModel.SpouseBirthDate = this.spouseBirthDate.toString();
+    this.mstCustomerModel.SpouseBirthDate = this.spouseBirthDate.toLocaleDateString();
   }
 
   public disabledButtons(): void {
