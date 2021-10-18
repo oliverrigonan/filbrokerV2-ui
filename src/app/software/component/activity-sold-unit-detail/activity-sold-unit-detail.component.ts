@@ -782,21 +782,22 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
 
     if (field === "soldUnitEquityPercent") {
       let TSP = (this.trnSoldUnitModel.Price + this.trnSoldUnitModel.MiscellaneousFeeAmount + this.trnSoldUnitModel.VATAmount) - this.trnSoldUnitModel.PriceDiscount;
-      let discountedTSP = TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount + this.trnSoldUnitModel.PriceDiscount;
+      let equityTSP = TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount + this.trnSoldUnitModel.PriceDiscount;
 
       // let price = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
       let equityPercent = event.target.value;
-      let equityValue = discountedTSP * (equityPercent / 100);
+      let equityValue = equityTSP * (equityPercent / 100);
 
       this.trnSoldUnitModel.EquityValue = equityValue;
       this.soldUnitEquityValue = this.decimalPipe.transform(equityValue, "1.2-2");
     } else {
       if (field === "soldUnitEquityValue") {
         let TSP = (this.trnSoldUnitModel.Price - this.trnSoldUnitModel.PriceDiscount) + this.trnSoldUnitModel.MiscellaneousFeeAmount + this.trnSoldUnitModel.VATAmount;
+        let equityTSP = TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount + this.trnSoldUnitModel.PriceDiscount;
 
         // let price = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
         let equityValue = event.target.value;
-        let equityPercent = (equityValue / TSP) * 100;
+        let equityPercent = (equityValue / equityTSP) * 100;
 
         this.trnSoldUnitModel.EquityPercent = equityPercent;
         this.soldUnitEquityPercent = this.decimalPipe.transform(equityPercent, "1.2-2");
@@ -854,7 +855,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     // let price = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
     this.soldUnitNetPrice = this.decimalPipe.transform(TSP, "1.2-2");
 
-    let balance = TSP - this.trnSoldUnitModel.Reservation - this.trnSoldUnitModel.DownpaymentValue - this.trnSoldUnitModel.EquityValue;
+    let balance = TSP - this.trnSoldUnitModel.Reservation - this.trnSoldUnitModel.DownpaymentValue - this.trnSoldUnitModel.EquityValue - this.trnSoldUnitModel.MiscellaneousFeeAmount;
 
     this.trnSoldUnitModel.Balance = balance;
     this.soldUnitBalance = this.decimalPipe.transform(balance, "1.2-2");
