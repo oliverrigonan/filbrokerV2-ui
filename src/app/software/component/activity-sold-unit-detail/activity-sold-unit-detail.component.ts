@@ -250,9 +250,11 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     this.trnSoldUnitModel.VATAmount = VATAmount;
     this.soldUnitVATAmount = this.decimalPipe.transform(VATAmount, "1.2-2");
 
-    let TSP = (this.trnSoldUnitModel.Price - this.trnSoldUnitModel.PriceDiscount) + this.trnSoldUnitModel.MiscellaneousFeeAmount + this.trnSoldUnitModel.VATAmount;
+    let TSP = (this.trnSoldUnitModel.Price + this.trnSoldUnitModel.MiscellaneousFeeAmount + this.trnSoldUnitModel.VATAmount) - this.trnSoldUnitModel.PriceDiscount;
+    let equityTSP = TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount + this.trnSoldUnitModel.PriceDiscount;
+
     let equityPercent = this.trnSoldUnitModel.EquityPercent;
-    let equityValue = TSP * (equityPercent / 100);
+    let equityValue = equityTSP * (equityPercent / 100);
 
     this.trnSoldUnitModel.EquityValue = equityValue;
     this.soldUnitEquityValue = this.decimalPipe.transform(equityValue, "1.2-2");
@@ -864,7 +866,11 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     let balanceNoOfPayments = this.trnSoldUnitModel.BalanceNoOfPayments;
 
     let balanceValue = balance * (balanceInterest / 100);
-    let balanceAmortization = balanceValue / balanceNoOfPayments;
+
+    let balanceAmortization = 0;
+    if (balanceNoOfPayments != 0) {
+      balanceAmortization = balanceValue / balanceNoOfPayments;
+    }
 
     this.trnSoldUnitModel.BalanceAmortization = balanceAmortization;
     this.soldUnitBalanceAmortization = this.decimalPipe.transform(balanceAmortization, "1.2-2");
