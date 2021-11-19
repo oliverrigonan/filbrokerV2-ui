@@ -771,7 +771,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
       this.soldUnitDownpaymentValue = this.decimalPipe.transform(downpaymentValue, "1.2-2");
     } else {
       if (field === "soldUnitDownpaymentValue") {
-        let TSP = ((this.trnSoldUnitModel.Price + this.trnSoldUnitModel.VATAmount) * (this.soldUnitVATRateValue / 100)) - this.trnSoldUnitModel.PriceDiscount;
+        // let TSP = ((this.trnSoldUnitModel.Price + this.trnSoldUnitModel.VATAmount) * (this.soldUnitVATRateValue / 100)) - this.trnSoldUnitModel.PriceDiscount;
+        let TSP = this.trnSoldUnitModel.Price + this.trnSoldUnitModel.VATAmount;
 
         // let price = (this.trnSoldUnitModel.TSP - this.trnSoldUnitModel.MiscellaneousFeeAmount - this.trnSoldUnitModel.Reservation) - this.trnSoldUnitModel.PriceDiscount;
         let downpaymentValue = event.target.value;
