@@ -219,6 +219,9 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     this.mstUnitService.getUnitListPerProject(this.trnSoldUnitModel.ProjectId).subscribe(
       data => {
         this.mstUnitModel = data;
+
+        let priceTUP = this.mstUnitModel.filter(x => x.Id == this.trnSoldUnitModel.UnitId)[0].Price;
+        this.soldUnitTUP = this.decimalPipe.transform(priceTUP, "1.2-2");
       }
     );
   }
@@ -350,8 +353,6 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
             this.trnSoldUnitModel.ProjectId = data.ProjectId;
             this.trnSoldUnitModel.Project = data.Project;
 
-            this.getUnitList();
-
             this.trnSoldUnitModel.UnitId = data.UnitId;
             this.trnSoldUnitModel.Unit = data.Unit;
             this.trnSoldUnitModel.CustomerId = data.CustomerId;
@@ -362,6 +363,8 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
             this.trnSoldUnitModel.BrokerCoordinator = data.BrokerCoordinator;
             this.trnSoldUnitModel.ChecklistId = data.ChecklistId;
             this.trnSoldUnitModel.Checklist = data.Checklist;
+
+            this.getUnitList();
 
             this.trnSoldUnitModel.MiscellaneousFeeAmount = data.MiscellaneousFeeAmount;
             this.soldUnitMiscellaneousFeeAmount = this.decimalPipe.transform(data.MiscellaneousFeeAmount, "1.2-2");
