@@ -61,6 +61,7 @@ import { ConfirmationAddChecklistComponent } from './component/confirmation-add-
 import { ActivitySoldUnitRequirementDetailComponent } from './component/activity-sold-unit-requirement-detail/activity-sold-unit-requirement-detail.component';
 import { ActivitySoldUnitRequirementActivityDetailComponent } from './component/activity-sold-unit-requirement-activity-detail/activity-sold-unit-requirement-activity-detail.component';
 import { ActivityCollectionPaymentDetailComponent } from './component/activity-collection-payment-detail/activity-collection-payment-detail.component';
+import { ActivitySoldUnitImportEquityScheduleComponent } from './component/activity-sold-unit-import-equity-schedule/activity-sold-unit-import-equity-schedule.component';
 import { PrintPdfCustomerComponent } from './component/print-pdf-customer/print-pdf-customer.component';
 import { PrintPdfBrokerComponent } from './component/print-pdf-broker/print-pdf-broker.component';
 import { PrintPdfChecklistComponent } from './component/print-pdf-checklist/print-pdf-checklist.component';
@@ -124,7 +125,8 @@ import { SystemUserRegisterComponent } from './component/system-user-register/sy
     ActivitySoldUnitCoOwnerDetailComponent,
     ActivitySoldUnitEquityScheduleDetailComponent,
     SystemUserRightsDetailComponent,
-    SystemUserRegisterComponent
+    SystemUserRegisterComponent,
+    ActivitySoldUnitImportEquityScheduleComponent
   ],
   imports: [
     CommonModule,

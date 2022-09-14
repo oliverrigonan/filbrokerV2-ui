@@ -103,11 +103,29 @@ export class TrnSoldUnitEquityScheduleService {
       );
     });
   }
+
   public saveSoldUnitEquitySchedule(TrnSoldUnitEquitySchedule: TrnSoldUnitEquityScheduleModel): Observable<[boolean, string]> {
     return new Observable<[boolean, string]>((observer) => {
       this.httpClient.put(this.defaultAPIURLHost + "/api/TrnSoldUnitEquitySchedule/Save", JSON.stringify(TrnSoldUnitEquitySchedule), this.options).subscribe(
         response => {
           observer.next([true, ""]);
+          observer.complete();
+        },
+        error => {
+          observer.next([false, error.error]);
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  public importSoldUnitEquitySchedule(id: number, trnSoldUnitEquitySchedule: TrnSoldUnitEquityScheduleModel[]): Observable<[boolean, any]> {
+    return new Observable<[boolean, any]>((observer) => {
+      this.httpClient.post(this.defaultAPIURLHost + "/api/TrnSoldUnitEquitySchedule/ImportNewTrnSoldUnitEquitySchedule/" + id, JSON.stringify(trnSoldUnitEquitySchedule), this.options).subscribe(
+        response => {
+          let id = response;
+
+          observer.next([true, id]);
           observer.complete();
         },
         error => {

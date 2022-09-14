@@ -681,13 +681,21 @@
             <div class="software-container">
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="100" style="padding: 3px; text-align: right;">
-                        <button mat-flat-button color="primary" (click)="buttonExportSoldUnitEquitySchedule()"
+                        <button mat-flat-button (click)="buttonAddSoldUnitEquitySchedule()"
                             [disabled]="!trnSoldUnitModel.IsLocked" style="margin-right: 3px;">
-                            Export
-                        </button>
-                        <button mat-flat-button color="primary" (click)="buttonAddSoldUnitEquitySchedule()"
-                            [disabled]="!trnSoldUnitModel.IsLocked">
                             Create
+                        </button>
+                        <button mat-flat-button (click)="buttonDownloadTemplateSoldUnitEquitySchedule()"
+                            [disabled]="!trnSoldUnitModel.IsLocked" style="margin-right: 3px;">
+                            Download Template
+                        </button>
+                        <button mat-flat-button color="primary" (click)="buttonImportSoldUnitEquitySchedule()"
+                            [disabled]="!trnSoldUnitModel.IsLocked" style="margin-right: 3px;">
+                            Import
+                        </button>
+                        <button mat-flat-button color="primary" (click)="buttonExportSoldUnitEquitySchedule()"
+                            [disabled]="!trnSoldUnitModel.IsLocked">
+                            Export
                         </button>
                     </div>
                 </div>

@@ -48,6 +48,7 @@ import { ConfirmationDeleteComponent } from './../confirmation-delete/confirmati
 import { MstUserRights } from './../../model/mst-user-rights.model';
 import { MstUserRightsService } from './../../service/mst-user-rights/mst-user-rights.service';
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import { ActivitySoldUnitImportEquityScheduleComponent } from '../activity-sold-unit-import-equity-schedule/activity-sold-unit-import-equity-schedule.component';
 
 
 
@@ -84,6 +85,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     private trnSoldUnitEquityScheduleService: TrnSoldUnitEquityScheduleService,
     private activitySoldUnitEquityScheduleDetailDialog: MatDialog,
     private mstUserRightsService: MstUserRightsService,
+    private activitySoldUnitImportEquityScheduleDialog: MatDialog
 
   ) { }
 
@@ -1354,6 +1356,40 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     }
 
     new Angular5Csv(data, 'PDC Report');
+  }
+
+  public buttonDownloadTemplateSoldUnitEquitySchedule(): void {
+    let data: any[] = [
+      {
+        PaymentDate: "Payment Date",
+        Remarks: "Remarks",
+        Amortization: "Amortization",
+        PaidAmount: "Paid Amount",
+        BalanceAmount: "Balance Amount",
+        CheckNumber: "Check Number",
+        CheckDate: "Check Date",
+        CheckBank: "Check Bank"
+      }
+    ];
+
+    new Angular5Csv(data, 'PDC Report Template');
+  }
+
+  public buttonImportSoldUnitEquitySchedule(): void {
+    const openDialog = this.activitySoldUnitImportEquityScheduleDialog.open(ActivitySoldUnitImportEquityScheduleComponent, {
+      width: '800px',
+      data: {
+        dialogTitle: "Import Sold Unit Requirement",
+        dialogData: this.trnSoldUnitModel
+      },
+      disableClose: true
+    });
+
+    openDialog.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.getSoldUnitEquityScheduleData();
+      }
+    });
   }
 
   ngOnInit(): void {
