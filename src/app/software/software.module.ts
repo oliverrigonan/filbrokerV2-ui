@@ -71,6 +71,7 @@ import { PrintPdfSoldUnitEquityScheduleComponent } from './component/print-pdf-s
 import { PrintPdfBuyersUndertakingComponent } from './component/print-pdf-buyers-undertaking/print-pdf-buyers-undertaking.component';
 import { PrintPdfReservationAgreementComponent } from './component/print-pdf-reservation-agreement/print-pdf-reservation-agreement.component';
 import { PrintPdfComputationSheetComponent } from './component/print-pdf-computation-sheet/print-pdf-computation-sheet.component';
+import { PrintPdfStatementOfAccountComponent } from './component/print-pdf-statement-of-account/print-pdf-statement-of-account.component';
 import { ConfirmationCancelComponent } from './component/confirmation-cancel/confirmation-cancel.component';
 import { ReportsComponent } from './component/reports/reports.component';
 import { GlobalSoldUnitListComponent } from './component/global-sold-unit-list/global-sold-unit-list.component';
@@ -126,7 +127,8 @@ import { SystemUserRegisterComponent } from './component/system-user-register/sy
     ActivitySoldUnitEquityScheduleDetailComponent,
     SystemUserRightsDetailComponent,
     SystemUserRegisterComponent,
-    ActivitySoldUnitImportEquityScheduleComponent
+    ActivitySoldUnitImportEquityScheduleComponent,
+    PrintPdfStatementOfAccountComponent
   ],
   imports: [
     CommonModule,

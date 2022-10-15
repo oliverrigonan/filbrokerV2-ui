@@ -694,8 +694,13 @@
                             Import
                         </button>
                         <button mat-flat-button color="primary" (click)="buttonExportSoldUnitEquitySchedule()"
-                            [disabled]="!trnSoldUnitModel.IsLocked">
+                            [disabled]="!trnSoldUnitModel.IsLocked" style="margin-right: 3px;">
                             Export
+                        </button>
+                        <button mat-flat-button color="primary"
+                            (click)="buttonPrintSoldUnitEquityScheduleStatementOfAccount()"
+                            [disabled]="!trnSoldUnitModel.IsLocked">
+                            Print
                         </button>
                     </div>
                 </div>

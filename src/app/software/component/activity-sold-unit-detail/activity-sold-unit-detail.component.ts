@@ -40,6 +40,7 @@ import { ConfirmationAddChecklistComponent } from './../confirmation-add-checkli
 
 import { PrintPdfSoldUnitProposalComponent } from './../../component/print-pdf-sold-unit-proposal/print-pdf-sold-unit-proposal.component';
 import { PrintPdfSoldUnitContractComponent } from './../../component/print-pdf-sold-unit-contract/print-pdf-sold-unit-contract.component';
+import { PrintPdfStatementOfAccountComponent } from './../../component/print-pdf-statement-of-account/print-pdf-statement-of-account.component';
 import { ActivitySoldUnitCancelReasonComponent } from './../../component/activity-sold-unit-cancel-reason/activity-sold-unit-cancel-reason.component';
 import { ActivitySoldUnitCoOwnerDetailComponent } from './../activity-sold-unit-co-owner-detail/activity-sold-unit-co-owner-detail.component';
 import { ActivitySoldUnitEquityScheduleDetailComponent } from './../activity-sold-unit-equity-schedule-detail/activity-sold-unit-equity-schedule-detail.component';
@@ -79,6 +80,7 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
     private datePipe: DatePipe,
     private printPdfSoldUnitProposalDialog: MatDialog,
     private printPdfSoldUnitContractDialog: MatDialog,
+    private printPdfSoldUnitEquityScheduleStatementOfAccountDialog: MatDialog,
     private activitySoldUnitCancelReasonDialog: MatDialog,
     private activitySoldUnitCoOwnerDetailDialog: MatDialog,
     private confirmationDeleteDialog: MatDialog,
@@ -1390,6 +1392,25 @@ export class ActivitySoldUnitDetailComponent implements OnInit {
         this.getSoldUnitEquityScheduleData();
       }
     });
+  }
+
+  public buttonPrintSoldUnitEquityScheduleStatementOfAccount(): void {
+    if (this.trnSoldUnitModel.IsLocked == true) {
+      const openDialog = this.printPdfSoldUnitEquityScheduleStatementOfAccountDialog.open(PrintPdfStatementOfAccountComponent, {
+        width: '1200px',
+        data: {
+          dialogTitle: "Print Statement of Account",
+          dialogData: this.trnSoldUnitModel
+        },
+        disableClose: true
+      });
+
+      openDialog.afterClosed().subscribe(result => {
+
+      });
+    } else {
+      this.toastr.error("Cannot print report with unlocked record.", 'Print Failed');
+    }
   }
 
   ngOnInit(): void {

@@ -138,4 +138,17 @@ export class RepPDFService {
       );
     });
   }
+
+  public printPdfStatementOfAccount(id: number): Observable<Blob> {
+    return new Observable<Blob>((observer) => {
+      this.httpClient.get(this.defaultAPIURLHost + "/api/PDF/StatementOfAccount/" + id, this.options).subscribe(
+        response => {
+          let results = new Blob([response], { type: 'application/pdf' });
+
+          observer.next(results);
+          observer.complete();
+        }
+      );
+    });
+  }
 }
